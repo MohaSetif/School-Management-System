@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'role',
+        'is_active',
     ];
 
     /**
@@ -44,5 +47,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+     public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_teachers');
+    }
+
+    public function attendanceRecords()
+    {
+        return $this->hasMany(Attendance_record::class, 'marked_by');
+    }
+
+    public function isHeadmaster()
+    {
+        return $this->role === 'headmaster';
+    }
+
+    public function isTeacher()
+    {
+        return $this->role === 'teacher';
+    }
+
+    public function isEmployee()
+    {
+        return $this->role === 'employee';
     }
 }
