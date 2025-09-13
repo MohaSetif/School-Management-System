@@ -34,11 +34,6 @@ class Student extends Model
         return $this->hasMany(Attendance_record::class);
     }
 
-    public function absenceNotifications()
-    {
-        return $this->hasMany(Absence_notification::class);
-    }
-
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;

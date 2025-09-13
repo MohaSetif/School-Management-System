@@ -1,81 +1,334 @@
-<?php
-
-// resources/views/filament/pages/bulk-attendance.blade.php
-?>
 <x-filament-panels::page>
-    <div class="space-y-6">
-        <form wire:submit.prevent="saveAttendance">
-            {{ $this->form }}
-            
-            <div class="mt-6">
-                <x-filament::button type="submit" wire:click="loadStudents" color="gray">
-                    Load Students
-                </x-filament::button>
-            </div>
-        </form>
+    <style>
+        :root{
+            --bg: #f6f7fb;
+            --card: #ffffff;
+            --muted: #6b7280;
+            --muted-2: #9aa3b2;
+            --border: #e6e9ef;
+            --primary: #2563eb;
+            --primary-600: #1e40af;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --glass: rgba(255,255,255,0.6);
+            --radius-lg: 12px;
+            --shadow-md: 0 6px 18px rgba(22, 28, 37, 0.06);
+        }
 
-        @if(!empty($this->students))
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        Mark Attendance - {{ \Carbon\Carbon::parse($this->attendance_date)->format('F j, Y') }}
-                    </h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                        Group: {{ App\Models\Group::find($this->group_id)?->name }}
-                    </p>
-                </div>
+        @media (prefers-color-scheme: dark) {
+            :root{
+                --bg: #0b1220;
+                --card: #0f1724;
+                --muted: #9ca3af;
+                --muted-2: #94a3b8;
+                --border: rgba(255,255,255,0.06);
+                --glass: rgba(255,255,255,0.03);
+            }
+        }
 
-                <div class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach($this->students as $index => $student)
-                        <div class="px-6 py-4 flex items-center justify-between">
-                            <div class="flex-1">
-                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                    {{ $student['name'] }}
-                                </div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400">
-                                    ID: {{ $student['student_id'] }}
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center space-x-4">
-                                <div class="flex space-x-2">
-                                    @foreach(['present', 'absent', 'late', 'excused'] as $status)
-                                        <label class="inline-flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="status_{{ $student['id'] }}"
-                                                value="{{ $status }}"
-                                                {{ $student['status'] === $status ? 'checked' : '' }}
-                                                wire:change="updateAttendance({{ $student['id'] }}, 'status', '{{ $status }}')"
-                                                class="form-radio text-primary-600"
-                                            >
-                                            <span class="ml-1 text-sm capitalize {{ $status === 'present' ? 'text-green-600' : ($status === 'absent' ? 'text-red-600' : ($status === 'late' ? 'text-yellow-600' : 'text-blue-600')) }}">
-                                                {{ $status }}
-                                            </span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                                
-                                <div class="w-48">
-                                    <input
-                                        type="text"
-                                        placeholder="Notes (optional)"
-                                        value="{{ $student['notes'] }}"
-                                        wire:change="updateAttendance({{ $student['id'] }}, 'notes', $event.target.value)"
-                                        class="block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-700 dark:text-gray-300 text-sm"
-                                    >
-                                </div>
-                            </div>
+        .ba-page {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Form card */
+        .ba-form-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            padding: 1.1rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        /* Layout for inline form controls */
+        .ba-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 240px;
+            gap: 0.9rem;
+            align-items: end;
+        }
+
+        /* Buttons */
+        .ba-controls {
+            display:flex;
+            justify-content:flex-end;
+            gap: 0.6rem;
+            margin-top: 0.6rem;
+        }
+
+        .btn {
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:0.5rem;
+            padding: 0.5rem 0.85rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            font-weight:600;
+            cursor: pointer;
+            font-size:0.95rem;
+            background: transparent;
+            color: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg,var(--primary),var(--primary-600));
+            color: #fff;
+            border-color: rgba(0,0,0,0.06);
+            box-shadow: 0 6px 14px rgba(37,99,235,0.12);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        /* Students card */
+        .ba-card {
+            background: var(--card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .ba-card-header {
+            padding: 1rem 1.1rem;
+            border-bottom: 1px solid var(--border);
+            display:flex;
+            justify-content:space-between;
+            align-items:baseline;
+            gap:1rem;
+            background: linear-gradient(180deg, transparent, var(--glass));
+        }
+
+        .ba-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: inherit;
+        }
+
+        .ba-sub {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        /* Table styles */
+        .ba-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            background: transparent;
+        }
+
+        table.ba-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 820px;
+        }
+
+        table.ba-table thead th {
+            text-align: left;
+            padding: 0.85rem 1rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            background: transparent;
+        }
+
+        table.ba-table tbody td {
+            padding: 0.9rem 1rem;
+            vertical-align: middle;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        table.ba-table tbody tr:hover {
+            background: rgba(37,99,235,0.03);
+        }
+
+        .student-name {
+            font-weight: 600;
+        }
+
+        .student-id {
+            font-size: 0.85rem;
+            color: var(--muted-2);
+            margin-top: 0.18rem;
+        }
+
+        /* Status radios layout */
+        .status-group {
+            display:flex;
+            gap: 0.6rem;
+            align-items:center;
+        }
+
+        .status-label {
+            display:flex;
+            align-items:center;
+            gap: 0.45rem;
+            font-size: 0.9rem;
+            cursor:pointer;
+        }
+
+        .status-label input[type="radio"]{
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .status-pill {
+            font-size: 0.82rem;
+            font-weight:600;
+            padding: 0.18rem 0.5rem;
+            border-radius: 999px;
+            display:inline-block;
+            color: #fff;
+        }
+
+        .pill-present { background: var(--success); }
+        .pill-absent  { background: var(--danger); }
+        .pill-late    { background: #f59e0b; } /* amber */
+        .pill-excused { background: #0ea5b7; } /* teal */
+
+        /* Notes input */
+        .notes-input {
+            width: 100%;
+            max-width: 340px;
+            padding: 0.5rem 0.7rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: inherit;
+            font-size: 0.95rem;
+        }
+
+        /* footer */
+        .ba-card-footer {
+            padding: 0.9rem 1rem;
+            border-top: 1px solid var(--border);
+            display:flex;
+            justify-content: flex-end;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 880px) {
+            .ba-form-grid { grid-template-columns: 1fr; }
+            .notes-input { max-width: 100%; }
+        }
+    </style>
+
+    <div class="ba-page">
+        {{-- Form container --}}
+        <section class="ba-form-card" aria-labelledby="ba-form-heading">
+            <form wire:submit.prevent="loadStudents">
+                <div id="ba-form-heading" style="display:none">Load students</div>
+
+                <div class="ba-form-grid">
+                    {{-- Filament form output (group + date) --}}
+                    <div>
+                        {{ $this->form }}
+                    </div>
+
+                    {{-- Action column: Load button + small hint --}}
+                    <div style="display:flex; flex-direction:column; gap:0.6rem; align-items:flex-end;">
+                        <div style="font-size:0.9rem; color:var(--muted); text-align:right;">
+                            Select group and date, then click <strong>Load Students</strong>.
                         </div>
-                    @endforeach
+
+                        <div class="ba-controls" aria-hidden="false">
+                            <button type="submit" class="btn btn-secondary" title="Load Students">
+                                Load Students
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        {{-- Students table --}}
+        @if(!empty($this->students))
+            <section class="ba-card" aria-labelledby="ba-students-heading">
+                <header class="ba-card-header">
+                    <div>
+                        <div class="ba-title" id="ba-students-heading">
+                            Mark Attendance — {{ \Carbon\Carbon::parse($this->attendance_date)->format('F j, Y') }}
+                        </div>
+                        <div class="ba-sub">
+                            Group: {{ \App\Models\Group::find($this->group_id)?->name ?? '—' }}
+                            · Students: {{ count($this->students) }}
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:0.6rem;">
+                        <button type="button" wire:click="saveAttendance" class="btn btn-primary" title="Save Attendance">
+                            Save Attendance
+                        </button>
+                    </div>
+                </header>
+
+                <div class="ba-table-wrap">
+                    <table class="ba-table" role="table" aria-describedby="ba-students-heading">
+                        <thead>
+                            <tr>
+                                <th scope="col">Student</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Notes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($this->students as $student)
+                                <tr>
+                                    <td>
+                                        <div class="student-name">{{ $student['name'] }}</div>
+                                        <div class="student-id">ID: {{ $student['student_id'] }}</div>
+                                    </td>
+
+                                    <td>
+                                        <div class="status-group" role="radiogroup" aria-label="Attendance status for {{ $student['name'] }}">
+                                            @foreach (['present','absent','late','excused'] as $status)
+                                                <label class="status-label" for="status_{{ $student['id'] }}_{{ $status }}">
+                                                    <input
+                                                        id="status_{{ $student['id'] }}_{{ $status }}"
+                                                        type="radio"
+                                                        name="status_{{ $student['id'] }}"
+                                                        value="{{ $status }}"
+                                                        {{ $student['status'] === $status ? 'checked' : '' }}
+                                                        wire:change="updateAttendance({{ $student['id'] }}, 'status', '{{ $status }}')"
+                                                    >
+                                                    <span class="status-pill pill-{{ $status }}">{{ ucfirst($status) }}</span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <input
+                                            type="text"
+                                            class="notes-input"
+                                            placeholder="Notes (optional)"
+                                            value="{{ $student['notes'] }}"
+                                            wire:change="updateAttendance({{ $student['id'] }}, 'notes', $event.target.value)"
+                                            aria-label="Notes for {{ $student['name'] }}"
+                                        >
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-200 dark:border-gray-600">
-                    <x-filament::button wire:click="saveAttendance" color="primary">
+                <div class="ba-card-footer">
+                    <button type="button" wire:click="saveAttendance" class="btn btn-primary">
                         Save Attendance
-                    </x-filament::button>
+                    </button>
                 </div>
-            </div>
+            </section>
         @endif
     </div>
 </x-filament-panels::page>
