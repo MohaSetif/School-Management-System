@@ -17,9 +17,9 @@
 
         @media (prefers-color-scheme: dark) {
             :root{
-                --bg: #0b1220;
-                --card: #0f1724;
-                --muted: #9ca3af;
+                --bg: #1c1c1cff;
+                --card: #161616ff;
+                --muted: #acacacff;
                 --muted-2: #94a3b8;
                 --border: rgba(255,255,255,0.06);
                 --glass: rgba(255,255,255,0.03);
@@ -146,7 +146,7 @@
         }
 
         table.ba-table tbody tr:hover {
-            background: rgba(37,99,235,0.03);
+            background: rgba(130,130,130,0.03);
         }
 
         .student-name {
@@ -234,16 +234,21 @@
                         {{ $this->form }}
                     </div>
 
-                    {{-- Action column: Load button + small hint --}}
                     <div style="display:flex; flex-direction:column; gap:0.6rem; align-items:flex-end;">
                         <div style="font-size:0.9rem; color:var(--muted); text-align:right;">
                             Select group and date, then click <strong>Load Students</strong>.
                         </div>
 
-                        <div class="ba-controls" aria-hidden="false">
-                            <button type="submit" class="btn btn-secondary" title="Load Students">
-                                Load Students
-                            </button>
+                        <div class="ba-controls">
+                            {{-- ✅ Filament button with loading state --}}
+                            <x-filament::button
+                                type="submit"
+                                color="gray"
+                                wire:loading.attr="disabled"
+                                wire:target="loadStudents"
+                            >
+                                <span>Load Students</span>
+                            </x-filament::button>
                         </div>
                     </div>
                 </div>
@@ -264,20 +269,24 @@
                         </div>
                     </div>
 
-                    <div style="display:flex; gap:0.6rem;">
-                        <button type="button" wire:click="saveAttendance" class="btn btn-primary" title="Save Attendance">
-                            Save Attendance
-                        </button>
-                    </div>
+                    {{-- ✅ Filament button with loading state --}}
+                    <x-filament::button
+                        wire:click="saveAttendance"
+                        color="gray"
+                        wire:loading.attr="disabled"
+                        wire:target="saveAttendance"
+                    >
+                        <span>Save Attendance</span>
+                    </x-filament::button>
                 </header>
 
                 <div class="ba-table-wrap">
-                    <table class="ba-table" role="table" aria-describedby="ba-students-heading">
+                    <table class="ba-table">
                         <thead>
                             <tr>
-                                <th scope="col">Student</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Notes</th>
+                                <th>Student</th>
+                                <th>Status</th>
+                                <th>Notes</th>
                             </tr>
                         </thead>
 
@@ -290,7 +299,7 @@
                                     </td>
 
                                     <td>
-                                        <div class="status-group" role="radiogroup" aria-label="Attendance status for {{ $student['name'] }}">
+                                        <div class="status-group">
                                             @foreach (['present','absent','late','excused'] as $status)
                                                 <label class="status-label" for="status_{{ $student['id'] }}_{{ $status }}">
                                                     <input
@@ -314,7 +323,6 @@
                                             placeholder="Notes (optional)"
                                             value="{{ $student['notes'] }}"
                                             wire:change="updateAttendance({{ $student['id'] }}, 'notes', $event.target.value)"
-                                            aria-label="Notes for {{ $student['name'] }}"
                                         >
                                     </td>
                                 </tr>
@@ -324,9 +332,15 @@
                 </div>
 
                 <div class="ba-card-footer">
-                    <button type="button" wire:click="saveAttendance" class="btn btn-primary">
-                        Save Attendance
-                    </button>
+                    {{-- ✅ Filament button with loading state --}}
+                    <x-filament::button
+                        wire:click="saveAttendance"
+                        color="gray"
+                        wire:loading.attr="disabled"
+                        wire:target="saveAttendance"
+                    >
+                        <span>Save Attendance</span>
+                    </x-filament::button>
                 </div>
             </section>
         @endif
