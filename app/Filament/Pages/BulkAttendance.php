@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\AbsenceNotification;
 use App\Models\Attendance_record;
 use App\Models\Group;
 use App\Models\Student;
@@ -63,13 +64,13 @@ class BulkAttendance extends Page implements HasForms
                     ->required()
                     ->default(Carbon::today()),
             ])
-            ->statePath('data');
+            ->statePath('data'); // ✅ this is correct
     }
 
     public function loadStudents(): void
     {
-        $this->group_id = $this->data['group_id'] ?? null;
-        $this->attendance_date = $this->data['attendance_date'] ?? null;
+        $this->group_id = $this->data['group_id'] ?? $this->group_id;
+        $this->attendance_date = $this->data['attendance_date'] ?? $this->attendance_date;
 
         if (!$this->group_id || !$this->attendance_date) {
             Notification::make()
@@ -113,7 +114,6 @@ class BulkAttendance extends Page implements HasForms
 
     public function saveAttendance(): void
     {
-        // Make sure we have the latest form state
         $this->group_id = $this->data['group_id'] ?? $this->group_id;
         $this->attendance_date = $this->data['attendance_date'] ?? $this->attendance_date;
 
@@ -128,7 +128,6 @@ class BulkAttendance extends Page implements HasForms
 
         $attendanceDate = Carbon::parse($this->attendance_date)->startOfDay();
 
-        $saved = 0;
         foreach ($this->students as $studentData) {
             Attendance_record::updateOrCreate(
                 [
@@ -142,13 +141,75 @@ class BulkAttendance extends Page implements HasForms
                     'notes' => $studentData['notes'],
                 ]
             );
-            $saved++;
         }
+
+        $this->checkConsecutiveAbsences();
 
         Notification::make()
             ->title('Success')
-            ->body("Saved attendance for {$saved} students.")
+            ->body("Saved attendance for " . count($this->students) . " students.")
             ->success()
+            ->send();
+    }
+
+    protected function checkConsecutiveAbsences(): void
+    {
+        // Get all students we just saved attendance for
+        $studentIds = collect($this->students)->pluck('id');
+
+        foreach ($studentIds as $studentId) {
+            // Get all absences for this student ordered by date
+            $absences = Attendance_record::where('student_id', $studentId)
+                ->where('status', 'absent')
+                ->orderBy('attendance_date')
+                ->pluck('attendance_date')
+                ->map(fn($d) => \Carbon\Carbon::parse($d)->startOfDay());
+
+            if ($absences->isEmpty()) {
+                continue;
+            }
+
+            $streak = 1;
+            $startDate = $absences[0];
+
+            for ($i = 1; $i < $absences->count(); $i++) {
+                $prev = $absences[$i - 1];
+                $current = $absences[$i];
+
+                if ($current->isSameDay($prev->copy()->addDay())) {
+                    // Consecutive day
+                    $streak++;
+                } else {
+                    // Streak broke, check previous streak
+                    if ($streak >= 3) {
+                        $this->createAbsenceNotification($studentId, $startDate, $prev, $streak);
+                    }
+                    $streak = 1;
+                    $startDate = $current;
+                }
+            }
+
+            // Final check for the last streak
+            if ($streak >= 3) {
+                $this->createAbsenceNotification($studentId, $startDate, $absences->last(), $streak);
+            }
+        }
+    }
+
+    protected function createAbsenceNotification($studentId, $startDate, $endDate, $count): void
+    {
+        AbsenceNotification::create([
+            'student_id' => $studentId,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'consecutive_days' => $count,
+        ]);
+
+        // Also show a notification
+        Notification::make()
+            ->title('Consecutive Absences Detected')
+            ->body("Student ID {$studentId} was absent for {$count} consecutive days ({$startDate->format('Y-m-d')} → {$endDate->format('Y-m-d')}).")
+            ->warning()
             ->send();
     }
 

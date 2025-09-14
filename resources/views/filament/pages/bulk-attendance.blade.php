@@ -15,15 +15,13 @@
             --shadow-md: 0 6px 18px rgba(22, 28, 37, 0.06);
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root{
-                --bg: #1c1c1cff;
-                --card: #161616ff;
-                --muted: #acacacff;
-                --muted-2: #94a3b8;
-                --border: rgba(255,255,255,0.06);
-                --glass: rgba(255,255,255,0.03);
-            }
+        html.dark {
+            --bg: #1c1c1cff;
+            --card: #161616ff;
+            --muted: #acacacff;
+            --muted-2: #94a3b8;
+            --border: rgba(255,255,255,0.06);
+            --glass: rgba(255,255,255,0.03);
         }
 
         .ba-page {
