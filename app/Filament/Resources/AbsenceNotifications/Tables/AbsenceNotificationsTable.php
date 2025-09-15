@@ -8,6 +8,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -40,6 +41,12 @@ class AbsenceNotificationsTable
                 // End date
                 TextColumn::make('end_date')
                     ->date('F j, Y')
+                    ->sortable(),
+
+                // Notified status
+                IconColumn::make('notified')
+                    ->label('Notified')
+                    ->boolean()
                     ->sortable(),
 
                 // Created at (when notification was recorded)
