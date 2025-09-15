@@ -16,7 +16,6 @@ return [
     */
 
     'commands' => [
-        CheckConsecutiveAbsences::class
     ],
 
     /*
