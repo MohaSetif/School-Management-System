@@ -22,9 +22,19 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
-    protected static string|UnitEnum|null $navigationGroup = 'Academic Management';
+    protected static string|UnitEnum|null $navigationGroup = 'students.navigation.group';
 
     protected static ?string $recordTitleAttribute = 'id';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('students.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('students.navigation.group');
+    }
 
     public static function form(Schema $schema): Schema
     {

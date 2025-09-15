@@ -22,10 +22,16 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
-    protected static string|null $navigationLabel = 'Teachers & Employees';
-    protected static string|UnitEnum|null $navigationGroup = 'User Management';
 
-    protected static ?string $recordTitleAttribute = 'id';
+    public static function getNavigationLabel(): string
+    {
+        return __('users.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('users.navigation.group');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -44,9 +50,7 @@ class UserResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

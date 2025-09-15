@@ -20,20 +20,23 @@ class GroupsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('groups.fields.name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('code')
+                    ->label(__('groups.fields.code'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('students_count')
                     ->counts('students')
-                    ->label('Students'),
+                    ->label(__('groups.fields.students_count')),
                 TextColumn::make('teachers.name')
-                    ->label('Teachers')
+                    ->label(__('groups.fields.teachers'))
                     ->listWithLineBreaks()
                     ->limitList(2)
                     ->expandableLimitedList(),
-                BooleanColumn::make('is_active'),
+                BooleanColumn::make('is_active')
+                    ->label(__('groups.fields.is_active'))
             ])
             ->filters([
                 TernaryFilter::make('is_active'),

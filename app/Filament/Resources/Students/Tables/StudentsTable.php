@@ -11,7 +11,6 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
-use Filament\Tables\Columns\BooleanColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -27,90 +26,101 @@ class StudentsTable
         return $table
             ->columns([
                 TextColumn::make('student_identifier')
+                    ->label(__('students.fields.student_identifier'))
                     ->searchable()
                     ->sortable(),
+
                 TextColumn::make('full_name')
-                    ->label('Name')
+                    ->label(__('students.fields.full_name'))
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(),
+
                 TextColumn::make('group.name')
-                    ->label('Group')
+                    ->label(__('students.fields.group'))
                     ->sortable(),
+
                 TextColumn::make('date_of_birth')
-                        ->label('تاريخ الازدياد'),
+                    ->label(__('students.fields.date_of_birth')),
+
                 IconColumn::make('is_orphan')
-                        ->label('يتيم')
-                        ->boolean()
-                        ->sortable(),
+                    ->label(__('students.fields.is_orphan'))
+                    ->boolean()
+                    ->sortable(),
+
                 IconColumn::make('is_needy')
-                        ->label('معوز')
-                        ->boolean()
-                        ->sortable(),    
+                    ->label(__('students.fields.is_needy'))
+                    ->boolean()
+                    ->sortable(),
             ])
             ->filters([
                 SelectFilter::make('group_id')
-                    ->label('Group')
+                    ->label(__('students.filters.group'))
                     ->relationship('group', 'name'),
-                TernaryFilter::make('is_active'),
+
+                TernaryFilter::make('is_active')
+                    ->label(__('students.filters.is_active')),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->label(__('students.actions.edit')),
+                DeleteAction::make()->label(__('students.actions.delete')),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()->label(__('students.actions.delete_selected')),
                 ]),
             ])
-             ->headerActions([
-                // Import Action
+            ->headerActions([
                 Action::make('import')
-                    ->label('Import Students')
+                    ->label(__('students.actions.import'))
                     ->icon('heroicon-o-arrow-up-tray')
                     ->color('success')
                     ->form([
                         FileUpload::make('file')
-                            ->label('Excel File')
-                            ->disk('public') // ✅ store in public disk
-                            ->directory('imports') // ✅ store inside storage/app/public/imports
+                            ->label(__('students.import.file'))
+                            ->disk('public')
+                            ->directory('imports')
                             ->acceptedFileTypes([
                                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                                 'application/vnd.ms-excel'
                             ])
                             ->required()
                             ->maxSize(2048)
-                            ->helperText('Upload an Excel file (.xlsx or .xls) with student data.')
+                            ->helperText(__('students.import.helper'))
                     ])
                     ->action(function (array $data) {
                         try {
-                            $filePath = Storage::disk('public')->path($data['file']); // ✅ now points to real stored file
-
+                            $filePath = Storage::disk('public')->path($data['file']);
                             Excel::import(new StudentsImport, $filePath);
-
-                            // Optionally delete after import
                             Storage::disk('public')->delete($data['file']);
 
                             Notification::make()
-                                ->title('Students imported successfully!')
+                                ->title(__('students.notifications.import_success'))
                                 ->success()
                                 ->send();
 
                         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
                             $failures = $e->failures();
-                            $errorMessage = 'Import failed with validation errors:';
+                            $errorMessage = __('students.notifications.import_failed_with_errors');
                             foreach ($failures as $failure) {
-                                $errorMessage .= "\nRow {$failure->row()}: " . implode(', ', $failure->errors());
+                                $errorMessage .= "\n" . __('students.notifications.row_error', [
+                                    'row' => $failure->row(),
+                                    'errors' => implode(', ', $failure->errors())
+                                ]);
                             }
+
                             Notification::make()
-                                ->title('Import Failed')
+                                ->title(__('students.notifications.import_failed'))
                                 ->body($errorMessage)
                                 ->danger()
                                 ->persistent()
                                 ->send();
+
                         } catch (\Exception $e) {
                             Notification::make()
-                                ->title('Import Failed')
-                                ->body('An error occurred while importing: ' . $e->getMessage())
+                                ->title(__('students.notifications.import_failed'))
+                                ->body(__('students.notifications.import_exception', [
+                                    'message' => $e->getMessage()
+                                ]))
                                 ->danger()
                                 ->send();
                         }

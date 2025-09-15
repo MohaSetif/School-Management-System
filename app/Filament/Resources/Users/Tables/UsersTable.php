@@ -21,33 +21,43 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('users.fields.name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
+                    ->label(__('users.fields.email'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('phone')
+                    ->label(__('users.fields.phone'))
                     ->searchable(),
                 BadgeColumn::make('role')
+                    ->label(__('users.fields.role'))
                     ->colors([
-                        'primary' => 'teacher',
-                        'success' => 'headmaster',
-                        'warning' => 'employee',
+                        'primary' => __('users.role.teacher'),
+                        'success' => __('users.role.headmaster'),
+                        'warning' => __('users.role.employee'),
                     ]),
-                BooleanColumn::make('is_active'),
+                BooleanColumn::make('is_active')
+                    ->label(__('users.fields.is_active'))
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
+                    ->label(__('users.fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('role')
+                    ->label(__('users.fields.role'))
                     ->options([
-                        'teacher' => 'Teacher',
-                        'employee' => 'Employee',
-                        'headmaster' => 'Headmaster',
+                        'teacher' => __('users.roles.teacher'),
+                        'employee' => __('users.roles.employee'),
+                        'headmaster' => __('users.roles.headmaster'),
                     ]),
-                TernaryFilter::make('is_active'),
+                TernaryFilter::make('is_active')
+                    ->label(__('users.fields.is_active')),
             ])
             ->actions([
                 EditAction::make(),

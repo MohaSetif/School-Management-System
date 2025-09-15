@@ -22,9 +22,19 @@ class GroupResource extends Resource
     protected static ?string $model = Group::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
-    protected static string|UnitEnum|null $navigationGroup = 'Academic Management';
+    protected static string|UnitEnum|null $navigationGroup = 'groups.navigation.group';
 
     protected static ?string $recordTitleAttribute = 'id';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('groups.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('groups.navigation.group');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -43,9 +53,7 @@ class GroupResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

@@ -1,0 +1,70 @@
+<?php
+
+return [
+    'fields' => [
+        'student_identifier' => 'رقم التعريف',
+        'last_name' => 'اللقب',
+        'first_name' => 'الاسم',
+        'full_name' => 'الاسم الكامل',
+        'name' => 'الاسم الكامل',
+        'genders' => [
+            'male' => 'ذكر',
+            'female' => 'أنثى'
+        ],
+        'group' => 'القسم',
+        'group_id' => 'القسم',
+        'gender' => 'الجنس',
+        'date_of_birth' => 'تاريخ الازدياد',
+        'place_of_birth' => 'مكان الازدياد',
+        'academic_year' => 'السنة',
+        'schooling_system' => 'نظام التمدرس',
+        'enrollment_number' => 'رقم القيد',
+        'enrollment_date' => 'تاريخ التسجيل',
+        'is_active' => 'نشط',
+        'is_judicial_birth' => 'مولود بحكم',
+        'has_birth_certificate' => 'عقد الميلاد',
+        'birth_registration_year' => 'سنة التسجيل في سجل الولادات',
+        'birth_certificate_number' => 'رقم عقد الميلاد',
+        'is_orphan' => 'يتيم',
+        'is_needy' => 'معوز',
+        'health_status' => 'الحالة الصحية',
+        'psychological_status' => 'الحالة النفسية',
+        'is_sector_child' => 'ابن قطاع',
+    ],
+
+    'sections' => [
+        'personal_info' => 'المعلومات الشخصية',
+        'academic_info' => 'المعلومات الأكاديمية',
+        'social_health' => 'الوضعية الاجتماعية والصحية',
+    ],
+
+    'filters' => [
+        'group' => 'الفوج',
+        'is_active' => 'الحالة',
+    ],
+
+    'actions' => [
+        'edit' => 'تعديل',
+        'delete' => 'حذف',
+        'delete_selected' => 'حذف المحددين',
+        'import' => 'استيراد الطلاب',
+    ],
+
+    'import' => [
+        'file' => 'ملف الإكسل',
+        'helper' => 'قم برفع ملف إكسل (.xlsx أو .xls) يحتوي على بيانات الطلاب',
+    ],
+
+    'notifications' => [
+        'import_success' => 'تم استيراد الطلاب بنجاح!',
+        'import_failed' => 'فشل الاستيراد',
+        'import_failed_with_errors' => 'فشل الاستيراد مع أخطاء في التحقق:',
+        'row_error' => 'السطر :row: :errors',
+        'import_exception' => 'حدث خطأ أثناء الاستيراد: :message',
+    ],
+
+    'navigation' => [
+        'label' => 'الطلاب',
+        'group' => 'إدارة الطلبة',
+    ],
+];

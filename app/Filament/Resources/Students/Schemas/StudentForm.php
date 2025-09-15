@@ -18,107 +18,107 @@ class StudentForm
     {
         return $schema
             ->components([
-                Section::make('المعلومات الشخصية')
+                Section::make(__('students.sections.personal_info'))
                     ->schema([
                         TextInput::make('student_identifier')
-                            ->label('رقم التعريف')
+                            ->label(__('students.fields.student_identifier'))
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(20),
 
                         TextInput::make('last_name')
-                            ->label('اللقب')
+                            ->label(__('students.fields.last_name'))
                             ->required()
                             ->maxLength(255),
 
                         TextInput::make('first_name')
-                            ->label('الاسم')
+                            ->label(__('students.fields.first_name'))
                             ->required()
                             ->maxLength(255),
 
                         Radio::make('gender')
-                            ->label('الجنس')
+                            ->label(__('students.fields.gender'))
                             ->options([
-                                'male' => 'ذكر',
-                                'female' => 'أنثى',
+                                'male' => __('students.fields.genders.male'),
+                                'female' => __('students.fields.genders.female'),
                             ])
                             ->required()
                             ->inline(),
 
                         DatePicker::make('date_of_birth')
-                            ->label('تاريخ الازدياد')
+                            ->label(__('students.fields.date_of_birth'))
                             ->required(),
 
                         Toggle::make('is_judicial_birth')
-                            ->label('مولود بحكم')
+                            ->label(__('students.fields.is_judicial_birth'))
                             ->inline(false),
 
                         Toggle::make('has_birth_certificate')
-                            ->label('عقد الميلاد')
+                            ->label(__('students.fields.has_birth_certificate'))
                             ->inline(false),
 
                         TextInput::make('birth_certificate_number')
-                            ->label('رقم عقد الميلاد')
+                            ->label(__('students.fields.birth_certificate_number'))
                             ->numeric(),
 
                         TextInput::make('birth_registration_year')
-                            ->label('سنة التسجيل في سجل الولادات')
+                            ->label(__('students.fields.birth_registration_year'))
                             ->numeric(),
 
                         TextInput::make('place_of_birth')
-                            ->label('مكان الازدياد')
+                            ->label(__('students.fields.place_of_birth'))
                             ->maxLength(255),
                     ])
                     ->columns(2),
 
-                Section::make('المعلومات الأكاديمية')
+                Section::make(__('students.sections.academic_info'))
                     ->schema([
                         TextInput::make('academic_year')
-                            ->label('السنة')
+                            ->label(__('students.fields.academic_year'))
                             ->maxLength(255),
 
                         Select::make('group_id')
-                            ->label('القسم')
+                            ->label(__('students.fields.group_id'))
                             ->relationship('group', 'name')
                             ->options(Group::where('is_active', true)->pluck('name', 'id'))
                             ->searchable()
                             ->preload(),
 
                         TextInput::make('schooling_system')
-                            ->label('نظام التمدرس')
+                            ->label(__('students.fields.schooling_system'))
                             ->maxLength(255),
 
                         TextInput::make('enrollment_number')
-                            ->label('رقم القيد')
+                            ->label(__('students.fields.enrollment_number'))
                             ->numeric(),
 
                         DatePicker::make('enrollment_date')
-                            ->label('تاريخ التسجيل'),
+                            ->label(__('students.fields.enrollment_date')),
 
                         Toggle::make('is_active')
-                            ->label('نشط')
+                            ->label(__('students.fields.is_active'))
                             ->default(true),
                     ])
                     ->columns(2),
 
-                Section::make('الوضعية الاجتماعية والصحية')
+                Section::make(__('students.sections.social_health'))
                     ->schema([
                         Toggle::make('is_orphan')
-                            ->label('يتيم'),
+                            ->label(__('students.fields.is_orphan')),
 
                         Toggle::make('is_needy')
-                            ->label('معوز'),
+                            ->label(__('students.fields.is_needy')),
 
                         Textarea::make('health_status')
-                            ->label('الحالة الصحية')
+                            ->label(__('students.fields.health_status'))
                             ->maxLength(500),
 
                         Textarea::make('psychological_status')
-                            ->label('الحالة النفسية')
+                            ->label(__('students.fields.psychological_status'))
                             ->maxLength(500),
 
                         Toggle::make('is_sector_child')
-                            ->label('ابن قطاع'),
+                            ->label(__('students.fields.is_sector_child')),
                     ])
                     ->columns(2),
             ]);

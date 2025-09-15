@@ -16,30 +16,36 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('users.fields.name'))
                     ->required()
                     ->maxLength(255),
                 TextInput::make('email')
+                    ->label(__('users.fields.email'))
                     ->email()
                     ->required()
                     ->maxLength(255),
                 TextInput::make('phone')
+                    ->label(__('users.fields.phone'))
                     ->tel()
                     ->maxLength(255),
                 Select::make('role')
+                    ->label(__('users.fields.role'))
                     ->options([
-                        'teacher' => 'Teacher',
-                        'employee' => 'Employee',
-                        'headmaster' => 'Headmaster',
+                        'teacher' => __('users.roles.teacher'),
+                        'employee' => __('users.roles.employee'),
+                        'headmaster' => __('users.roles.headmaster'),
                     ])
                     ->required()
                     ->default('teacher'),
                 TextInput::make('password')
+                    ->label(__('users.fields.password'))
                     ->password()
                     ->required(fn (string $context): bool => $context === 'create')
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->dehydrated(fn ($state) => filled($state))
                     ->maxLength(255),
                 Toggle::make('is_active')
+                    ->label(__('users.fields.is_active'))
                     ->default(true),
             ]);
     }

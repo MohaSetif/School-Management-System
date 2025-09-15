@@ -13,21 +13,25 @@ class GroupForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label(__('groups.fields.name'))
                     ->required()
                     ->maxLength(255),
                 TextInput::make('code')
+                    ->label(__('groups.fields.code'))
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Textarea::make('description')
+                    ->label(__('groups.fields.description'))
                     ->maxLength(500),
                 Select::make('teachers')
-                    ->label('Assigned Teachers')
+                    ->label(__('groups.fields.teachers'))
                     ->multiple()
                     ->relationship('teachers', 'name')
                     ->options(User::where('role', 'teacher')->pluck('name', 'id'))
                     ->preload(),
                 Toggle::make('is_active')
+                    ->label(__('groups.fields.is_active'))
                     ->default(true),
             ]);
     }
