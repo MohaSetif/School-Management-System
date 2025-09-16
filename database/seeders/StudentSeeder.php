@@ -4,37 +4,53 @@ namespace Database\Seeders;
 
 use App\Models\Group;
 use App\Models\Student;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 
 class StudentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $faker = Faker::create();
         $groups = Group::all();
 
         foreach ($groups as $group) {
-            // Create 15-25 students per group
+            // Create 15–25 students per group
             $studentCount = rand(15, 25);
-            
+
             for ($i = 1; $i <= $studentCount; $i++) {
-                $firstName = $faker->firstName;
+                $gender = $faker->randomElement(['male', 'female']);
+                $firstName = $faker->firstName($gender);
                 $lastName = $faker->lastName;
-                
+
                 Student::create([
-                    'first_name' => $firstName,
-                    'last_name' => $lastName,
-                    'student_id' => $group->code . sprintf('%03d', $i),
-                    'date_of_birth' => $faker->dateTimeBetween('-12 years', '-6 years'),
-                    'address' => $faker->address,
-                    'parent_name' => $faker->name,
-                    'parent_phone' => $faker->phoneNumber,
-                    'group_id' => $group->id,
+                    'student_identifier' => $faker->unique(),
+                    'first_name'         => $firstName,
+                    'last_name'          => $lastName,
+                    'gender'             => $gender,
+                    'date_of_birth'      => $faker->dateTimeBetween('-12 years', '-6 years'),
+
+                    // Birth details
+                    'is_judicial_birth'      => $faker->boolean(5), // 5% chance
+                    'has_birth_certificate'  => $faker->randomElement(['normal', 'lost', 'copy']),
+                    'birth_registration_year'=> $faker->optional()->year(),
+                    'birth_certificate_number'=> $faker->optional()->numerify('BC####'),
+                    'place_of_birth'        => $faker->city(),
+
+                    // School details
+                    'academic_year'    => $faker->randomElement(['أولى', 'ثانية', 'ثالثة', 'رابعة', 'خامسة']),
+                    'group_id'         => $group->id,
+                    'schooling_system' => $faker->randomElement(['public', 'private']),
+                    'enrollment_number'=> $faker->numerify('ENR###'),
+                    'enrollment_date'  => $faker->dateTimeBetween('-3 years', 'now'),
+
+                    // Social status
+                    'is_orphan'       => $faker->boolean(5),
+                    'is_needy'        => $faker->boolean(10),
+                    'health_status'   => $faker->optional()->randomElement(['healthy', 'disabled', 'chronic illness']),
+                    'psychological_status' => $faker->optional()->randomElement(['stable', 'needs support']),
+                    'is_sector_child' => $faker->boolean(3),
+
                     'is_active' => true,
                 ]);
             }

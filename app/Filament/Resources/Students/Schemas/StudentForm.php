@@ -79,8 +79,8 @@ class StudentForm
 
                         Select::make('group_id')
                             ->label(__('students.fields.group_id'))
-                            ->relationship('group', 'name')
-                            ->options(Group::where('is_active', true)->pluck('name', 'id'))
+                            ->relationship('group', 'code')
+                            ->options(Group::where('is_active', true)->pluck('code', 'id'))
                             ->searchable()
                             ->preload(),
 

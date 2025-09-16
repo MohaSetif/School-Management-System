@@ -26,7 +26,9 @@ return [
         'birth_registration_year' => 'سنة التسجيل في سجل الولادات',
         'birth_certificate_number' => 'رقم عقد الميلاد',
         'is_orphan' => 'يتيم',
+        'not_orphan' => 'غير يتيم',
         'is_needy' => 'معوز',
+        'not_needy' => 'غير معوز',
         'health_status' => 'الحالة الصحية',
         'psychological_status' => 'الحالة النفسية',
         'is_sector_child' => 'ابن قطاع',
@@ -47,11 +49,11 @@ return [
         'edit' => 'تعديل',
         'delete' => 'حذف',
         'delete_selected' => 'حذف المحددين',
-        'import' => 'استيراد الطلاب',
+        'import' => 'رفع ملف الطلاب',
     ],
 
     'import' => [
-        'file' => 'ملف الإكسل',
+        'file' => 'ملف Excel',
         'helper' => 'قم برفع ملف إكسل (.xlsx أو .xls) يحتوي على بيانات الطلاب',
     ],
 
@@ -67,4 +69,14 @@ return [
         'label' => 'الطلاب',
         'group' => 'إدارة الطلبة',
     ],
+
+    'stats' => 'إحصائيات تلاميذ المدرسة',
+    'academic_years_stats' => 'إحصائيات سنوات التمدرس',
+    'orphans_stats' => 'إحصائيات الأيتام',
+    'needy_stats' => 'إحصائيات المعوزين',
+    'first_year' => 'السنة الأولى',
+    'second_year' => 'السنة الثانية',
+    'third_year' => 'السنة الثالثة',
+    'fourth_year' => 'السنة الرابعة',
+    'fifth_year' => 'السنة الخامسة',
 ];
