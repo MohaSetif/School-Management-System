@@ -22,7 +22,7 @@ class StudentResource extends Resource
     protected static ?string $model = Student::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-academic-cap';
-    protected static string|UnitEnum|null $navigationGroup = 'students.navigation.group';
+    protected static string|UnitEnum|null $navigationGroup = 'members.group';
 
     protected static ?string $recordTitleAttribute = 'id';
 

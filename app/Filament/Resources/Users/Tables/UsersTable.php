@@ -34,9 +34,9 @@ class UsersTable
                 BadgeColumn::make('role')
                     ->label(__('users.fields.role'))
                     ->colors([
-                        'primary' => __('users.role.teacher'),
-                        'success' => __('users.role.headmaster'),
-                        'warning' => __('users.role.employee'),
+                        'primary' => __('users.roles.teacher'),
+                        'success' => __('users.roles.headmaster'),
+                        'warning' => __('users.roles.employee'),
                     ]),
                 BooleanColumn::make('is_active')
                     ->label(__('users.fields.is_active'))

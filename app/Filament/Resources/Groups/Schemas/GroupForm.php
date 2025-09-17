@@ -27,8 +27,8 @@ class GroupForm
                 Select::make('teachers')
                     ->label(__('groups.fields.teachers'))
                     ->multiple()
-                    ->relationship('teachers', 'name')
-                    ->options(User::where('role', 'teacher')->pluck('name', 'id'))
+                    ->relationship('teachers', 'full_name')
+                    ->options(User::where('role', 'teacher')->pluck('full_name', 'id'))
                     ->preload(),
                 Toggle::make('is_active')
                     ->label(__('groups.fields.is_active'))
