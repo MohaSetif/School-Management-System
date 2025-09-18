@@ -2,8 +2,10 @@
 
 namespace App\Imports;
 
+use App\Models\Group;
 use App\Models\Student;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
@@ -35,6 +37,26 @@ class StudentsImport implements ToModel, WithHeadingRow
             }
         }
 
+        $groupId = null;
+
+        if (!empty($row['القسم']) && !empty($row['السنة'])) {
+            // Try to match both السنة (year) and القسم (class code)
+            $group = Group::where('name', $row['السنة'])
+                        ->where('code', $row['القسم'])
+                        ->first();
+
+            Log::info("Looking for group with code: {$row['القسم']} and name: {$row['السنة']}");
+
+            if (!$group) {
+                // Fallback: match by code only
+                $group = Group::where('code', $row['القسم'])->first();
+                Log::info("Fallback: Looking for group with code: {$row['القسم']}");
+            }
+
+            $groupId = $group?->id;
+            Log::info('Importing student: ' . $row['اللقب'] . ' ' . $row['الاسم'] . ', Group: ' . ($group ? $group->name : 'Not Found'));
+        }
+
         return new Student([
             'student_identifier'      => $row['رقم التعريف'],
             'last_name'               => $row['اللقب'],
@@ -49,7 +71,7 @@ class StudentsImport implements ToModel, WithHeadingRow
             'place_of_birth'          => $row['مكان الازدياد'] ?? null,
 
             'academic_year'           => $row['السنة'] ?? null,
-            'group_id'                => $row['القسم'] ?? null,
+            'group_id'                => $groupId,
             'schooling_system'        => $row['نظام التمدرس'] ?? null,
             'enrollment_number'       => $row['رقم القيد'] ?? null,
             'enrollment_date'         => $enrollmentDate,

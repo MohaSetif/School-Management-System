@@ -9,6 +9,7 @@ use App\Models\Student;
 use BackedEnum;
 use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Pages\Page;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -41,24 +42,29 @@ class BulkAttendance extends Page implements HasForms
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('group_id')
-                    ->label('Select Group')
-                    ->options(function () {
-                        $user = Auth::user();
-                        if ($user && $user->isHeadmaster()) {
-                            return Group::where('is_active', true)
-                                ->pluck('code', 'id')
-                                ->toArray();
-                        }
+                Select::make('group_id')
+                ->label(__('Select Group'))
+                ->options(function () {
+                    $user = Auth::user();
 
-                        return $user
-                            ? $user->groups()
-                                ->where('groups.is_active', true)
-                                ->pluck('groups.code', 'groups.id')
-                                ->toArray()
-                            : [];
-                    })
-                    ->required(),
+                    $query = ($user && !$user->isHeadmaster())
+                        ? $user->groups()->where('groups.is_active', true)
+                        : Group::where('is_active', true);
+
+                    return $query
+                        ->orderBy('groups.name')
+                        ->get(['groups.id', 'groups.name', 'groups.code'])
+                        ->mapWithKeys(fn ($group) => [
+                            $group->id => __(':name — :code', [
+                                'name' => __($group->name),
+                                'code' => $group->code,
+                            ]),
+                        ])
+                        ->toArray();
+                })
+                ->required()
+                ->searchable()
+                ->preload(),
 
                 Forms\Components\DatePicker::make('attendance_date')
                     ->required()

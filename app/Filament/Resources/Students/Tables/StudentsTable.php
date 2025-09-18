@@ -35,8 +35,12 @@ class StudentsTable
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(),
 
-                TextColumn::make('group.name')
-                    ->label(__('students.fields.group'))
+                TextColumn::make('academic_year')
+                    ->label(__('students.fields.academic_year'))
+                    ->sortable(),
+                
+                TextColumn::make('group_id')
+                    ->label(__('students.fields.group_id'))
                     ->sortable(),
 
                 TextColumn::make('date_of_birth')

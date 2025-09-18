@@ -79,10 +79,13 @@ class StudentForm
 
                         Select::make('group_id')
                             ->label(__('students.fields.group_id'))
-                            ->relationship('group', 'code')
-                            ->options(Group::where('is_active', true)->pluck('code', 'id'))
-                            ->searchable()
-                            ->preload(),
+                            ->options(function (callable $get) {
+                                // $get('academic_year') will fetch the current value of academic_year field
+                                $academicYear = $get('academic_year');
+
+                                return Group::where('name', $academicYear)->pluck('code', 'id');
+                            })
+                            ->searchable(),
 
                         TextInput::make('schooling_system')
                             ->label(__('students.fields.schooling_system'))

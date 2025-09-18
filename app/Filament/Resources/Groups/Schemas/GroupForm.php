@@ -12,10 +12,16 @@ class GroupForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
+                Select::make('name')
                     ->label(__('groups.fields.name'))
-                    ->required()
-                    ->maxLength(255),
+                    ->options([
+                        'أولى' => 'أولى',
+                        'ثانية' => 'ثانية',
+                        'ثالثة' => 'ثالثة',
+                        'رابعة' => 'رابعة',
+                        'خامسة' => 'خامسة',
+                    ])
+                    ->required(),
                 TextInput::make('code')
                     ->label(__('groups.fields.code'))
                     ->required()
