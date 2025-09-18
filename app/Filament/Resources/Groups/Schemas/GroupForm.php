@@ -19,7 +19,6 @@ class GroupForm
                 TextInput::make('code')
                     ->label(__('groups.fields.code'))
                     ->required()
-                    ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Textarea::make('description')
                     ->label(__('groups.fields.description'))
@@ -27,8 +26,8 @@ class GroupForm
                 Select::make('teachers')
                     ->label(__('groups.fields.teachers'))
                     ->multiple()
-                    ->relationship('teachers', 'full_name')
-                    ->options(User::where('role', 'teacher')->pluck('full_name', 'id'))
+                    ->relationship('teachers', 'name')
+                    ->options(User::where('role', 'teacher')->pluck('name', 'id'))
                     ->preload(),
                 Toggle::make('is_active')
                     ->label(__('groups.fields.is_active'))

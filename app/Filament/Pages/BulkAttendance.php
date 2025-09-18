@@ -47,14 +47,14 @@ class BulkAttendance extends Page implements HasForms
                         $user = Auth::user();
                         if ($user && $user->isHeadmaster()) {
                             return Group::where('is_active', true)
-                                ->pluck('name', 'id')
+                                ->pluck('code', 'id')
                                 ->toArray();
                         }
 
                         return $user
                             ? $user->groups()
                                 ->where('groups.is_active', true)
-                                ->pluck('groups.name', 'groups.id')
+                                ->pluck('groups.code', 'groups.id')
                                 ->toArray()
                             : [];
                     })
@@ -95,7 +95,7 @@ class BulkAttendance extends Page implements HasForms
             return [
                 'id' => $student->id,
                 'name' => $student->full_name,
-                'student_id' => $student->student_id,
+                'student_identifier' => $student->student_identifier,
                 'status' => $existingRecord?->status ?? 'present',
                 'notes' => $existingRecord?->notes ?? '',
             ];

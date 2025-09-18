@@ -293,7 +293,7 @@
                                 <tr>
                                     <td>
                                         <div class="student-name">{{ $student['name'] }}</div>
-                                        <div class="student-id">ID: {{ $student['student_id'] }}</div>
+                                        <div class="student-id">ID: {{ $student['student_identifier'] }}</div>
                                     </td>
 
                                     <td>
