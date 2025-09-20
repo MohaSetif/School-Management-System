@@ -1,0 +1,13 @@
+<x-filament::page>
+    {{ $this->form }}
+
+    <x-filament::button wire:click="generateReport" color="primary" class="mt-4">
+        توليد التقرير
+    </x-filament::button>
+
+    <script>
+        window.addEventListener('download-report', event => {
+            window.open(event.detail.url, '_blank');
+        });
+    </script>
+</x-filament::page>
