@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Models\Report;
 use App\Models\User;
 use BackedEnum;
 use Filament\Forms;
@@ -95,6 +96,21 @@ class GenerateReport extends Page implements HasForms
         $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
         $mpdf->WriteHTML($html);
         $mpdf->Output($filePath, 'F'); // Save to file
+
+        Report::create([
+            'school_name'  => $data['school_name'],
+            'directorate'  => $data['directorate'],
+            'institution'  => $data['institution'],
+            'municipality' => $data['municipality'],
+            'location'     => $data['location'],
+            'date'         => $data['date'],
+            'from'         => $data['from'],
+            'to'           => $data['to'],
+            'ref_number'   => $data['ref_number'],
+            'subject'      => $data['subject'],
+            'content'      => $content,
+            'file_path'    => 'reports/'.$fileName, // relative path for download
+        ]);
 
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
