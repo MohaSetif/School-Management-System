@@ -18,7 +18,7 @@ class AttendanceRecordForm
         return $schema
             ->components([
                 Select::make('group_id')
-                    ->label('Group')
+                    ->label(__('attendance.group'))
                     ->options(function () {
                         $user = Auth::user();
                         if ($user->isHeadmaster()) {
@@ -31,9 +31,9 @@ class AttendanceRecordForm
                     ->required()
                     ->reactive()
                     ->afterStateUpdated(fn (callable $set) => $set('student_id', null)),
-                    
+
                 Select::make('student_id')
-                    ->label('Student')
+                    ->label(__('attendance.student'))
                     ->options(function (callable $get) {
                         $groupId = $get('group_id');
                         if (!$groupId) {
@@ -46,24 +46,27 @@ class AttendanceRecordForm
                     })
                     ->required()
                     ->searchable(),
-                    
+
                 DatePicker::make('attendance_date')
+                    ->label(__('attendance.date'))
                     ->required()
                     ->default(now()),
-                    
+
                 Select::make('status')
+                    ->label(__('attendance.status'))
                     ->options([
-                        'present' => 'Present',
-                        'absent' => 'Absent',
-                        'late' => 'Late',
-                        'excused' => 'Excused',
+                        'present' => __('attendance.statuses.present'),
+                        'absent'  => __('attendance.statuses.absent'),
+                        'late'    => __('attendance.statuses.late'),
+                        'excused' => __('attendance.statuses.excused'),
                     ])
                     ->required()
                     ->default('present'),
-                    
+
                 Textarea::make('notes')
+                    ->label(__('attendance.notes'))
                     ->maxLength(500),
-                    
+
                 Hidden::make('marked_by')
                     ->default(Auth::id()),
             ]);

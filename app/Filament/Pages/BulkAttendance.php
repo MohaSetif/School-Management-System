@@ -24,8 +24,16 @@ class BulkAttendance extends Page implements HasForms
     protected string $view = 'filament.pages.bulk-attendance';
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-list';
-    protected static string|UnitEnum|null $navigationGroup = 'Academic Management';
-    protected static ?string $title = 'Mark Attendance';
+    
+    public static function getNavigationLabel(): string
+    {
+        return __('attendance.mark_attendance');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('attendance.navigation.group');
+    }
 
     public ?array $data = [];
     public ?int $group_id = null;
@@ -43,7 +51,7 @@ class BulkAttendance extends Page implements HasForms
         return $form
             ->schema([
                 Select::make('group_id')
-                ->label(__('Select Group'))
+                ->label(__('attendance.select_group'))
                 ->options(function () {
                     $user = Auth::user();
 
@@ -125,8 +133,8 @@ class BulkAttendance extends Page implements HasForms
 
         if (empty($this->students) || !$this->group_id || !$this->attendance_date) {
             Notification::make()
-                ->title('Error')
-                ->body('Please select a group and date, and load students first.')
+                ->title(__('attendance.notifications.error_select_group_date'))
+                ->body(__('attendance.notifications.error_select_group_date_save'))
                 ->danger()
                 ->send();
             return;
@@ -152,7 +160,7 @@ class BulkAttendance extends Page implements HasForms
         $this->checkConsecutiveAbsences();
 
         Notification::make()
-            ->title('Success')
+            ->title(__('attendance.notifications.success_saved', ['count' => count($this->students)]))
             ->body("Saved attendance for " . count($this->students) . " students.")
             ->success()
             ->send();
@@ -213,8 +221,13 @@ class BulkAttendance extends Page implements HasForms
 
         // Also show a notification
         Notification::make()
-            ->title('Consecutive Absences Detected')
-            ->body("Student ID {$studentId} was absent for {$count} consecutive days ({$startDate->format('Y-m-d')} → {$endDate->format('Y-m-d')}).")
+            ->title(__('attendance.notifications.consecutive_absences_title'))
+            ->body(__('attendance.notifications.consecutive_absences_body', [
+                'student' => Student::find($studentId)?->full_name ?? 'Unknown',
+                'count' => $count,
+                'start' => $startDate->format('Y-m-d'),
+                'end' => $endDate->format('Y-m-d'),
+            ]))
             ->warning()
             ->send();
     }

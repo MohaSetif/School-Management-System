@@ -224,7 +224,7 @@
         {{-- Form container --}}
         <section class="ba-form-card" aria-labelledby="ba-form-heading">
             <form wire:submit.prevent="loadStudents">
-                <div id="ba-form-heading" style="display:none">Load students</div>
+                <div id="ba-form-heading" style="display:none">{{ __('attendance.load_students_heading') }}</div>
 
                 <div class="ba-form-grid">
                     {{-- Filament form output (group + date) --}}
@@ -234,7 +234,7 @@
 
                     <div style="display:flex; flex-direction:column; gap:0.6rem; align-items:flex-end;">
                         <div style="font-size:0.9rem; color:var(--muted); text-align:right;">
-                            Select group and date, then click <strong>Load Students</strong>.
+                            {{ __('attendance.load_students_instructions') }}
                         </div>
 
                         <div class="ba-controls">
@@ -245,7 +245,7 @@
                                 wire:loading.attr="disabled"
                                 wire:target="loadStudents"
                             >
-                                <span>Load Students</span>
+                                <span>{{ __('attendance.load_students') }}</span>
                             </x-filament::button>
                         </div>
                     </div>
@@ -259,11 +259,11 @@
                 <header class="ba-card-header">
                     <div>
                         <div class="ba-title" id="ba-students-heading">
-                            Mark Attendance — {{ \Carbon\Carbon::parse($this->attendance_date)->format('F j, Y') }}
+                            {{ __('attendance.mark_attendance_for_date', ['date' => \Carbon\Carbon::parse($this->attendance_date)->format('F j, Y')]) }}
                         </div>
                         <div class="ba-sub">
-                            Group: {{ \App\Models\Group::find($this->group_id)?->name ?? '—' }}
-                            · Students: {{ count($this->students) }}
+                            {{ __('attendance.group_label', ['group' => \App\Models\Group::find($this->group_id)?->name ?? '—']) }}
+                            · {{ __('attendance.students_count', ['count' => count($this->students)]) }}
                         </div>
                     </div>
 
@@ -274,7 +274,7 @@
                         wire:loading.attr="disabled"
                         wire:target="saveAttendance"
                     >
-                        <span>Save Attendance</span>
+                        <span>{{ __('attendance.save_attendance') }}</span>
                     </x-filament::button>
                 </header>
 
@@ -282,9 +282,9 @@
                     <table class="ba-table">
                         <thead>
                             <tr>
-                                <th>Student</th>
-                                <th>Status</th>
-                                <th>Notes</th>
+                                <th>{{ __('attendance.student') }}</th>
+                                <th>{{ __('attendance.status') }}</th>
+                                <th>{{ __('attendance.notes') }}</th>
                             </tr>
                         </thead>
 
@@ -293,7 +293,7 @@
                                 <tr>
                                     <td>
                                         <div class="student-name">{{ $student['name'] }}</div>
-                                        <div class="student-id">ID: {{ $student['student_identifier'] }}</div>
+                                        <div class="student-id">{{ __('attendance.student_id', ['id' => $student['student_identifier']]) }}</div>
                                     </td>
 
                                     <td>
@@ -308,7 +308,7 @@
                                                         {{ $student['status'] === $status ? 'checked' : '' }}
                                                         wire:change="updateAttendance({{ $student['id'] }}, 'status', '{{ $status }}')"
                                                     >
-                                                    <span class="status-pill pill-{{ $status }}">{{ ucfirst($status) }}</span>
+                                                    <span class="status-pill pill-{{ $status }}">{{ __('attendance.status_'.$status) }}</span>
                                                 </label>
                                             @endforeach
                                         </div>
@@ -318,7 +318,7 @@
                                         <input
                                             type="text"
                                             class="notes-input"
-                                            placeholder="Notes (optional)"
+                                            placeholder="{{ __('attendance.notes_placeholder') }}"
                                             value="{{ $student['notes'] }}"
                                             wire:change="updateAttendance({{ $student['id'] }}, 'notes', $event.target.value)"
                                         >
@@ -337,7 +337,7 @@
                         wire:loading.attr="disabled"
                         wire:target="saveAttendance"
                     >
-                        <span>Save Attendance</span>
+                        <span>{{ __('attendance.save_attendance') }}</span>
                     </x-filament::button>
                 </div>
             </section>

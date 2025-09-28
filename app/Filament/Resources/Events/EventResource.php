@@ -26,6 +26,16 @@ class EventResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('events.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('academic_members.navigation.group');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return EventForm::configure($schema);

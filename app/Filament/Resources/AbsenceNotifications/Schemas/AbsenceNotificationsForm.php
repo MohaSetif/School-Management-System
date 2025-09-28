@@ -4,7 +4,6 @@ namespace App\Filament\Resources\AbsenceNotifications\Schemas;
 
 use App\Models\Student;
 use Carbon\Carbon;
-use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
@@ -18,39 +17,34 @@ class AbsenceNotificationsForm
     {
         return $schema
             ->components([
-                // Select student
                 Select::make('student_id')
-                    ->label('Student')
+                    ->label(__('absence_notifications.fields.student'))
                     ->options(Student::query()->pluck('first_name', 'id'))
                     ->searchable()
                     ->required(),
 
-                // Start date
                 DatePicker::make('start_date')
-                    ->label('Start Date')
+                    ->label(__('absence_notifications.fields.start_date'))
                     ->required()
                     ->default(Carbon::today()),
 
-                // End date
                 DatePicker::make('end_date')
-                    ->label('End Date')
+                    ->label(__('absence_notifications.fields.end_date'))
                     ->required()
                     ->default(Carbon::today()),
 
-                // Consecutive days (auto-filled or editable)
                 TextInput::make('consecutive_days')
-                    ->label('Consecutive Days')
+                    ->label(__('absence_notifications.fields.consecutive_days'))
                     ->numeric()
                     ->required()
                     ->minValue(1)
-                    ->hint('Number of days student was absent consecutively'),
+                    ->hint(__('absence_notifications.hints.consecutive_days')),
 
                 Toggle::make('notified')
-                    ->label('Notified')
+                    ->label(__('absence_notifications.fields.notified'))
                     ->default(false)
                     ->disabled(Auth::user()->isHeadmaster() ? false : true)
-                    ->hint('Indicates if the guardian has been notified about the absence'),
-
+                    ->hint(__('absence_notifications.hints.notified')),
             ]);
     }
 }

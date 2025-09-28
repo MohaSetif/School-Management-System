@@ -23,8 +23,16 @@ class AbsenceNotificationsResource extends Resource
     protected static ?string $model = AbsenceNotification::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-bell-alert';
-    protected static string|null $navigationLabel = 'Absence Notifications';
-    protected static string|UnitEnum|null $navigationGroup = 'Absence Management';
+    
+    public static function getNavigationLabel(): string
+    {
+        return __('absence_notifications.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('absence_notifications.navigation.group');
+    }
 
     public static function getNavigationBadge(): ?string
     {

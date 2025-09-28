@@ -7,7 +7,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -24,32 +23,41 @@ class AttendanceRecordsTable
         return $table
             ->columns([
                 TextColumn::make('attendance_date')
+                    ->label(__('attendance.date'))
                     ->date()
                     ->sortable(),
+
                 TextColumn::make('student.full_name')
-                    ->label('Student')
+                    ->label(__('attendance.student'))
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(),
+
                 TextColumn::make('group.name')
-                    ->label('Group')
+                    ->label(__('attendance.group'))
                     ->sortable(),
+
                 BadgeColumn::make('status')
+                    ->label(__('attendance.status'))
                     ->colors([
                         'success' => 'present',
                         'danger' => 'absent',
                         'warning' => 'late',
                         'primary' => 'excused',
-                    ]),
+                    ])
+                    ->formatStateUsing(fn (string $state) => __('attendance.statuses.' . $state)),
+
                 TextColumn::make('markedBy.name')
-                    ->label('Marked By')
+                    ->label(__('attendance.marked_by'))
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('notes')
+                    ->label(__('attendance.notes'))
                     ->limit(30)
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('group_id')
-                    ->label('Group')
+                    ->label(__('attendance.group'))
                     ->relationship('group', 'name')
                     ->options(function () {
                         $user = Auth::user();
@@ -60,17 +68,21 @@ class AttendanceRecordsTable
                                     ->where('groups.is_active', true)
                                     ->pluck('groups.name', 'groups.id');
                     }),
+
                 SelectFilter::make('status')
+                    ->label(__('attendance.status'))
                     ->options([
-                        'present' => 'Present',
-                        'absent' => 'Absent',
-                        'late' => 'Late',
-                        'excused' => 'Excused',
+                        'present' => __('attendance.statuses.present'),
+                        'absent'  => __('attendance.statuses.absent'),
+                        'late'    => __('attendance.statuses.late'),
+                        'excused' => __('attendance.statuses.excused'),
                     ]),
+
                 Filter::make('attendance_date')
+                    ->label(__('attendance.date'))
                     ->form([
-                        DatePicker::make('from'),
-                        DatePicker::make('until'),
+                        DatePicker::make('from')->label(__('attendance.filters.from')),
+                        DatePicker::make('until')->label(__('attendance.filters.until')),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
@@ -85,12 +97,12 @@ class AttendanceRecordsTable
                     }),
             ])
             ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->label(__('attendance.common.edit')),
+                DeleteAction::make()->label(__('attendance.common.delete')),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()->label(__('attendance.common.delete_selected')),
                 ]),
             ])
             ->defaultSort('attendance_date', 'desc');

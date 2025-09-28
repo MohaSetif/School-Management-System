@@ -13,8 +13,6 @@ use App\Models\Attendance_record;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 use UnitEnum;
 
 class AttendanceRecordResource extends Resource
@@ -22,8 +20,16 @@ class AttendanceRecordResource extends Resource
     protected static ?string $model = Attendance_record::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
-    protected static string|null $navigationLabel = 'Attendance';
-    protected static string|UnitEnum|null $navigationGroup = 'Academic Management';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('attendance.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('attendance.navigation.group');
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -35,25 +41,23 @@ class AttendanceRecordResource extends Resource
         return AttendanceRecordInfolist::configure($schema);
     }
 
-    public static function table(Table $table): Table
+    public static function table(\Filament\Tables\Table $table): \Filament\Tables\Table
     {
         return AttendanceRecordsTable::configure($table);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => ListAttendanceRecords::route('/'),
+            'index'  => ListAttendanceRecords::route('/'),
             'create' => CreateAttendanceRecord::route('/create'),
-            'view' => ViewAttendanceRecord::route('/{record}'),
-            'edit' => EditAttendanceRecord::route('/{record}/edit'),
+            'view'   => ViewAttendanceRecord::route('/{record}'),
+            'edit'   => EditAttendanceRecord::route('/{record}/edit'),
         ];
     }
 }
