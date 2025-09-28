@@ -22,6 +22,16 @@ class ReportResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('reports.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('reports.navigation.group');
+    }
+
     public static function infolist(Schema $schema): Schema
     {
         return ReportInfolist::configure($schema);

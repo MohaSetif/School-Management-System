@@ -57,7 +57,7 @@ return [
     'status_excused' => 'مُعفى',
 
     'notifications' => [
-        'error_select_group_date' => 'الرجاء اختيار المجموعة والتاريخ قبل تحميل الطلاب.',
+        'error_select_group_date' => 'خطأ',
         'error_select_group_date_save' => 'الرجاء اختيار مجموعة وتاريخ وتحميل الطلاب أولاً قبل الحفظ.',
         'success_saved' => 'تم حفظ الحضور لـ :count طالب.',
         'consecutive_absences_title' => 'تم اكتشاف غيابات متتالية',

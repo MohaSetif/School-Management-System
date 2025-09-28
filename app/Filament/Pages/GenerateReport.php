@@ -21,8 +21,21 @@ class GenerateReport extends Page implements HasForms
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
     protected string $view = 'filament.pages.generate-report';
-    protected static ?string $navigationLabel = 'توليد تقرير';
-    protected static ?string $title = 'توليد تقرير';
+
+    public function getTitle(): string
+    {
+        return __('reports.navigation.label3');
+    }
+    
+    public static function getNavigationLabel(): string
+    {
+        return __('reports.navigation.label2');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('reports.navigation.group');
+    }
 
     public $school_name;
     public $date;

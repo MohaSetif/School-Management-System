@@ -24,7 +24,7 @@ class EventResource extends Resource
 {
     protected static ?string $model = Event::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendar;
 
     public static function getNavigationLabel(): string
     {
@@ -33,7 +33,7 @@ class EventResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('academic_members.navigation.group');
+        return __('events.navigation.group');
     }
 
     public static function form(Schema $schema): Schema

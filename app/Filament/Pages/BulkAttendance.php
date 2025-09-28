@@ -88,8 +88,8 @@ class BulkAttendance extends Page implements HasForms
 
         if (!$this->group_id || !$this->attendance_date) {
             Notification::make()
-                ->title('Error')
-                ->body('Please select both group and date before loading students.')
+                ->title(__('attendance.notifications.error_select_group_date'))
+                ->body(__('attendance.notifications.error_select_group_date_save'))
                 ->danger()
                 ->send();
             $this->students = [];
