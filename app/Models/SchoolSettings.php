@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class SchoolSettings extends Model
+{
+    protected $table = 'school_settings';
+
+    protected $fillable = [
+        'school_name',
+        'school_type',
+        'director_id',
+        'province',
+        'district',
+        'municipality',
+        'location',
+        'identification_number',
+        'date_established',
+        'date_established_number',
+    ];
+
+    public function director(){
+        return $this->belongsTo(User::class, 'director_id');
+    }
+}
