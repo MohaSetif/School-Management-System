@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\AcademicMembers\Schemas;
 
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -50,6 +51,17 @@ class AcademicMemberInfolist
                         ->placeholder('-')
                         ->icon('heroicon-o-building-library')
                         ->color(Color::Gray),
+
+                    TextEntry::make('email')
+                        ->label(__('academic_members.fields.email'))
+                        ->placeholder('-')
+                        ->weight('bold')
+                        ->size('lg'),
+
+                    ImageEntry::make('image')
+                        ->disk('public')
+                        ->imageHeight(200)
+                        ->label(__('academic_members.fields.image'))
                 ]),
 
             Section::make(__('academic_members.sections.professional_info'))

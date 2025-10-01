@@ -61,6 +61,12 @@ class StudentsTable
                     ->label(__('students.filters.group'))
                     ->relationship('group', 'name'),
 
+                SelectFilter::make('is_orphan')
+                    ->label(__('students.filters.is_orphan')),
+
+                SelectFilter::make('is_needy')
+                    ->label(__('students.filters.is_needy')),
+
                 TernaryFilter::make('is_active')
                     ->label(__('students.filters.is_active')),
             ])

@@ -27,6 +27,8 @@ return [
         'absence_date' => 'تاريخ الغياب',
         'reason' => 'السبب',
         'status' => 'الحالة',
+        'email' => 'البريد الالكتروني',
+        'image' => 'الصورة'
     ],
     'sections' => [
         'personal_info' => 'المعلومات الشخصية',

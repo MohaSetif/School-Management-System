@@ -3,6 +3,7 @@
 namespace App\Filament\Pages;
 
 use App\Models\Report;
+use App\Models\SchoolSettings;
 use App\Models\User;
 use BackedEnum;
 use Filament\Forms;
@@ -62,12 +63,8 @@ class GenerateReport extends Page implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            TextInput::make('school_name')->label('اسم المدرسة')->required(),
             TextInput::make('directorate')->label('المديرية')->required(),
             TextInput::make('institution')->label('المؤسسة')->required(),
-            TextInput::make('municipality')->label('البلدية')->required(),
-            TextInput::make('location')->label('المكان')->required(),
-            DatePicker::make('date')->label('التاريخ')->required(),
             TextInput::make('from')->label('من')->required(),
             TextInput::make('to')->label('إلى')->required(),
             TextInput::make('ref_number')->label('رقم الإرسال')->required(),
@@ -80,20 +77,22 @@ class GenerateReport extends Page implements HasForms
     {
         $data = $this->form->getState();
 
+        $school = SchoolSettings::all();
+
         $content = (string) ($data['content'] ?? '<p></p>');
 
         $html = view('pdf.report', [
-            'school_name'   => $data['school_name'],
+            'school_name'   => $school->school_name,
             'date'          => $data['date'],
             'from'          => $data['from'],
             'to'            => $data['to'],
             'ref_number'    => $data['ref_number'],
             'subject'       => $data['subject'],
-            'director_name' => User::where('role', 'headmaster')->first()->name,
+            'director_name' => $school->director->name,
             'directorate'   => $data['directorate'],
             'institution'   => $data['institution'],
-            'municipality'  => $data['municipality'],
-            'location'      => $data['location'],
+            'municipality'  => $school->municipality,
+            'location'      => $school->location,
             'content'       => $content,
         ])->render();
 
@@ -111,17 +110,18 @@ class GenerateReport extends Page implements HasForms
         $mpdf->Output($filePath, 'F'); // Save to file
 
         Report::create([
-            'school_name'  => $data['school_name'],
-            'directorate'  => $data['directorate'],
-            'institution'  => $data['institution'],
-            'municipality' => $data['municipality'],
-            'location'     => $data['location'],
-            'date'         => $data['date'],
-            'from'         => $data['from'],
-            'to'           => $data['to'],
-            'ref_number'   => $data['ref_number'],
-            'subject'      => $data['subject'],
-            'content'      => $content,
+            'school_name'   => $school->school_name,
+            'date'          => $data['date'],
+            'from'          => $data['from'],
+            'to'            => $data['to'],
+            'ref_number'    => $data['ref_number'],
+            'subject'       => $data['subject'],
+            'director_name' => $school->director->name,
+            'directorate'   => $data['directorate'],
+            'institution'   => $data['institution'],
+            'municipality'  => $school->municipality,
+            'location'      => $school->location,
+            'content'       => $content,
             'file_path'    => 'reports/'.$fileName, // relative path for download
         ]);
 

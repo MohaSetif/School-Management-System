@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -72,6 +73,13 @@ class AcademicMembersTable
                 TextColumn::make('phone')
                     ->label(__('academic_members.fields.phone'))
                     ->searchable(),
+                TextColumn::make('email')
+                    ->label(__('academic_members.fields.email'))
+                    ->searchable(),
+                ImageColumn::make('image')
+                    ->label(__('academic_members.fields.image'))
+                    ->imageHeight(40)
+                    ->circular(),
             ])
             ->filters([
                 //

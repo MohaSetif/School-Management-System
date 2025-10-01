@@ -26,6 +26,8 @@ class AcademicMember extends Model
         'effective_date',
         'postal_account',
         'phone',
+        'image',
+        'email'
     ];
 
     public function absences(): HasMany

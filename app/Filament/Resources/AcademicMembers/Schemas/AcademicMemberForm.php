@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\AcademicMembers\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class AcademicMemberForm
 {
@@ -27,6 +29,16 @@ class AcademicMemberForm
                             ->label(__('academic_members.fields.subject')),
                         TextInput::make('grade')
                             ->label(__('academic_members.fields.grade')),
+                        TextInput::make('email')
+                            ->label(__('academic_members.fields.email')),
+                        FileUpload::make('image')
+                            ->label(__('academic_members.fields.image'))
+                            ->image()
+                            ->disk('public')
+                            ->directory('academic_members')
+                            ->preserveFilenames()
+                            ->visibility('public')
+                            ->maxSize(2048),
                         DatePicker::make('effective_date')
                             ->label(__('academic_members.fields.effective_date')),
                     ])

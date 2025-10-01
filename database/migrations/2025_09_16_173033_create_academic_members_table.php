@@ -40,6 +40,8 @@ return new class extends Migration
 
             $table->string('postal_account')->nullable(); // الحساب البريدي
             $table->string('phone')->nullable(); // الهاتف
+            $table->string('email')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
