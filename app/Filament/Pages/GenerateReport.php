@@ -55,8 +55,16 @@ class GenerateReport extends Page implements HasForms
 
     public function mount(): void
     {
+        $school = SchoolSettings::first();
+
         $this->form->fill([
-            'date' => now()->toDateString(),
+            'directorate' => '',
+            'institution' => $school ? ($school->school_type . ' ' . $school->school_name) : '',
+            'from'        => $school?->director->name ?? '',
+            'to'          => '',
+            'ref_number'  => '',
+            'subject'     => '',
+            'content'     => '',
         ]);
     }
 
@@ -77,55 +85,54 @@ class GenerateReport extends Page implements HasForms
     {
         $data = $this->form->getState();
 
-        $school = SchoolSettings::all();
+        $school = SchoolSettings::firstOrFail();
 
         $content = (string) ($data['content'] ?? '<p></p>');
 
         $html = view('pdf.report', [
-            'school_name'   => $school->school_name,
-            'date'          => $data['date'],
+            'school_name'   => $school->school_type . $school->school_name ?? '',
+            'date'          => now()->toDateString(),
             'from'          => $data['from'],
             'to'            => $data['to'],
             'ref_number'    => $data['ref_number'],
             'subject'       => $data['subject'],
-            'director_name' => $school->director->name,
+            'director_name' => $school->director->name ?? '',
             'directorate'   => $data['directorate'],
             'institution'   => $data['institution'],
-            'municipality'  => $school->municipality,
-            'location'      => $school->location,
+            'municipality'  => $school->municipality ?? '',
+            'location'      => $school->location ?? '',
             'content'       => $content,
         ])->render();
 
-        // Ensure the directory exists
         $directory = storage_path('app/reports');
         if (!is_dir($directory)) {
             mkdir($directory, 0755, true);
         }
 
-        $fileName = 'report_' . time() . '.pdf';
+        $fileName = 'report_' . uniqid() . '.pdf';
         $filePath = $directory . '/' . $fileName;
 
         $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
         $mpdf->WriteHTML($html);
-        $mpdf->Output($filePath, 'F'); // Save to file
+        $mpdf->Output($filePath, 'F');
 
         Report::create([
-            'school_name'   => $school->school_name,
-            'date'          => $data['date'],
+            'school_name'   => $school->school_name ?? '',
+            'date'          => now()->toDateString(),
             'from'          => $data['from'],
             'to'            => $data['to'],
             'ref_number'    => $data['ref_number'],
             'subject'       => $data['subject'],
-            'director_name' => $school->director->name,
+            'director_name' => $school->director?->name ?? '',
             'directorate'   => $data['directorate'],
             'institution'   => $data['institution'],
-            'municipality'  => $school->municipality,
-            'location'      => $school->location,
+            'municipality'  => $school->municipality ?? '',
+            'location'      => $school->location ?? '',
             'content'       => $content,
-            'file_path'    => 'reports/'.$fileName, // relative path for download
+            'file_path'     => 'reports/'.$fileName,
         ]);
 
-        return response()->download($filePath)->deleteFileAfterSend(true);
+        return response()->download($filePath);
     }
 
 }

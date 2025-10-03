@@ -35,8 +35,8 @@ class ReportsTable
             ])->actions([
             Action::make('download')
                 ->label('تحميل')
-                ->url(fn ($record) => route('reports.download', $record))
+                ->url(fn ($record) => route('download.report', basename($record->file_path)))
                 ->openUrlInNewTab(),
-            ]);;
+            ]);
     }
 }

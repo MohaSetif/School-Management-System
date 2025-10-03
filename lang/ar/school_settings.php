@@ -17,6 +17,7 @@ return [
     'primary' => 'ابتدائية',
     'middle' => 'متوسط',
     'high' => 'ثانوية',
+    'vocational_training' => 'تكوين مهني',
     'generalInformation' => 'معلومات عامة',
     'locationDetails' => 'تفاصيل حول الموقع',
     'legalEstablishment' => 'التأسيس',

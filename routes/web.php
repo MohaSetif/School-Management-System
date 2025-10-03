@@ -18,10 +18,10 @@ Route::get('/reports/download/{file}', function ($file) {
 
 
 
-Route::get('/reports/download/{report}', function (Report $report) {
-    $path = storage_path('app/'.$report->file_path);
-    if (file_exists($path)) {
-        return response()->download($path);
-    }
-    abort(404, 'Report file not found.');
-})->name('reports.download');
+// Route::get('/reports/download/{report}', function (Report $report) {
+//     $path = storage_path('app/reports/'.$report->file_path);
+//     if (file_exists($path)) {
+//         return response()->download($path);
+//     }
+//     abort(404, 'Report file not found.');
+// })->name('reports.download');

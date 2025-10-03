@@ -21,9 +21,10 @@ class SchoolSettingsForm
                 Select::make('school_type')
                     ->label(__('school_settings.fields.school_type'))
                     ->options([
-                        'primary' => __('school_settings.primary'),
-                        'middle' => __('school_settings.middle'),
-                        'high' => __('school_settings.high')
+                        'ابتدائية' => __('school_settings.primary'),
+                        'متوسطة' => __('school_settings.middle'),
+                        'ثانوية' => __('school_settings.high'),
+                        'تكوين مهني' => __('school_settings.vocational_training')
                     ])
                     ->required(),
 

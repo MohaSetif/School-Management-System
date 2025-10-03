@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('school_settings', function (Blueprint $table) {
             $table->id();
             $table->string('school_name');
-            $table->enum('school_type', ['primary', 'middle', 'high']);
+            $table->enum('school_type', ['ابتدائية', 'متوسطة', 'ثانوية', 'تكوين مهني']);
 
             $table->foreignId('director_id')
                   ->constrained('users')
