@@ -20,7 +20,7 @@ class MemberAbsenceResource extends Resource
 {
     protected static ?string $model = MemberAbsence::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::UserMinus;
 
     public static function getNavigationLabel(): string
     {
