@@ -15,7 +15,7 @@ class MemberAbsenceInfolist
             Section::make(__('members_absence.form.sections.details'))
                 ->columns(2)
                 ->schema([
-                    TextEntry::make('member.full_name')
+                    TextEntry::make('member_full_name')
                         ->label(__('members_absence.form.fields.member'))
                         ->placeholder('-'),
 
@@ -28,10 +28,10 @@ class MemberAbsenceInfolist
                         ->label(__('members_absence.form.fields.status'))
                         ->badge()
                         ->color(fn (string $state): string => match ($state) {
-                            'present' => 'success',
-                            'absent' => 'danger',
-                            'late' => 'warning',
-                            'excused' => 'info',
+                            __('members_absence.form.fields.status.present') => 'success',
+                            __('members_absence.form.fields.status.absent') => 'danger',
+                            __('members_absence.form.fields.status.late') => 'warning',
+                            __('members_absence.form.fields.status.excused') => 'info',
                             default => 'gray',
                         }),
 

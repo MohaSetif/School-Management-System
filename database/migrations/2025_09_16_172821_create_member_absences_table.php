@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->string('reason')->nullable();
             $table->string('status')->default('present');
-            $table->foreign('member_id')->references('id')->on('academic_members')->onDelete('cascade');
+            $table->string('member_type')->default('academic');
             $table->timestamps();
         });
     }
