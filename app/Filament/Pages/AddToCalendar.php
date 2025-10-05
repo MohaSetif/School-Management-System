@@ -12,6 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Livewire\Notifications;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Validation\ValidationException;
@@ -60,14 +61,24 @@ class AddToCalendar extends Page
 
             Select::make('teacher_id')
                 ->label('Teacher')
-                ->options(Teacher::with('user')->get()->pluck('user.name', 'id'))
+                ->options(
+                    Teacher::with('user')
+                        ->get()
+                        ->mapWithKeys(function ($t) {
+                            return $t->user ? [$t->id => $t->user->name] : [];
+                        })
+                )
                 ->searchable()
                 ->required()
                 ->reactive(),
 
             Select::make('group_id')
                 ->label('Class')
-                ->options(Group::all()->pluck('name', 'id'))
+                ->options(
+                    Group::all()->mapWithKeys(function ($group) {
+                        return [$group->id => $group->name . ' (' . $group->code . ')'];
+                    })
+                )
                 ->searchable()
                 ->required(),
 
@@ -118,7 +129,11 @@ class AddToCalendar extends Page
         // Save schedule
         Schedule::create($data);
 
-        $this->notify('success', 'Schedule saved successfully!');
+        Notifications::make()
+                ->title('Success!')
+                ->body('Scheduled successfully!')
+                ->success()
+                ->send();
         $this->form->reset();
     }
 }

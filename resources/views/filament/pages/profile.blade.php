@@ -1,57 +1,213 @@
-<x-filament-panels::page class="p-6 bg-neutral-50 dark:bg-neutral-900">
-    <div class="max-w-3xl mx-auto bg-white dark:bg-neutral-800 shadow rounded-lg p-6">
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-neutral-800 dark:text-neutral-100">Profile</h2>
-            <span class="text-sm text-neutral-500 dark:text-neutral-300">Role: {{ ucfirst($userType) }}</span>
-        </div>
+<x-filament-panels::page>
+    <style>
+        /* Global Container */
+        .profile-container {
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            background: #f9fafb;
+        }
+        .dark .profile-container { background: #1f1f1f; }
 
-        <!-- Basic Info -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div>
-                <label class="block text-neutral-600 dark:text-neutral-300 font-medium mb-1">Full Name</label>
-                <p class="text-neutral-800 dark:text-neutral-100">{{ $user->name }}</p>
+        .profile-wrapper {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Header Card */
+        .profile-header {
+            border-radius: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            background: #f3f4f6;
+            overflow: hidden;
+        }
+        .dark .profile-header { background: #2b2b2b; }
+
+        .header-content {
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .avatar-container { position: relative; }
+        .avatar {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 50%;
+            background: #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #374151;
+        }
+        .dark .avatar { background: #4b5563; color: #f9fafb; }
+
+        .status-indicator {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #34d399;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        .dark .status-indicator { border-color: #1f1f1f; }
+
+        .user-info { flex: 1; }
+        .user-name { font-size: 1.75rem; font-weight: bold; color: #111827; }
+        .dark .user-name { color: #f9fafb; }
+        .user-email { font-size: 1rem; color: #6b7280; margin-bottom: 0.5rem; }
+        .dark .user-email { color: #d1d5db; }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: #e5e7eb;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        .dark .role-badge { background: #374151; color: #f9fafb; }
+
+        /* Cards */
+        .content-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            border: 1px solid #e5e7eb;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+        .dark .content-card { background: #2b2b2b; border-color: #4b5563; }
+
+        .card-title { font-size: 1.5rem; font-weight: bold; color: #111827; }
+        .dark .card-title { color: #f9fafb; }
+
+        /* Subject Buttons */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            background: #f9fafb;
+            color: #374151;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .dark .subject-btn { background: #4b5563; color: #f9fafb; border-color: #6b7280; }
+
+        .subject-btn.selected {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+        .subject-btn.selected:hover { transform: scale(1.05); }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: #6366f1;
+            color: white;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .submit-btn:hover { background: #4f46e5; }
+
+        /* Student Info Cards */
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media(min-width:768px) { .info-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .info-card {
+            background: #f3f4f6;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            padding: 1rem;
+        }
+        .dark .info-card { background: #4b5563; border-color: #6b7280; }
+
+        .info-label { font-size: 0.75rem; font-weight: 600; color: #6b7280; margin-bottom: 0.25rem; }
+        .dark .info-label { color: #d1d5db; }
+        .info-value { font-size: 1.25rem; font-weight: bold; color: #111827; }
+        .dark .info-value { color: #f9fafb; }
+    </style>
+
+    <div class="profile-container">
+        <div class="profile-wrapper">
+
+            <!-- Header -->
+            <div class="profile-header">
+                <div class="header-content">
+                    <div class="avatar-container">
+                        <div class="avatar">{{ substr($user->name,0,1) }}</div>
+                        <div class="status-indicator"></div>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">{{ $user->name }}</div>
+                        <div class="user-email">{{ $user->email }}</div>
+                        <div class="role-badge">{{ ucfirst($userType) }}</div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label class="block text-neutral-600 dark:text-neutral-300 font-medium mb-1">Email</label>
-                <p class="text-neutral-800 dark:text-neutral-100">{{ $user->email }}</p>
-            </div>
-        </div>
 
-        <!-- Teacher Section -->
-        @if($userType === 'teacher')
-            <div class="mt-6">
-                <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-200 mb-3">Teacher Info</h3>
+            <!-- Teacher Section -->
+            @if($userType === 'teacher')
+                <div class="content-card">
+                    <div class="card-title">Teaching Subjects</div>
+                    <form wire:submit.prevent="updateSubjects">
+                        <div class="subjects-grid">
+                            @foreach(\App\Models\Subject::all() as $subject)
+                                <button type="button"
+                                        wire:click.prevent="toggleSubject({{ $subject->id }})"
+                                        class="subject-btn {{ in_array($subject->id, $selectedSubjects) ? 'selected' : '' }}">
+                                    {{ $subject->name }}
+                                </button>
+                            @endforeach
+                        </div>
+                        <button type="submit" class="submit-btn">Save Subjects</button>
+                    </form>
+                </div>
 
-                <!-- Subjects -->
-                <form wire:submit.prevent="updateSubjects" class="space-y-4">
-                    <label class="block text-neutral-600 dark:text-neutral-300 font-medium mb-1">Subjects</label>
-                    <select multiple
-                            wire:model="selectedSubjects"
-                            class="w-full border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 text-neutral-800 dark:text-neutral-100 rounded-lg shadow-sm focus:ring focus:ring-indigo-200 focus:ring-offset-0 focus:border-indigo-500"
-                    >
-                        @foreach(\App\Models\Subject::all() as $subject)
-                            <option value="{{ $subject->id }}">
-                                {{ $subject->name }}
-                            </option>
-                        @endforeach
-                    </select>
-
-                    <button type="submit"
-                            class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow hover:bg-indigo-700 transition">
-                        Save Subjects
-                    </button>
-                </form>
-            </div>
-        @elseif($userType === 'student')
             <!-- Student Section -->
-            <div class="mt-6">
-                <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-200 mb-3">Student Info</h3>
-                <p class="text-neutral-800 dark:text-neutral-100"><strong>Class:</strong> {{ $profile->group->name ?? 'Not assigned' }}</p>
-                <p class="text-neutral-800 dark:text-neutral-100"><strong>Roll Number:</strong> {{ $profile->roll_number ?? '-' }}</p>
-            </div>
-        @else
-            <p class="mt-6 text-neutral-500 dark:text-neutral-400">No extra info available.</p>
-        @endif
+            @elseif($userType === 'student')
+                <div class="content-card">
+                    <div class="card-title">Student Information</div>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-label">Class</div>
+                            <div class="info-value">{{ $profile->group->name ?? 'Not assigned' }}</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Roll Number</div>
+                            <div class="info-value">{{ $profile->roll_number ?? '-' }}</div>
+                        </div>
+                    </div>
+                </div>
+
+            @else
+                <div class="content-card text-center">No additional information available.</div>
+            @endif
+
+        </div>
     </div>
 </x-filament-panels::page>

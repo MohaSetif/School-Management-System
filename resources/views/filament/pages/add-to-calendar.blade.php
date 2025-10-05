@@ -18,8 +18,7 @@
                 {{ ucfirst($s->day_of_week) }}: {{ $s->start_time }} - {{ $s->end_time }} 
                 | {{ $s->subject->name }} 
                 | {{ $s->teacher->name }} 
-                | Class: {{ $s->class->name }} 
-                | Room: {{ $s->room }}
+                | Class: {{ $s->group->name }} - {{ $s->group->code }}
             </li>
         @endforeach
     </ul>
