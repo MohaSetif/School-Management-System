@@ -22,6 +22,11 @@ class SchoolSettingsResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::InformationCircle;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->isHeadmaster();
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('school_settings.label');
