@@ -11,6 +11,7 @@ class SchoolSettings extends Model
     protected $fillable = [
         'school_name',
         'school_type',
+        'school_type2',
         'director_id',
         'province',
         'district',

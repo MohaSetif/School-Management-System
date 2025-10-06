@@ -15,10 +15,12 @@
     <ul>
         @foreach(\App\Models\Schedule::orderBy('day_of_week')->orderBy('start_time')->get() as $s)
             <li>
+                | Class: {{ $s->group->name }} - {{ $s->group->code }}
+            </li>
+            <li>
                 {{ ucfirst($s->day_of_week) }}: {{ $s->start_time }} - {{ $s->end_time }} 
                 | {{ $s->subject->name }} 
-                | {{ $s->teacher->name }} 
-                | Class: {{ $s->group->name }} - {{ $s->group->code }}
+                | {{ $s->teacher->user->name }} 
             </li>
         @endforeach
     </ul>

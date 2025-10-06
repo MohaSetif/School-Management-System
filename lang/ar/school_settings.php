@@ -4,7 +4,8 @@ return [
     'label' => 'إعدادات المدرسة',
     'fields' => [
         'school_name' => 'اسم المدرسة',
-        'school_type' => 'نوع المدرسة',
+        'school_type' => 'مستوى المدرسة',
+        'school_type2' => 'نوع المدرسة',
         'director_id' => 'المدير',
         'province' => 'الولاية',
         'district' => 'الدائرة',
@@ -14,6 +15,8 @@ return [
         'date_established' => 'تاريخ الفتح',
         'date_established_number' => 'رقم قرار الفتح',
     ],
+    'private' => 'خاصة',
+    'public' => 'عامة',
     'primary' => 'ابتدائية',
     'middle' => 'متوسط',
     'high' => 'ثانوية',

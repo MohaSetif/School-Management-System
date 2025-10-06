@@ -23,6 +23,9 @@ class SchoolSettingsInfolist
                         TextEntry::make('school_type')
                             ->label(__('school_settings.fields.school_type')),
 
+                        TextEntry::make('school_type2')
+                            ->label(__('school_settings.fields.school_type2')),
+
                         TextEntry::make('director.name')
                             ->label(__('school_settings.fields.director_id'))
                             ->badge()

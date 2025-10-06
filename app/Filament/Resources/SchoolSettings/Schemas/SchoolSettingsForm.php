@@ -28,6 +28,14 @@ class SchoolSettingsForm
                     ])
                     ->required(),
 
+                Select::make('school_type2')
+                    ->label(__('school_settings.fields.school_type2'))
+                    ->options([
+                        'خاصة' => __('school_settings.private'),
+                        'عامة' => __('school_settings.public')
+                    ])
+                    ->required(),
+
                 Select::make('director_id')
                     ->label(__('school_settings.fields.director_id'))
                     ->options(function(){
