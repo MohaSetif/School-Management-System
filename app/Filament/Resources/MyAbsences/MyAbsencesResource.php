@@ -22,6 +22,11 @@ class MyAbsencesResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('my_absences.label');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return MyAbsencesForm::configure($schema);

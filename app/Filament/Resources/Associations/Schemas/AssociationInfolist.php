@@ -13,16 +13,16 @@ class AssociationInfolist
     {
         return $schema
             ->components([
-                Section::make('معلومات الجمعية')
+                Section::make(__('associations.sections.association_info'))
                     ->schema([
                         Grid::make(2)->schema([
                             TextEntry::make('name')
-                                ->label('اسم الجمعية')
+                                ->label(__('associations.fields.name'))
                                 ->weight('bold')
                                 ->size('l'),
 
                             TextEntry::make('serial_number')
-                                ->label('الرقم التسلسلي')
+                                ->label(__('associations.fields.serial_number'))
                                 ->numeric()
                                 ->formatStateUsing(fn($state) => self::toLatinNumbers($state))
                                 ->badge()
@@ -31,36 +31,36 @@ class AssociationInfolist
                     ])
                     ->collapsible(),
 
-                Section::make('معلومات الاتصال')
+                Section::make(__('associations.sections.contact_info'))
                     ->schema([
                         TextEntry::make('email')
-                            ->label('البريد الإلكتروني')
+                            ->label(__('associations.fields.email'))
                             ->icon('heroicon-o-envelope')
                             ->copyable(),
                     ])
                     ->collapsible(),
 
-                Section::make('التواريخ')
+                Section::make(__('associations.sections.dates'))
                     ->schema([
                         Grid::make(2)->schema([
                             TextEntry::make('establishment_date')
-                                ->label('تاريخ التأسيس')
+                                ->label(__('associations.fields.establishment_date'))
                                 ->date()
                                 ->formatStateUsing(fn($state) => self::toLatinNumbers(optional($state)->format('Y-m-d'))),
 
                             TextEntry::make('renew_date')
-                                ->label('تاريخ التجديد')
+                                ->label(__('associations.fields.renew_date'))
                                 ->date()
                                 ->formatStateUsing(fn($state) => self::toLatinNumbers(optional($state)->format('Y-m-d'))),
 
                             TextEntry::make('created_at')
-                                ->label('تاريخ الإضافة')
+                                ->label(__('associations.fields.created_at'))
                                 ->dateTime()
                                 ->placeholder('-')
                                 ->formatStateUsing(fn($state) => self::toLatinNumbers(optional($state)->format('Y-m-d H:i'))),
 
                             TextEntry::make('updated_at')
-                                ->label('آخر تحديث')
+                                ->label(__('associations.fields.updated_at'))
                                 ->dateTime()
                                 ->placeholder('-')
                                 ->formatStateUsing(fn($state) => self::toLatinNumbers(optional($state)->format('Y-m-d H:i'))),
@@ -68,10 +68,10 @@ class AssociationInfolist
                     ])
                     ->collapsible(),
 
-                Section::make('الرصيد')
+                Section::make(__('associations.sections.balance'))
                     ->schema([
                         TextEntry::make('score')
-                            ->label('النقاط')
+                            ->label(__('associations.fields.score'))
                             ->numeric()
                             ->formatStateUsing(fn($state) => self::toLatinNumbers($state))
                             ->badge()

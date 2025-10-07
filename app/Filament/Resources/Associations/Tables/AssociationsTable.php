@@ -16,27 +16,41 @@ class AssociationsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('associations.fields.name'))
                     ->searchable(),
+
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label(__('associations.fields.email'))
                     ->searchable(),
+
                 TextColumn::make('serial_number')
+                    ->label(__('associations.fields.serial_number'))
                     ->numeric()
                     ->sortable(),
+
                 TextColumn::make('establishment_date')
+                    ->label(__('associations.fields.establishment_date'))
                     ->date()
                     ->sortable(),
+
                 TextColumn::make('renew_date')
+                    ->label(__('associations.fields.renew_date'))
                     ->date()
                     ->sortable(),
+
                 TextColumn::make('score')
+                    ->label(__('associations.fields.score'))
                     ->numeric()
                     ->sortable(),
+
                 TextColumn::make('created_at')
+                    ->label(__('associations.fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
+                    ->label(__('associations.fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -45,12 +59,12 @@ class AssociationsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()->label(__('associations.actions.view')),
+                EditAction::make()->label(__('associations.actions.edit')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()->label(__('associations.actions.delete_selected')),
                 ]),
             ]);
     }

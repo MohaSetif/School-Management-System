@@ -5,7 +5,6 @@ namespace App\Filament\Resources\MyAbsences\Schemas;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Tables\Columns\BadgeColumn;
 
 class MyAbsencesInfolist
 {
@@ -13,53 +12,51 @@ class MyAbsencesInfolist
     {
         return $schema
             ->components([
-                // Employee Info Section
-                Section::make('الموظف')
-                    ->description('معلومات الموظف')
+                Section::make(__('my_absences.employee_section'))
+                    ->description(__('my_absences.employee_info'))
                     ->schema([
                         TextEntry::make('user.name')
-                            ->label('الموظف')
+                            ->label(__('my_absences.employee'))
                             ->weight('bold')
                             ->icon('heroicon-o-user')
                             ->size('xl'),
                     ]),
 
-                // Absence Info Section
-                Section::make('تفاصيل الغياب')
-                    ->description('معلومات حول الغياب')
+                Section::make(__('my_absences.absence_section'))
+                    ->description(__('my_absences.absence_info'))
                     ->schema([
                         TextEntry::make('type')
-                            ->label('نوع الغياب')
-                            ->getStateUsing(fn($record) => $record->type === 'notice' ? 'بعذر' : 'بدون عذر')
+                            ->label(__('my_absences.absence_type'))
+                            ->getStateUsing(fn($record) => $record->type === 'notice' ? __('my_absences.with_notice') : __('my_absences.without_notice'))
                             ->size('lg'),
 
                         TextEntry::make('date')
-                            ->label('التاريخ')
+                            ->label(__('my_absences.date'))
                             ->icon('heroicon-o-calendar')
                             ->date()
                             ->weight('medium'),
 
                         TextEntry::make('start_time')
-                            ->label('من الساعة')
+                            ->label(__('my_absences.from_time'))
                             ->icon('heroicon-o-clock')
                             ->weight('medium'),
 
                         TextEntry::make('end_time')
-                            ->label('إلى الساعة')
+                            ->label(__('my_absences.to_time'))
                             ->icon('heroicon-o-clock')
                             ->weight('medium'),
-                        
+
                         TextEntry::make('reason')
-                            ->label('السبب')
+                            ->label(__('my_absences.reason'))
                             ->html()
                             ->icon('heroicon-o-document-text'),
 
                         TextEntry::make('file_path')
-                            ->label('الملف')
+                            ->label(__('my_absences.file'))
                             ->icon('heroicon-o-paper-clip')
                             ->url(fn ($record) => $record->file_path ? asset('storage/' . $record->file_path) : null)
                             ->openUrlInNewTab()
-                            ->getStateUsing(fn($record) => $record->file_path ? basename($record->file_path) : 'لا يوجد ملف'),
+                            ->getStateUsing(fn($record) => $record->file_path ? basename($record->file_path) : __('my_absences.no_file')),
                     ]),
             ]);
     }

@@ -9,7 +9,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Filament\Schemas\Schema;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
 
 class MyAbsencesForm
 {
@@ -18,37 +17,37 @@ class MyAbsencesForm
         return $schema
             ->components([
                 TextInput::make('user.name')
-                ->label('الموظف')
-                ->default(auth()->user()->name)
-                ->disabled(),
+                    ->label(__('my_absences.employee'))
+                    ->default(auth()->user()->name)
+                    ->disabled(),
 
                 Select::make('type')
-                    ->label('نوع الغياب')
+                    ->label(__('my_absences.absence_type'))
                     ->options([
-                        'notice' => 'بعذر',
-                        'without_notice' => 'بدون عذر',
+                        'notice' => __('my_absences.with_notice'),
+                        'without_notice' => __('my_absences.without_notice'),
                     ])
                     ->default('notice')
                     ->required(),
 
                 DatePicker::make('date')
-                    ->label('تاريخ الغياب')
+                    ->label(__('my_absences.date'))
                     ->required(),
 
                 TimePicker::make('start_time')
-                    ->label('من الساعة')
+                    ->label(__('my_absences.from_time'))
                     ->required(),
 
                 TimePicker::make('end_time')
-                    ->label('إلى الساعة')
+                    ->label(__('my_absences.to_time'))
                     ->required(),
 
                 RichEditor::make('reason')
-                    ->label('السبب')
+                    ->label(__('my_absences.reason'))
                     ->required(),
 
                 FileUpload::make('file_path')
-                    ->label('إرفاق مبرّر (اختياري)')
+                    ->label(__('my_absences.file_optional'))
                     ->disk('public')
                     ->directory('absences')
                     ->required(fn($get) => $get('type') === 'notice')

@@ -18,38 +18,54 @@ class Profile extends Page
     protected static string|BackedEnum|null $navigationIcon = Heroicon::UserCircle;
     protected string $view = 'filament.pages.profile';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('profile.label');
+    }
+
     public $user;
     public $profile;
     public $userType;
     public $selectedSubjects = [];
 
-    public function mount()
+    public function mount(): void
     {
         $this->user = Auth::user();
 
-        if ($this->user->role === 'teacher') {
-            $this->userType = 'teacher';
-            $this->profile = $this->user->teacher;
-            $this->selectedSubjects = $this->profile->subjects->pluck('id')->toArray();
-        } elseif ($this->user->role === 'student') {
-            $this->userType = 'student';
-            $this->profile = $this->user->student;
-        } else {
-            $this->userType = 'default';
-            $this->profile = $this->user;
-        }
+        // Define the supported roles and their corresponding relationships
+        $roleMap = [
+            'teacher'   => 'teacher',
+            'student'   => 'student',
+            'headmaster'=> 'headmaster',
+            'employee'  => 'employee',
+        ];
+
+        // Determine the current user type
+        $this->userType = $roleMap[$this->user->role] ?? 'default';
+
+        // Load the related profile model if it exists
+        $this->profile = $this->user->{$roleMap[$this->user->role]} ?? $this->user;
+
+        // If the user is a teacher, load their subjects
+        $this->selectedSubjects = match ($this->userType) {
+            'teacher' => $this->profile->subjects?->pluck('id')->toArray() ?? [],
+            default => [],
+        };
     }
 
     protected function getFormSchema(): array
     {
         return [
-            TextInput::make('user.name')->label('Full Name')->required(),
-            TextInput::make('user.email')->label('Email')->required(),
+            TextInput::make('user.name')
+                ->label(__('profile.form.full_name'))
+                ->required(),
+            TextInput::make('user.email')
+                ->label(__('profile.form.email'))
+                ->required(),
         ];
     }
 
-    // Toggle subject selection for buttons
-    public function toggleSubject($subjectId)
+    public function toggleSubject($subjectId): void
     {
         if (in_array($subjectId, $this->selectedSubjects)) {
             $this->selectedSubjects = array_diff($this->selectedSubjects, [$subjectId]);
@@ -58,25 +74,24 @@ class Profile extends Page
         }
     }
 
-    // Save selected subjects with error handling
-    public function updateSubjects()
+    public function updateSubjects(): void
     {
         try {
             if ($this->userType !== 'teacher') {
-                throw new Exception('Only teachers can update subjects.');
+                throw new Exception(__('profile.errors.teacher_only'));
             }
 
             $this->profile->subjects()->sync($this->selectedSubjects);
 
             Notification::make()
-                ->title('Success!')
-                ->body('Your subjects have been updated.')
+                ->title(__('profile.notifications.success.title'))
+                ->body(__('profile.notifications.success.body'))
                 ->success()
                 ->send();
         } catch (Exception $e) {
             Notification::make()
-                ->title('Error')
-                ->body('Failed to update subjects: ' . $e->getMessage())
+                ->title(__('profile.notifications.error.title'))
+                ->body(__('profile.notifications.error.body', ['message' => $e->getMessage()]))
                 ->danger()
                 ->send();
         }

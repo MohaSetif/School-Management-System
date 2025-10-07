@@ -22,6 +22,11 @@ class AssociationResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::BuildingLibrary;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('associations.label');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AssociationForm::configure($schema);

@@ -165,7 +165,9 @@
                     <div class="user-info">
                         <div class="user-name">{{ $user->name }}</div>
                         <div class="user-email">{{ $user->email }}</div>
-                        <div class="role-badge">{{ ucfirst($userType) }}</div>
+                        <div class="role-badge">
+                            {{ __('profile.roles.' . $userType) }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,7 +175,7 @@
             <!-- Teacher Section -->
             @if($userType === 'teacher')
                 <div class="content-card">
-                    <div class="card-title">Teaching Subjects</div>
+                    <div class="card-title">{{ __('profile.teacher.title') }}</div>
                     <form wire:submit.prevent="updateSubjects">
                         <div class="subjects-grid">
                             @foreach(\App\Models\Subject::all() as $subject)
@@ -184,28 +186,34 @@
                                 </button>
                             @endforeach
                         </div>
-                        <button type="submit" class="submit-btn">Save Subjects</button>
+                        <button type="submit" class="submit-btn">
+                            {{ __('profile.teacher.save_button') }}
+                        </button>
                     </form>
                 </div>
 
             <!-- Student Section -->
             @elseif($userType === 'student')
                 <div class="content-card">
-                    <div class="card-title">Student Information</div>
+                    <div class="card-title">{{ __('profile.student.title') }}</div>
                     <div class="info-grid">
                         <div class="info-card">
-                            <div class="info-label">Class</div>
-                            <div class="info-value">{{ $profile->group->name ?? 'Not assigned' }}</div>
+                            <div class="info-label">{{ __('profile.student.class') }}</div>
+                            <div class="info-value">
+                                {{ $profile->group->name ?? __('profile.student.not_assigned') }}
+                            </div>
                         </div>
                         <div class="info-card">
-                            <div class="info-label">Roll Number</div>
+                            <div class="info-label">{{ __('profile.student.roll_number') }}</div>
                             <div class="info-value">{{ $profile->roll_number ?? '-' }}</div>
                         </div>
                     </div>
                 </div>
 
             @else
-                <div class="content-card text-center">No additional information available.</div>
+                <div class="content-card text-center">
+                    {{ __('profile.default.no_info') }}
+                </div>
             @endif
 
         </div>

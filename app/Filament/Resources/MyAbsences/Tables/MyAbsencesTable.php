@@ -20,63 +20,53 @@ class MyAbsencesTable
     {
         return $table
             ->columns([
-                // Employee
                 TextColumn::make('user.name')
-                    ->label('الموظف')
+                    ->label(__('my_absences.employee'))
                     ->sortable()
                     ->searchable()
                     ->weight('bold'),
 
-                // Absence Type with badge
                 BadgeColumn::make('type')
-                    ->label('نوع الغياب')
+                    ->label(__('my_absences.absence_type'))
                     ->colors([
                         'success' => fn ($state) => $state === 'notice',
                         'danger' => fn ($state) => $state === 'without_notice',
                     ])
-                    ->getStateUsing(fn($record) => $record->type === 'notice' ? 'بعذر' : 'بدون عذر')
+                    ->getStateUsing(fn($record) => $record->type === 'notice' ? __('my_absences.with_notice') : __('my_absences.without_notice'))
                     ->sortable(),
 
-                // Date
                 TextColumn::make('date')
-                    ->label('التاريخ')
+                    ->label(__('my_absences.date'))
                     ->date()
                     ->sortable(),
 
-                // Period
                 TextColumn::make('start_time')
-                    ->label('من الساعة')
+                    ->label(__('my_absences.from_time'))
                     ->time()
                     ->sortable(),
 
                 TextColumn::make('end_time')
-                    ->label('إلى الساعة')
+                    ->label(__('my_absences.to_time'))
                     ->time()
-                    ->sortable()
+                    ->sortable(),
             ])
             ->filters([
-                // Filter by absence type
                 SelectFilter::make('type')
-                    ->label('نوع الغياب')
+                    ->label(__('my_absences.absence_type'))
                     ->options([
-                        'notice' => 'بعذر',
-                        'without_notice' => 'بدون عذر',
+                        'notice' => __('my_absences.with_notice'),
+                        'without_notice' => __('my_absences.without_notice'),
                     ]),
 
-                // Filter by date
                 Filter::make('date')
-                    ->label('التاريخ')
+                    ->label(__('my_absences.date'))
                     ->form([
-                        DatePicker::make('from')->label('من'),
-                        DatePicker::make('until')->label('إلى'),
+                        DatePicker::make('from')->label(__('my_absences.from')),
+                        DatePicker::make('until')->label(__('my_absences.until')),
                     ])
                     ->query(function ($query, array $data) {
-                        if ($data['from']) {
-                            $query->whereDate('date', '>=', $data['from']);
-                        }
-                        if ($data['until']) {
-                            $query->whereDate('date', '<=', $data['until']);
-                        }
+                        if ($data['from']) $query->whereDate('date', '>=', $data['from']);
+                        if ($data['until']) $query->whereDate('date', '<=', $data['until']);
                         return $query;
                     }),
             ])
