@@ -81,6 +81,7 @@ return [
     'third_year' => 'السنة الثالثة',
     'fourth_year' => 'السنة الرابعة',
     'fifth_year' => 'السنة الخامسة',
+    'all_years' => 'جميع السنوات',
 
     'groups' => [
         '1st year' => 'السنة الأولى',

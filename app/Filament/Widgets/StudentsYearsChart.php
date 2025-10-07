@@ -33,7 +33,7 @@ class StudentsYearsChart extends ChartWidget
             ->toArray();
 
         // Add "All" option
-        return ['all' => __('All Years')] + $years;
+        return ['all' => __('students.all_years')] + $years;
     }
 
     protected function getData(): array
