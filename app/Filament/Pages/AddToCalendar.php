@@ -12,7 +12,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Livewire\Notifications;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Validation\ValidationException;
@@ -24,6 +24,32 @@ class AddToCalendar extends Page
     protected string $view = 'filament.pages.add-to-calendar';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDays;
 
+    public ?int $selectedGroupId = null;
+    public ?int $appliedGroupId = null;
+
+    public function filter()
+    {
+        $this->appliedGroupId = $this->selectedGroupId;
+    }
+
+    public function getSchedulesProperty()
+    {
+        return Schedule::with(['group', 'subject', 'teacher.user'])
+            ->when($this->appliedGroupId, fn($q) => $q->where('group_id', $this->appliedGroupId))
+            ->orderBy('day_of_week')
+            ->orderBy('start_time')
+            ->get();
+    }
+
+    // Form fields
+    public $day_of_week;
+    public $start_time;
+    public $end_time;
+    public $teacher_id;
+    public $subject_id;
+    public $group_id;
+    public $room;
+
     public static function getPluralModelLabel(): string
     {
         return __('calendar.label');
@@ -33,14 +59,6 @@ class AddToCalendar extends Page
     {
         return __('calendar.label');
     }
-
-    public $day_of_week;
-    public $start_time;
-    public $end_time;
-    public $teacher_id;
-    public $subject_id;
-    public $group_id;
-    public $room;
 
     protected function getFormSchema(): array
     {
@@ -56,22 +74,14 @@ class AddToCalendar extends Page
                 ])
                 ->required(),
 
-            TimePicker::make('start_time')
-                ->label('Start Time')
-                ->required(),
-
-            TimePicker::make('end_time')
-                ->label('End Time')
-                ->required(),
+            TimePicker::make('start_time')->label('Start Time')->required(),
+            TimePicker::make('end_time')->label('End Time')->required(),
 
             Select::make('teacher_id')
                 ->label('Teacher')
                 ->options(
-                    Teacher::with('user')
-                        ->get()
-                        ->mapWithKeys(function ($t) {
-                            return $t->user ? [$t->id => $t->user->name] : [];
-                        })
+                    Teacher::with('user')->get()
+                        ->mapWithKeys(fn($t) => $t->user ? [$t->id => $t->user->name] : [])
                 )
                 ->searchable()
                 ->required()
@@ -80,9 +90,7 @@ class AddToCalendar extends Page
             Select::make('group_id')
                 ->label('Class')
                 ->options(
-                    Group::all()->mapWithKeys(function ($group) {
-                        return [$group->id => $group->name . ' (' . $group->code . ')'];
-                    })
+                    Group::all()->mapWithKeys(fn($g) => [$g->id => $g->name . ' (' . $g->code . ')'])
                 )
                 ->searchable()
                 ->required(),
@@ -109,36 +117,47 @@ class AddToCalendar extends Page
     {
         $data = $this->form->getState();
 
-        // Check overlaps
+        $data['start_time'] = date('H:i:s', strtotime($data['start_time']));
+        $data['end_time'] = date('H:i:s', strtotime($data['end_time']));
+
+        if ($data['end_time'] <= $data['start_time']) {
+            Notification::make()
+                ->title('Invalid Time Range')
+                ->body('End time must be later than start time.')
+                ->danger()
+                ->send();
+            return;
+        }
+
+        // 🟠 Overlap detection (teacher or group)
         $conflict = Schedule::where('day_of_week', $data['day_of_week'])
-            ->where(function ($query) use ($data) {
-                $query->whereBetween('start_time', [$data['start_time'], $data['end_time']])
-                    ->orWhereBetween('end_time', [$data['start_time'], $data['end_time']])
-                    ->orWhere(function ($q) use ($data) {
-                        $q->where('start_time', '<=', $data['start_time'])
-                          ->where('end_time', '>=', $data['end_time']);
-                    });
+            ->where(function ($q) use ($data) {
+                $q->where('start_time', '<', $data['end_time'])
+                  ->where('end_time', '>', $data['start_time']);
             })
-            ->where(function ($query) use ($data) {
-                $query->where('teacher_id', $data['teacher_id'])
-                      ->orWhere('group_id', $data['group_id']);
+            ->where(function ($q) use ($data) {
+                $q->where('teacher_id', $data['teacher_id'])
+                  ->orWhere('group_id', $data['group_id']);
             })
             ->exists();
 
         if ($conflict) {
-            throw ValidationException::withMessages([
-                'schedule' => 'Conflict detected! Either the teacher or the class has another subject at this time.',
-            ]);
+            Notification::make()
+                ->title('Conflict Detected!')
+                ->body('Either the selected teacher or class already has another subject scheduled at this time.')
+                ->danger()
+                ->send();
+            return;
         }
 
-        // Save schedule
         Schedule::create($data);
 
-        Notifications::make()
-                ->title('Success!')
-                ->body('Scheduled successfully!')
-                ->success()
-                ->send();
-        $this->form->reset();
+        Notification::make()
+            ->title('Success!')
+            ->body('Schedule added successfully!')
+            ->success()
+            ->send();
+
+        $this->form->fill([]);
     }
 }
