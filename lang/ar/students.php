@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'الطلاب',
     'fields' => [
         'student_identifier' => 'رقم التعريف',
         'last_name' => 'اللقب',

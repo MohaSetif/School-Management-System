@@ -27,6 +27,11 @@ class MyAbsencesResource extends Resource
         return __('my_absences.label');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('my_absences.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return MyAbsencesForm::configure($schema);

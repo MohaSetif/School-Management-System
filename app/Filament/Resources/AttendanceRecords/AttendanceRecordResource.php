@@ -31,6 +31,11 @@ class AttendanceRecordResource extends Resource
         return __('attendance.navigation.group');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('attendance.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AttendanceRecordForm::configure($schema);

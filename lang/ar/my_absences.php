@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'غياباتي',
     'label' => 'غياباتي',
     'employee' => 'الموظف',
     'absence_type' => 'نوع الغياب',

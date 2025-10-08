@@ -2,9 +2,9 @@
     <style>
         /* Global Container */
         .profile-container {
-            min-height: 100vh;
             padding: 2rem 1rem;
             background: #f9fafb;
+            border-radius: 1rem;
         }
         .dark .profile-container { background: #1f1f1f; }
 
@@ -96,6 +96,7 @@
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 0.75rem;
             margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
         }
 
         .subject-btn {

@@ -24,6 +24,11 @@ class AddToCalendar extends Page
     protected string $view = 'filament.pages.add-to-calendar';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDays;
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('calendar.label');
+    }
+
     public static function getNavigationLabel(): string
     {
         return __('calendar.label');

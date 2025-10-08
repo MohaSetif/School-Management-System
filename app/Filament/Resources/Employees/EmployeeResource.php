@@ -32,6 +32,11 @@ class EmployeeResource extends Resource
         return __('employees.navigation.group');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('employees.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return EmployeeForm::configure($schema);

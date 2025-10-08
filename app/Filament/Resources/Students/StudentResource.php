@@ -36,6 +36,11 @@ class StudentResource extends Resource
         return __('students.navigation.group');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('students.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return StudentForm::configure($schema);

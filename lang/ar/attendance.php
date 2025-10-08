@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'قائمة الحضور',
     'navigation' => [
         'label' => 'قائمة الحضور',
         'group' => 'إدارة الأكاديمية',

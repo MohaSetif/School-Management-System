@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'المستخدمون',
     'navigation' => [
         'label' => 'المستخدمون',
         'group' => 'إدارة المستخدمين',

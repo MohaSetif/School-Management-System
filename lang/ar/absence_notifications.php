@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'الطلاب ذوي الغيابات المتكررة',
     'fields' => [
         'student' => 'الطالب',
         'start_date' => 'تاريخ البداية',

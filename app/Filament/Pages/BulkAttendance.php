@@ -35,6 +35,11 @@ class BulkAttendance extends Page implements HasForms
         return __('attendance.navigation.group');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('attendance.mainTitle');
+    }
+
     public ?array $data = [];
     public ?int $group_id = null;
     public ?string $attendance_date = null;

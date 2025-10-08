@@ -27,6 +27,11 @@ class AssociationResource extends Resource
         return __('associations.label');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('associations.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AssociationForm::configure($schema);

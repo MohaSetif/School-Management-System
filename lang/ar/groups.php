@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'قائمة الأفواج',
     'navigation' => [
         'label' => 'الأقسام',
         'group' => 'إدارة الأقسام',

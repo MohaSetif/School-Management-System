@@ -32,6 +32,11 @@ class ReportResource extends Resource
         return __('reports.navigation.group');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('reports.mainTitle');
+    }
+
     public static function infolist(Schema $schema): Schema
     {
         return ReportInfolist::configure($schema);

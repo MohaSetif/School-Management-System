@@ -23,6 +23,11 @@ class Profile extends Page
         return __('profile.label');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('profile.mainTitle');
+    }
+
     public $user;
     public $profile;
     public $userType;

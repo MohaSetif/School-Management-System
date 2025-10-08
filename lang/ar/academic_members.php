@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'أعضاء هيئة التدريس',
     "stats" => "أساتذة المدرسة",
     'navigation' => [
         'label' => 'أعضاء هيئة التدريس',

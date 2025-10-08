@@ -33,6 +33,11 @@ class UserResource extends Resource
         return __('users.navigation.group');
     }
 
+    public static function getPluralModelLabel(): string
+    {
+        return __('users.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);

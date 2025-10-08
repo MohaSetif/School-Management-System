@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'حسابي',
     'label' => 'حسابي الخاص',
     'form' => [
         'full_name' => 'الاسم الكامل',

@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'mainTitle' => 'العمال',
     'navigation' => [
         'label' => 'العمال',
         'group' => 'أعضاء المؤسسة',

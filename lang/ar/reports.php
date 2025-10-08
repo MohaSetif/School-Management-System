@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'الرسائل الإدارية',
     'navigation' => [
         'label' => 'البريد الصادر',
         'group' => 'إدارة الأكاديمية',

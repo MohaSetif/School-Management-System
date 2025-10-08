@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'mainTitle' => 'التوزيع الأسبوعي',
     'navigation' => [
         'label' => 'التوزيع اليومي',
         'group' => 'التوزيع الإداري',
