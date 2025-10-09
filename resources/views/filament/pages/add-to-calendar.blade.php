@@ -6,26 +6,26 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
-                Add New Schedule
+                {{ __('calendar.form.add_new') }}
             </h2>
-            
+
             <form wire:submit.prevent="submit">
                 {{ $this->form }}
-                
-               <div class="mt-6">
+
+                <div class="mt-6">
                     <x-filament::button 
-                        type="submit" 
-                        size="lg" 
+                        type="submit"
+                        size="lg"
                         class="w-full sm:w-auto relative"
                         wire:loading.attr="disabled"
                     >
                         {{-- Normal state --}}
                         <div wire:loading.remove>
                             <svg class="w-5 h-5 ml-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            Save Schedule
+                            {{ __('calendar.buttons.save') }}
                         </div>
 
                         {{-- Loading state --}}
@@ -34,25 +34,26 @@
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"></path>
                             </svg>
-                            <span>Saving...</span>
+                            <span>{{ __('calendar.buttons.saving') }}</span>
                         </div>
                     </x-filament::button>
                 </div>
             </form>
         </div>
 
+        {{-- Filter Section --}}
         <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-4">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
-                Weekly Schedule
+                {{ __('calendar.weekly_schedule') }}
             </h2>
 
             <div class="flex items-center gap-2">
                 <div class="w-full sm:w-64 border border-neutral-500 bg-neutral-800 rounded-3xl">
                     <x-filament::input.select wire:model="selectedGroupId">
-                        <option value="">All Classes</option>
+                        <option value="">{{ __('calendar.filter.all_classes') }}</option>
                         @foreach(\App\Models\Group::orderBy('name')->get() as $group)
                             <option value="{{ $group->id }}">{{ $group->name }} ({{ $group->code }})</option>
                         @endforeach
@@ -61,7 +62,7 @@
 
                 <x-filament::button wire:click="filter" color="primary" size="sm">
                     <x-heroicon-o-funnel class="w-4 h-4 mr-1" />
-                    Filter
+                    {{ __('calendar.filter.button') }}
                 </x-filament::button>
             </div>
         </div>
@@ -73,7 +74,7 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
-                    Weekly Schedule
+                    {{ __('calendar.weeklySchedule') }}
                 </h2>
             </div>
 
@@ -99,8 +100,7 @@
                             <div class="bg-gray-50 dark:bg-gray-900/50 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                                 {{-- Day Header --}}
                                 <div class="bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white">
-                                    <h3 class="font-bold text-lg text-center">{{ $englishDay }}</h3>
-                                    <p class="text-xs text-center text-primary-100 mt-1">{{ $arabicDay }}</p>
+                                    <h3 class="font-bold text-lg text-center">{{ $arabicDay }}</h3>
                                 </div>
 
                                 {{-- Schedule Items --}}
@@ -160,7 +160,7 @@
                                             <svg class="w-12 h-12 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                                             </svg>
-                                            <p class="text-sm font-medium">No classes</p>
+                                            <p class="text-sm font-medium">{{ __('calendar.noClasses') }}</p>
                                         </div>
                                     @endforelse
                                 </div>
@@ -178,19 +178,19 @@
                             <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">
                                 {{ $schedules->count() }}
                             </div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Total Classes</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('calendar.totalClasses') }}</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">
                                 {{ $schedules->unique('teacher_id')->count() }}
                             </div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Teachers</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('calendar.teachers') }}</div>
                         </div>
                         <div class="text-center">
                             <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">
                                 {{ $schedules->unique('group_id')->count() }}
                             </div>
-                            <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">Classes</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('calendar.classes') }}</div>
                         </div>
                     </div>
                 </div>

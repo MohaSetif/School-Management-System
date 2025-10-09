@@ -64,21 +64,21 @@ class AddToCalendar extends Page
     {
         return [
             Select::make('day_of_week')
-                ->label('Day of Week')
+                ->label(__('calendar.fields.dayofWeek'))
                 ->options([
-                    'الأحد' => 'Sunday',
-                    'الإثنين' => 'Monday',
-                    'الثلاثاء' => 'Tuesday',
-                    'الأربعاء' => 'Wednesday',
-                    'الخميس' => 'Thursday',
+                    'الأحد' => __('calendar.days.sunday'),
+                    'الإثنين' => __('calendar.days.monday'),
+                    'الثلاثاء' => __('calendar.days.tuesday'),
+                    'الأربعاء' => __('calendar.days.wednesday'),
+                    'الخميس' => __('calendar.days.thursday'),
                 ])
                 ->required(),
 
-            TimePicker::make('start_time')->label('Start Time')->required(),
-            TimePicker::make('end_time')->label('End Time')->required(),
+            TimePicker::make('start_time')->label(__('calendar.fields.startTime'))->required(),
+            TimePicker::make('end_time')->label(__('calendar.fields.endTime'))->required(),
 
             Select::make('teacher_id')
-                ->label('Teacher')
+                ->label(__('calendar.fields.teacher'))
                 ->options(
                     Teacher::with('user')->get()
                         ->mapWithKeys(fn($t) => $t->user ? [$t->id => $t->user->name] : [])
@@ -88,7 +88,7 @@ class AddToCalendar extends Page
                 ->reactive(),
 
             Select::make('group_id')
-                ->label('Class')
+                ->label(__('calendar.fields.class'))
                 ->options(
                     Group::all()->mapWithKeys(fn($g) => [$g->id => $g->name . ' (' . $g->code . ')'])
                 )
@@ -96,7 +96,7 @@ class AddToCalendar extends Page
                 ->required(),
 
             Select::make('subject_id')
-                ->label('Subject')
+                ->label(__('calendar.fields.subject'))
                 ->options(function (callable $get) {
                     $teacherId = $get('teacher_id');
                     if (! $teacherId) {
@@ -139,8 +139,8 @@ class AddToCalendar extends Page
 
         if ($teacherConflict) {
             Notification::make()
-                ->title('Conflict Detected!')
-                ->body('The selected teacher already has another subject at this time.')
+                ->title(__('calendar.notifications.invalid_time.title'))
+                ->body(__('calendar.notifications.invalid_time.body'))
                 ->danger()
                 ->send();
             return;
@@ -155,8 +155,8 @@ class AddToCalendar extends Page
 
         if ($groupConflict) {
             Notification::make()
-                ->title('Conflict Detected!')
-                ->body('This class already has another subject scheduled at this time.')
+                ->title(__('calendar.notifications.invalid_time.title'))
+                ->body(__('calendar.notifications.invalid_time.body'))
                 ->danger()
                 ->send();
             return;
@@ -166,8 +166,8 @@ class AddToCalendar extends Page
         Schedule::create($data);
 
         Notification::make()
-            ->title('Success!')
-            ->body('Subject schedule added successfully!')
+            ->title(__('calendar.success!'))
+            ->body(__('calendar.successMessage'))
             ->success()
             ->send();
 
