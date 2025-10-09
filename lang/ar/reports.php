@@ -9,8 +9,16 @@ return [
         'label3'=> 'إعداد تقرير',
     ],
 
+    'infolist' => [
+        'generalInfo' => 'معلومات التقرير',
+        'schoolInfo' => 'معلومات المؤسسة',
+        'content' => 'محتوى التقرير',
+        'actions' => 'إجراءات',
+    ],
+
     'form' => [
         'school_name'   => 'اسم المدرسة',
+        'director_name' => 'اسم المدير',
         'directorate'   => 'المديرية',
         'institution'   => 'المؤسسة',
         'municipality'  => 'البلدية',
@@ -21,6 +29,7 @@ return [
         'ref_number'    => 'رقم الإرسال',
         'subject'       => 'الموضوع',
         'content'       => 'المحتوى',
+        'created_at'    => 'تاريخ الكتابة'
     ],
 
     'buttons' => [
@@ -45,5 +54,9 @@ return [
         'ref_number'    => 'رقم الإرسال',
         'subject'       => 'الموضوع',
         'content'       => 'المحتوى',
+    ],
+
+    'actions' => [
+        'download' => 'تحميل التقرير',
     ],
 ];

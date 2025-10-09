@@ -16,10 +16,10 @@ class ReportsTable
     {
         return $table
             ->columns([
-                TextColumn::make('subject')->searchable(),
-                TextColumn::make('date')->date(),
-                TextColumn::make('ref_number'),
-                TextColumn::make('created_at')->since(),
+                TextColumn::make('subject')->label(__('reports.form.subject'))->searchable(),
+                TextColumn::make('date')->label(__('reports.form.date'))->date(),
+                TextColumn::make('ref_number')->label(__('reports.form.ref_number')),
+                TextColumn::make('created_at')->label(__('reports.form.created_at'))->since(),
             ])
             ->filters([
                 //
@@ -32,11 +32,6 @@ class ReportsTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])->actions([
-            Action::make('download')
-                ->label('تحميل')
-                ->url(fn ($record) => route('download.report', basename($record->file_path)))
-                ->openUrlInNewTab(),
             ]);
     }
 }

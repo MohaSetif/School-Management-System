@@ -123,8 +123,8 @@ class AddToCalendar extends Page
         // 🔹 Validate time range
         if ($data['end_time'] <= $data['start_time']) {
             Notification::make()
-                ->title('Invalid Time Range')
-                ->body('End time must be later than start time.')
+                ->title(__('calendar.notifications.invalid_time.title'))
+                ->body(__('calendar.notifications.invalid_time.title'))
                 ->danger()
                 ->send();
             return;
@@ -139,8 +139,8 @@ class AddToCalendar extends Page
 
         if ($teacherConflict) {
             Notification::make()
-                ->title(__('calendar.notifications.invalid_time.title'))
-                ->body(__('calendar.notifications.invalid_time.body'))
+                ->title(__('calendar.notifications.teacher_conflict.title'))
+                ->body(__('calendar.notifications.teacher_conflict.body'))
                 ->danger()
                 ->send();
             return;
@@ -155,8 +155,8 @@ class AddToCalendar extends Page
 
         if ($groupConflict) {
             Notification::make()
-                ->title(__('calendar.notifications.invalid_time.title'))
-                ->body(__('calendar.notifications.invalid_time.body'))
+                ->title(__('calendar.notifications.group_conflict.title'))
+                ->body(__('calendar.notifications.group_conflict.body'))
                 ->danger()
                 ->send();
             return;
@@ -166,8 +166,8 @@ class AddToCalendar extends Page
         Schedule::create($data);
 
         Notification::make()
-            ->title(__('calendar.success!'))
-            ->body(__('calendar.successMessage'))
+            ->title(__('calendar.notifications.success.title'))
+            ->body(__('calendar.notifications.success.body'))
             ->success()
             ->send();
 
