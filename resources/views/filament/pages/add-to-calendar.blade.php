@@ -12,26 +12,29 @@
             <form wire:submit.prevent="submit">
                 {{ $this->form }}
                 
-                <div class="mt-6">
+               <div class="mt-6">
                     <x-filament::button 
                         type="submit" 
                         size="lg" 
                         class="w-full sm:w-auto relative"
                         wire:loading.attr="disabled"
                     >
+                        {{-- Normal state --}}
                         <div wire:loading.remove>
-                            <svg class="w-5 h-5 mr-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            <svg class="w-5 h-5 ml-2 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
                             Save Schedule
                         </div>
 
-                        <div wire:loading.flex class="items-center justify-center">
-                            <svg class="animate-spin w-5 h-5 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        {{-- Loading state --}}
+                        <div wire:loading.flex class="justify-center items-center space-x-2">
+                            <svg class="animate-spin ml-2 w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"></path>
                             </svg>
-                            Saving...
+                            <span>Saving...</span>
                         </div>
                     </x-filament::button>
                 </div>
@@ -47,7 +50,7 @@
             </h2>
 
             <div class="flex items-center gap-2">
-                <div class="w-full sm:w-64">
+                <div class="w-full sm:w-64 border border-neutral-500 bg-neutral-800 rounded-3xl">
                     <x-filament::input.select wire:model="selectedGroupId">
                         <option value="">All Classes</option>
                         @foreach(\App\Models\Group::orderBy('name')->get() as $group)

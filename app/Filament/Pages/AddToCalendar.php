@@ -120,6 +120,7 @@ class AddToCalendar extends Page
         $data['start_time'] = date('H:i:s', strtotime($data['start_time']));
         $data['end_time'] = date('H:i:s', strtotime($data['end_time']));
 
+        // 🔹 Validate time range
         if ($data['end_time'] <= $data['start_time']) {
             Notification::make()
                 ->title('Invalid Time Range')
@@ -129,35 +130,49 @@ class AddToCalendar extends Page
             return;
         }
 
-        // 🟠 Overlap detection (teacher or group)
-        $conflict = Schedule::where('day_of_week', $data['day_of_week'])
-            ->where(function ($q) use ($data) {
-                $q->where('start_time', '<', $data['end_time'])
-                  ->where('end_time', '>', $data['start_time']);
-            })
-            ->where(function ($q) use ($data) {
-                $q->where('teacher_id', $data['teacher_id'])
-                  ->orWhere('group_id', $data['group_id']);
-            })
+        // 🟠 Check if teacher is already teaching another group at this time
+        $teacherConflict = Schedule::where('day_of_week', $data['day_of_week'])
+            ->where('teacher_id', $data['teacher_id'])
+            ->where('start_time', '<', $data['end_time'])
+            ->where('end_time', '>', $data['start_time'])
             ->exists();
 
-        if ($conflict) {
+        if ($teacherConflict) {
             Notification::make()
                 ->title('Conflict Detected!')
-                ->body('Either the selected teacher or class already has another subject scheduled at this time.')
+                ->body('The selected teacher already has another subject at this time.')
                 ->danger()
                 ->send();
             return;
         }
 
+        // 🏫 Check if the class (group) already has another subject at this time
+        $groupConflict = Schedule::where('day_of_week', $data['day_of_week'])
+            ->where('group_id', $data['group_id'])
+            ->where('start_time', '<', $data['end_time'])
+            ->where('end_time', '>', $data['start_time'])
+            ->exists();
+
+        if ($groupConflict) {
+            Notification::make()
+                ->title('Conflict Detected!')
+                ->body('This class already has another subject scheduled at this time.')
+                ->danger()
+                ->send();
+            return;
+        }
+
+        // ✅ If no conflicts, save the schedule
         Schedule::create($data);
 
         Notification::make()
             ->title('Success!')
-            ->body('Schedule added successfully!')
+            ->body('Subject schedule added successfully!')
             ->success()
             ->send();
 
+        // Reset form fields
         $this->form->fill([]);
     }
+
 }
