@@ -41,6 +41,11 @@ class GroupResource extends Resource
         return __('groups.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.groups');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return GroupForm::configure($schema);

@@ -33,6 +33,11 @@ class UserResource extends Resource
         return __('users.navigation.group');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.user');
+    }
+
     public static function getPluralModelLabel(): string
     {
         return __('users.mainTitle');

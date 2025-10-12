@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\MemberAbsences\Pages;
 
 use App\Filament\Resources\MemberAbsences\MemberAbsenceResource;
+use App\Filament\Traits\TranslatablePageTitle;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditMemberAbsence extends EditRecord
 {
+    use TranslatablePageTitle;
     protected static string $resource = MemberAbsenceResource::class;
 
     protected function mutateFormDataBeforeSave(array $data): array

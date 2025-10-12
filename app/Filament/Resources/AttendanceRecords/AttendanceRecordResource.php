@@ -36,6 +36,11 @@ class AttendanceRecordResource extends Resource
         return __('attendance.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.attendance');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AttendanceRecordForm::configure($schema);

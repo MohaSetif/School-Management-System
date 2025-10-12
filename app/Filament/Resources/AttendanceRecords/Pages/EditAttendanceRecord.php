@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\AttendanceRecords\Pages;
 
 use App\Filament\Resources\AttendanceRecords\AttendanceRecordResource;
+use App\Filament\Traits\TranslatablePageTitle;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditAttendanceRecord extends EditRecord
 {
+    use TranslatablePageTitle;
     protected static string $resource = AttendanceRecordResource::class;
 
     protected function getHeaderActions(): array

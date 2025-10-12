@@ -37,6 +37,11 @@ class ReportResource extends Resource
         return __('reports.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.reports');
+    }
+
     public static function infolist(Schema $schema): Schema
     {
         return ReportInfolist::configure($schema);

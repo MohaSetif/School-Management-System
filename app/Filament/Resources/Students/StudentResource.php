@@ -41,6 +41,11 @@ class StudentResource extends Resource
         return __('students.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.student');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return StudentForm::configure($schema);

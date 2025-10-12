@@ -32,6 +32,11 @@ class AssociationResource extends Resource
         return __('associations.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.associations');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AssociationForm::configure($schema);

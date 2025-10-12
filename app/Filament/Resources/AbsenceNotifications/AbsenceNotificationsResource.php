@@ -39,6 +39,11 @@ class AbsenceNotificationsResource extends Resource
         return __('absence_notifications.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.absence_notifications');
+    }
+
     public static function getNavigationBadge(): ?string
     {
         return (string) AbsenceNotification::where('notified', false)->count();

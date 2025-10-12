@@ -32,6 +32,16 @@ class AcademicMemberResource extends Resource
         return __('academic_members.navigation.group');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.academic_members');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('resources.academic_members');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AcademicMemberForm::configure($schema);

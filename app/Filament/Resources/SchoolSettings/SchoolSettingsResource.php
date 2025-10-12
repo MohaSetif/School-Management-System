@@ -42,6 +42,11 @@ class SchoolSettingsResource extends Resource
         return __('school_settings.label');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.school_settings');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return SchoolSettingsForm::configure($schema);

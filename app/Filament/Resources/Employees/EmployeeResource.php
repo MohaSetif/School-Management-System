@@ -37,6 +37,11 @@ class EmployeeResource extends Resource
         return __('employees.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.employees');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return EmployeeForm::configure($schema);

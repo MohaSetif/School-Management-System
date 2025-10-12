@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Students\Pages;
 
 use App\Filament\Resources\Students\StudentResource;
+use App\Filament\Traits\TranslatablePageTitle;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewStudent extends ViewRecord
 {
+    use TranslatablePageTitle;
     protected static string $resource = StudentResource::class;
 
     protected function getHeaderActions(): array

@@ -37,6 +37,11 @@ class MyAbsencesResource extends Resource
         return MyAbsencesForm::configure($schema);
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('resources.my_absences');
+    }
+
     public static function infolist(Schema $schema): Schema
     {
         return MyAbsencesInfolist::configure($schema);

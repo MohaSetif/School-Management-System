@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\SchoolSettings\Pages;
 
 use App\Filament\Resources\SchoolSettings\SchoolSettingsResource;
+use App\Filament\Traits\TranslatablePageTitle;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditSchoolSettings extends EditRecord
 {
+    use TranslatablePageTitle;
     protected static string $resource = SchoolSettingsResource::class;
 
     protected function getHeaderActions(): array

@@ -37,6 +37,11 @@ class MemberAbsenceResource extends Resource
         return __('members_absence.mainTitle');
     }
 
+    public static function getModelLabel(): string
+    {
+        return __('members_absence.mainTitle');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return MemberAbsenceForm::configure($schema);
