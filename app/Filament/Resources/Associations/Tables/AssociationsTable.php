@@ -59,8 +59,8 @@ class AssociationsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make()->label(__('associations.actions.view')),
-                EditAction::make()->label(__('associations.actions.edit')),
+                ViewAction::make()->label(__('actions.view')),
+                EditAction::make()->label(__('actions.edit')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

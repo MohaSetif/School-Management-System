@@ -23,7 +23,7 @@ class Profile extends Page
         return __('profile.label');
     }
 
-    public static function getPluralModelLabel(): string
+    public function getTitle(): string
     {
         return __('profile.mainTitle');
     }

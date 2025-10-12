@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Employees\Pages;
+namespace App\Filament\Resources\Reports\Pages;
 
-use App\Filament\Resources\Employees\EmployeeResource;
+use App\Filament\Resources\Reports\ReportResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditEmployee extends EditRecord
+class EditReport extends EditRecord
 {
-    protected static string $resource = EmployeeResource::class;
+    protected static string $resource = ReportResource::class;
 
     protected function getHeaderActions(): array
     {

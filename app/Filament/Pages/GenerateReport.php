@@ -37,12 +37,7 @@ class GenerateReport extends Page implements HasForms
     {
         return __('reports.navigation.group');
     }
-
-    public static function getPluralModelLabel(): string
-    {
-        return __('reports.mainTitle');
-    }
-
+    
     public $school_name;
     public $date;
     public $from;

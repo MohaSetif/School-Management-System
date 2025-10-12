@@ -9,6 +9,7 @@ use App\Models\Student;
 use BackedEnum;
 use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Page;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -35,7 +36,7 @@ class BulkAttendance extends Page implements HasForms
         return __('attendance.navigation.group');
     }
 
-    public static function getPluralModelLabel(): string
+    public function getTitle(): string
     {
         return __('attendance.mainTitle');
     }
@@ -79,7 +80,8 @@ class BulkAttendance extends Page implements HasForms
                 ->searchable()
                 ->preload(),
 
-                Forms\Components\DatePicker::make('attendance_date')
+                DatePicker::make('attendance_date')
+                    ->label(__('attendance.attendance_date'))
                     ->required()
                     ->default(Carbon::today()),
             ])

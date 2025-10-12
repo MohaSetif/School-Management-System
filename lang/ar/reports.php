@@ -36,6 +36,8 @@ return [
         'generate_report' => 'توليد التقرير',
     ],
 
+    'fileNotFound' => 'الملف غير موجود',
+
     'notifications' => [
         'success_generated' => 'تم إنشاء التقرير وحفظه بنجاح.',
         'error_missing_fields' => 'الرجاء ملء جميع الحقول المطلوبة قبل إنشاء التقرير.',

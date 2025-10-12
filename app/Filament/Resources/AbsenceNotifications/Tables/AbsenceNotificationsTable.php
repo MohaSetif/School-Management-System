@@ -55,12 +55,12 @@ class AbsenceNotificationsTable
                     ->query(fn ($query) => $query->where('created_at', '>=', now()->subDays(7))),
             ])
             ->recordActions([
-                ViewAction::make()->label(__('absence_notifications.actions.view')),
-                EditAction::make()->label(__('absence_notifications.actions.edit')),
+                ViewAction::make()->label(__('actions.view')),
+                EditAction::make()->label(__('actions.edit')),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make()->label(__('absence_notifications.actions.delete')),
+                    DeleteBulkAction::make()->label(__('actions.delete')),
                 ]),
             ])
             ->defaultSort('created_at', 'desc');

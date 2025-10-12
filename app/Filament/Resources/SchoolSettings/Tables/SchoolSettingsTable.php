@@ -27,11 +27,6 @@ class SchoolSettingsTable
                     ->color('success')
                     ->searchable(),
 
-                TextColumn::make('director_id')
-                    ->label(__('school_settings.fields.director_id'))
-                    ->numeric()
-                    ->sortable(),
-
                 TextColumn::make('province')
                     ->label(__('school_settings.fields.province'))
                     ->badge()

@@ -39,7 +39,7 @@ class SchoolSettingsResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return __('school_settings.mainTitle');
+        return __('school_settings.label');
     }
 
     public static function form(Schema $schema): Schema

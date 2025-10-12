@@ -50,7 +50,7 @@ class AddToCalendar extends Page
     public $group_id;
     public $room;
 
-    public static function getPluralModelLabel(): string
+    public function getTitle(): string
     {
         return __('calendar.label');
     }

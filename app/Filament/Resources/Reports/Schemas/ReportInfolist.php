@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Reports\Schemas;
 use Filament\Actions\Action;
 use Filament\Forms\Components\RichEditor;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -63,12 +64,21 @@ class ReportInfolist
 
             Section::make(__('reports.infolist.actions'))
                 ->schema([
-                    TextEntry::make('file_path')
+                    Action::make('download_report')
                         ->label(__('reports.actions.download'))
-                        ->icon('heroicon-o-paper-clip')
-                        ->url(fn ($record) => $record->file_path ? asset('storage/app/public/' . $record->file_path) : null)
-                        ->openUrlInNewTab()
-                        ->getStateUsing(fn($record) => $record->file_path ? basename($record->file_path) : __('my_absences.no_file')),
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->visible(fn ($record) => filled($record->file_path))
+                        ->action(function ($record) {
+                            $path = storage_path('app/' . $record->file_path);
+                            if (file_exists($path)) {
+                                return response()->download($path);
+                            }
+
+                            Notification::make()
+                                ->title(__('reports.fileNotFound'))
+                                ->danger()
+                                ->send();
+                        }),
                 ]),
         ]);
     }
