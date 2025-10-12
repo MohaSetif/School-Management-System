@@ -9,7 +9,6 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListMemberAbsences extends ListRecords
 {
-    use TranslatablePageTitle;
     protected static string $resource = MemberAbsenceResource::class;
 
     protected function getHeaderActions(): array
