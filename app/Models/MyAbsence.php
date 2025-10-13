@@ -17,6 +17,7 @@ class MyAbsence extends Model
         'end_time',
         'reason',
         'file_path',    // uploaded file path (nullable)
+        'status',       // pending, approved, rejected
     ];
 
     /**

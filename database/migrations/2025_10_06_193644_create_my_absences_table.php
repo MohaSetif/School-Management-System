@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->time('end_time');
             $table->text('reason');
             $table->string('file_path')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

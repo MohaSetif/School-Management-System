@@ -46,6 +46,16 @@ class MyAbsencesForm
                     ->label(__('my_absences.reason'))
                     ->required(),
 
+                Select::make('status')
+                    ->label(__('my_absences.status'))
+                    ->options([
+                        'pending' => __('my_absences.pending'),
+                        'approved' => __('my_absences.approved'),
+                        'rejected' => __('my_absences.rejected'),
+                    ])
+                    ->default('pending')
+                    ->disabled(fn() => !auth()->user()->isHeadmaster()),
+
                 FileUpload::make('file_path')
                     ->label(__('my_absences.file_optional'))
                     ->disk('public')

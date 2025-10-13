@@ -50,6 +50,11 @@ class AddToCalendar extends Page
     public $group_id;
     public $room;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->isHeadmaster();
+    }
+
     public function getTitle(): string
     {
         return __('calendar.label');

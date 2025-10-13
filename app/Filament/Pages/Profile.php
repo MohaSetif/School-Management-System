@@ -33,29 +33,25 @@ class Profile extends Page
     public $userType;
     public $selectedSubjects = [];
 
+    public $subjects = [];
+
     public function mount(): void
     {
         $this->user = Auth::user();
 
-        // Define the supported roles and their corresponding relationships
         $roleMap = [
             'teacher'   => 'teacher',
-            'student'   => 'student',
             'headmaster'=> 'headmaster',
             'employee'  => 'employee',
         ];
 
-        // Determine the current user type
         $this->userType = $roleMap[$this->user->role] ?? 'default';
-
-        // Load the related profile model if it exists
         $this->profile = $this->user->{$roleMap[$this->user->role]} ?? $this->user;
 
-        // If the user is a teacher, load their subjects
-        $this->selectedSubjects = match ($this->userType) {
-            'teacher' => $this->profile->subjects?->pluck('id')->toArray() ?? [],
-            default => [],
-        };
+        if ($this->userType === 'teacher') {
+            $this->selectedSubjects = $this->profile->subjects?->pluck('id')->toArray() ?? [];
+            $this->subjects = cache()->remember('subjects.all', 3600, fn() => \App\Models\Subject::all());
+        }
     }
 
     protected function getFormSchema(): array

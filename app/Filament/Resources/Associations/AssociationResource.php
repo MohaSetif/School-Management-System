@@ -37,6 +37,11 @@ class AssociationResource extends Resource
         return __('resources.associations');
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->isHeadmaster();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return AssociationForm::configure($schema);

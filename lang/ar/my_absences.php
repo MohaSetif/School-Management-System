@@ -20,5 +20,8 @@ return [
     'absence_info' => 'معلومات حول الغياب',
     'from' => 'من',
     'until' => 'إلى',
-
+    'status' => 'الحالة',
+    'pending' => 'قيد الانتظار',
+    'approved' => 'مقبول',
+    'rejected' => 'مرفوض'
 ];

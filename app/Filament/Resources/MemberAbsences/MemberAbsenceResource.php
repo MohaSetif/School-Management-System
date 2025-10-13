@@ -42,6 +42,11 @@ class MemberAbsenceResource extends Resource
         return __('members_absence.mainTitle');
     }
 
+    public static function canAccess(): bool
+    {
+        return !auth()->user()->isTeacher();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return MemberAbsenceForm::configure($schema);

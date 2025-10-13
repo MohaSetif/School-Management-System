@@ -51,6 +51,23 @@ class MyAbsencesInfolist
                             ->html()
                             ->icon('heroicon-o-document-text'),
 
+                        TextEntry::make('status')
+                            ->icon('heroicon-o-document-text')
+                            ->label(__('my_absences.status'))
+                            ->getStateUsing(fn($record) => match ($record->status) {
+                                'pending' => __('my_absences.pending'),
+                                'approved' => __('my_absences.approved'),
+                                'rejected' => __('my_absences.rejected'),
+                                default => $record->status,
+                            })
+                            ->weight('medium')
+                            ->badge(fn($record) => match ($record->status) {
+                                'pending' => 'warning',
+                                'approved' => 'success',
+                                'rejected' => 'danger',
+                                default => 'secondary',
+                            }),
+
                         TextEntry::make('file_path')
                             ->label(__('my_absences.file'))
                             ->icon('heroicon-o-paper-clip')

@@ -179,7 +179,7 @@
                     <div class="card-title">{{ __('profile.teacher.title') }}</div>
                     <form wire:submit.prevent="updateSubjects">
                         <div class="subjects-grid">
-                            @foreach(\App\Models\Subject::all() as $subject)
+                            @foreach($subjects as $subject)
                                 <button type="button"
                                         wire:click.prevent="toggleSubject({{ $subject->id }})"
                                         class="subject-btn {{ in_array($subject->id, $selectedSubjects) ? 'selected' : '' }}">
@@ -187,28 +187,19 @@
                                 </button>
                             @endforeach
                         </div>
-                        <button type="submit" class="submit-btn">
-                            {{ __('profile.teacher.save_button') }}
+                        <button type="submit" class="submit-btn" wire:loading.attr="disabled">
+                            <span wire:loading.remove>
+                                {{ __('profile.teacher.save_button') }}
+                            </span>
+                            <span wire:loading>
+                                Saving...
+                                <svg class="w-4 h-4 inline-block animate-spin ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                                </svg>
+                            </span>
                         </button>
                     </form>
-                </div>
-
-            <!-- Student Section -->
-            @elseif($userType === 'student')
-                <div class="content-card">
-                    <div class="card-title">{{ __('profile.student.title') }}</div>
-                    <div class="info-grid">
-                        <div class="info-card">
-                            <div class="info-label">{{ __('profile.student.class') }}</div>
-                            <div class="info-value">
-                                {{ $profile->group->name ?? __('profile.student.not_assigned') }}
-                            </div>
-                        </div>
-                        <div class="info-card">
-                            <div class="info-label">{{ __('profile.student.roll_number') }}</div>
-                            <div class="info-value">{{ $profile->roll_number ?? '-' }}</div>
-                        </div>
-                    </div>
                 </div>
 
             @else
