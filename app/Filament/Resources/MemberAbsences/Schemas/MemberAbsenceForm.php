@@ -4,6 +4,7 @@ namespace App\Filament\Resources\MemberAbsences\Schemas;
 
 use App\Models\AcademicMember;
 use App\Models\Employee;
+use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -27,8 +28,15 @@ class MemberAbsenceForm
                 'employee_' . $employee->id => "{$employee->last_name} {$employee->first_name}",
             ]);
 
+        $teachers = User::query()->where('role', 'teacher')
+            ->orderBy('name')
+            ->get()
+            ->mapWithKeys(fn($teacher) => [
+                'teacher_' . $teacher->id => $teacher->name,
+            ]);
         // Merge both collections into one
         $members = $academicMembers->merge($employees);
+        $members = $members->merge($teachers);
 
         return $schema->components([
             Select::make('member_key')
@@ -53,6 +61,7 @@ class MemberAbsenceForm
                     'absent' => __('members_absence.form.status.absent'),
                     'late' => __('members_absence.form.status.late'),
                     'excused' => __('members_absence.form.status.excused'),
+                    'exit_before_time' => __('members_absence.form.status.exit_before_time'),
                 ])
                 ->default('present')
                 ->required(),

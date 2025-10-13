@@ -32,6 +32,7 @@ return [
             'absent' => 'غائب',
             'late' => 'متأخر',
             'excused' => 'معذور',
+            'exit_before_time' => 'خرج قبل الوقت',
         ]
     ],
     'table' => [
