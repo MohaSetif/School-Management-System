@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('group_id')->constrained()->onDelete('cascade');
             $table->foreignId('marked_by')->constrained('users')->onDelete('cascade');
             $table->date('attendance_date');
-            $table->enum('status', ['present', 'absent', 'late', 'excused'])->default('present');
+            $table->enum('status', ['present', 'absent', 'late', 'excused', 'exit_before_time'])->default('present');
             $table->text('notes')->nullable();
             $table->timestamps();
             

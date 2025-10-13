@@ -192,6 +192,7 @@
         .pill-absent  { background: var(--danger); }
         .pill-late    { background: #f59e0b; } /* amber */
         .pill-excused { background: #0ea5b7; } /* teal */
+        .pill-exit_before_time { background: #94a3b8; }
 
         /* Notes input */
         .notes-input {
@@ -298,7 +299,7 @@
 
                                     <td>
                                         <div class="status-group">
-                                            @foreach (['present','absent','late','excused'] as $status)
+                                            @foreach (['present','absent','late','excused', 'exit_before_time'] as $status)
                                                 <label class="status-label" for="status_{{ $student['id'] }}_{{ $status }}">
                                                     <input
                                                         id="status_{{ $student['id'] }}_{{ $status }}"

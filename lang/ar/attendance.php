@@ -20,6 +20,7 @@ return [
         'absent'  => 'غائب',
         'late'    => 'متأخر',
         'excused' => 'مُعفى',
+        'exit_before_time' => 'خروج قبل الوقت',
     ],
 
     'filters' => [
@@ -56,6 +57,7 @@ return [
     'status_absent'  => 'غائب',
     'status_late'    => 'متأخر',
     'status_excused' => 'مُعفى',
+    'status_exit_before_time' => 'خروج قبل الوقت',
 
     'notifications' => [
         'error_select_group_date' => 'خطأ',

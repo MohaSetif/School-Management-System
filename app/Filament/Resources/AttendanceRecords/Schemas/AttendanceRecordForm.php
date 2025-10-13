@@ -59,6 +59,7 @@ class AttendanceRecordForm
                         'absent'  => __('attendance.statuses.absent'),
                         'late'    => __('attendance.statuses.late'),
                         'excused' => __('attendance.statuses.excused'),
+                        'exit_before_time' => __('attendance.statuses.exit_before_time'),
                     ])
                     ->required()
                     ->default('present'),
