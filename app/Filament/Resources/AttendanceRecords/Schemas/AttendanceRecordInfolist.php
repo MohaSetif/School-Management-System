@@ -18,7 +18,7 @@ class AttendanceRecordInfolist
     {
         return $schema
             ->components([
-                 TextEntry::make('student.full_name')
+                TextEntry::make('student.full_name')
                     ->label(__('attendance.student'))
                     ->formatStateUsing(fn($state) => $state ?? '—'),
 
@@ -54,18 +54,28 @@ class AttendanceRecordInfolist
                         $fileName = 'ticket_' . $record->id . '.pdf';
                         $filePath = $directory . '/' . $fileName;
 
+                        // Configure mPDF for 80mm thermal printer format
                         $mpdf = new Mpdf([
                             'mode' => 'utf-8',
-                            'format' => [80, 60], // width 80mm, height 60mm
-                            'margin_top' => 2,
-                            'margin_bottom' => 2,
-                            'margin_left' => 2,
-                            'margin_right' => 2,
+                            'format' => [80, 120], // 80mm width, reasonable height
+                            'margin_left' => 0,
+                            'margin_right' => 0,
+                            'margin_top' => 0,
+                            'margin_bottom' => 0,
+                            'margin_header' => 0,
+                            'margin_footer' => 0,
+                            'orientation' => 'P',
+                            'autoScriptToLang' => true,
+                            'autoLangToFont' => true,
                         ]);
+                        
+                        // Critical: Set shrink to fit
+                        $mpdf->shrink_tables_to_fit = 1;
+                        
                         $mpdf->WriteHTML($html);
                         $mpdf->Output($filePath, 'F');
 
-                        return response()->download($filePath);
+                        return response()->download($filePath)->deleteFileAfterSend(true);
                     }),
             ]);
     }
