@@ -26,8 +26,17 @@
         }
 
         .header {
+            text-align: center;
+            display: block; /* remove flex layout */
             margin-bottom: 6px;
-            overflow: hidden;
+        }
+
+        .ticket-type.centered {
+            margin: 6px auto 0 auto;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .header-flex {
@@ -66,7 +75,9 @@
             padding: 4px 6px;
             border-radius: 4px;
             font-size: 11px;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .meta-top {
@@ -159,20 +170,11 @@
 <body>
     <div class="ticket">
         <div class="header">
-            <div class="header-flex">
-                <div class="header-left">
-                    <div class="school-name">
-                        {{ $record->school_name ?? 'مدرسة النور الابتدائية' }}
-                    </div>
-                    <div class="department">
-                        {{ $record->department ?? 'قسم التعليم الأساسي' }}
-                    </div>
-                </div>
-                <div class="header-right">
-                    <div class="ticket-type">
-                        {{ $record->status === 'absent' ? 'تذكرة غياب' : 'تذكرة تأخير' }}
-                    </div>
-                </div>
+            <div class="school-info">
+                <div class="school-name">{{ config('app.name') }}</div>
+            </div>
+            <div class="ticket-type centered">
+                {{ $record->status === 'absent' ? 'تذكرة غياب' : 'تذكرة تأخير' }}
             </div>
         </div>
 
@@ -194,11 +196,6 @@
         </div>
 
         <div class="row">
-            <div class="label">المادة</div>
-            <div class="value">{{ optional($record->subject)->name ?? '—' }}</div>
-        </div>
-
-        <div class="row">
             <div class="label">وضع الحضور</div>
             <div class="value">
                 @switch($record->status)
@@ -213,15 +210,14 @@
 
         <div class="reason">
             <div class="reason-label">السبب:</div>
-            <div>{{ $record->reason ?? '—' }}</div>
+            <div>{{ $record->notes ?? '—' }}</div>
         </div>
 
         <div class="footer">
             <div class="sig">
-                توقيع المعلم
+                التوقيع
             </div>
             <div class="meta">
-                <div>مرسل بواسطة: {{ optional($record->teacher)->name ?? '—' }}</div>
                 <div>طُبِع بتاريخ: {{ now()->format('Y-m-d H:i') }}</div>
             </div>
         </div>
