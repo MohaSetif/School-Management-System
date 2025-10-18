@@ -68,6 +68,11 @@ class SchoolSettingsForm
 
                 TextInput::make('date_established_number')
                     ->label(__('school_settings.fields.date_established_number')),
+
+                TextInput::make('working_days')
+                    ->label(__('school_settings.fields.working_days'))
+                    ->numeric()
+                    ->required(),
             ]);
     }
 }

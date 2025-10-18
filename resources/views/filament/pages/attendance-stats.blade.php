@@ -38,7 +38,7 @@
         </div>
 
         <div class="mt-6 text-center text-sm text-gray-500">
-            آخر تحديث: {{ now()->format('Y-m-d H:i') }}
+            آخر تحديث: {{ now()->addHour()->format('Y-m-d H:i') }}
         </div>
     </div>
 </x-filament-panels::page>

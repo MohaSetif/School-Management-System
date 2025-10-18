@@ -20,6 +20,7 @@ class SchoolSettings extends Model
         'identification_number',
         'date_established',
         'date_established_number',
+        'working_days'
     ];
 
     public function director(){

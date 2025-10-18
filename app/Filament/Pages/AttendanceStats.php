@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\Setting;
 use App\Models\Attendance;
 use App\Models\Attendance_record;
+use App\Models\SchoolSettings;
 use BackedEnum;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,7 @@ class AttendanceStats extends Page
 
     protected function loadStats(): void
     {
-        $totalDays = 45;
+        $totalDays = SchoolSettings::first()->working_days ?? 0;
 
         $totalStudents = Student::count();
 

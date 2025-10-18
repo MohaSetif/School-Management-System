@@ -14,6 +14,7 @@ return [
         'identification_number' => 'رقم التعريف',
         'date_established' => 'تاريخ الفتح',
         'date_established_number' => 'رقم قرار الفتح',
+        'working_days' => 'أيام العمل'
     ],
     'private' => 'خاصة',
     'public' => 'عامة',

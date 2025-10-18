@@ -30,6 +30,9 @@ class SchoolSettingsInfolist
                             ->label(__('school_settings.fields.director_id'))
                             ->badge()
                             ->color('primary'),
+
+                        TextEntry::make('working_days')
+                            ->label(__('school_settings.fields.working_days')),
                     ]),
 
                 Section::make(__('school_settings.locationDetails'))

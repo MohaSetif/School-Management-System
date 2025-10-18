@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('date_established_number')->nullable();
 
             $table->enum('school_type2', ['خاصة', 'عامة'])->required();
+            $table->integer('working_days')->nullable();
 
             $table->timestamps();
         });
