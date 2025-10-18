@@ -46,11 +46,6 @@ class AttendanceRecordResource extends Resource
         return AttendanceRecordForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return AttendanceRecordInfolist::configure($schema);
-    }
-
     public static function table(\Filament\Tables\Table $table): \Filament\Tables\Table
     {
         return AttendanceRecordsTable::configure($table);
