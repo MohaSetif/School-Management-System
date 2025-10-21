@@ -9,7 +9,7 @@ use App\Filament\Resources\StudyRecords\Pages\ViewStudyRecords;
 use App\Filament\Resources\StudyRecords\Schemas\StudyRecordsForm;
 use App\Filament\Resources\StudyRecords\Schemas\StudyRecordsInfolist;
 use App\Filament\Resources\StudyRecords\Tables\StudyRecordsTable;
-use App\Models\StudyRecords;
+use App\Models\StudyRecord;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,9 +18,9 @@ use Filament\Tables\Table;
 
 class StudyRecordsResource extends Resource
 {
-    protected static ?string $model = StudyRecords::class;
+    protected static ?string $model = StudyRecord::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBookOpen;
 
     public static function form(Schema $schema): Schema
     {
