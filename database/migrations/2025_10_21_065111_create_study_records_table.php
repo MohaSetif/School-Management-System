@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('field');
             $table->string('subject');
             $table->text('goal');
-            $table->enum('status', ['pending', 'seen', 'sent'])->default('pending');
+            $table->enum('status', ['pending', 'seen'])->default('pending');
             $table->text('remarks')->nullable();
             $table->timestamps();
         });
