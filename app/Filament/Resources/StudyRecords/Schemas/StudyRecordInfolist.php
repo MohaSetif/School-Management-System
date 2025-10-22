@@ -12,31 +12,22 @@ class StudyRecordInfolist
         return $schema
             ->components([
                 TextEntry::make('teacher_id')
-                    ->label(__('studyrecord.fields.teacher_id')),
+                    ->numeric(),
                 TextEntry::make('time')
-                    ->label(__('studyrecord.fields.time'))
                     ->dateTime(),
-                TextEntry::make('activity')
-                    ->label(__('studyrecord.fields.activity')),
-                TextEntry::make('field')
-                    ->label(__('studyrecord.fields.field')),
-                TextEntry::make('subject')
-                    ->label(__('studyrecord.fields.subject')),
+                TextEntry::make('activity'),
+                TextEntry::make('field'),
+                TextEntry::make('subject'),
                 TextEntry::make('goal')
-                    ->label(__('studyrecord.fields.goal'))
                     ->columnSpanFull(),
-                TextEntry::make('status')
-                    ->label(__('studyrecord.fields.status')),
+                TextEntry::make('status'),
                 TextEntry::make('remarks')
-                    ->label(__('studyrecord.fields.remarks'))
                     ->placeholder('-')
                     ->columnSpanFull(),
                 TextEntry::make('created_at')
-                    ->label(__('studyrecord.fields.created_at'))
                     ->dateTime()
                     ->placeholder('-'),
                 TextEntry::make('updated_at')
-                    ->label(__('studyrecord.fields.updated_at'))
                     ->dateTime()
                     ->placeholder('-'),
             ]);

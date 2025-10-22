@@ -33,7 +33,7 @@ class StudyRecordForm
                 TextInput::make('field')
                     ->label(__('studyrecord.fields.field'))
                     ->required(),
-                Select::make('subject_id')
+                Select::make('subject')
                     ->label(__('studyrecord.fields.subject'))
                     ->options(fn() => Auth::user()->teacher->subjects
                         ->pluck('name', 'id'))
