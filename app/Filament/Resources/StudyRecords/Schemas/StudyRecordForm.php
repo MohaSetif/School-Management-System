@@ -16,13 +16,13 @@ class StudyRecordForm
     {
         return $schema
             ->components([
-                TextInput::make('teacher_id')
+                TextInput::make('teacher.name')
                     ->label(__('studyrecord.fields.teacher_id'))
                     ->default(fn() => Auth::user()->name)
                     ->disabled()
                     ->dehydrated(false),
                 Hidden::make('teacher_id')
-                    ->default(fn() => Auth::id())
+                    ->default(fn() => Auth::user()->teacher->id)
                     ->required(),
                 DateTimePicker::make('time')
                     ->label(__('studyrecord.fields.time'))
@@ -33,7 +33,7 @@ class StudyRecordForm
                 TextInput::make('field')
                     ->label(__('studyrecord.fields.field'))
                     ->required(),
-                Select::make('subject')
+                Select::make('subject_id')
                     ->label(__('studyrecord.fields.subject'))
                     ->options(fn() => Auth::user()->teacher->subjects
                         ->pluck('name', 'id'))

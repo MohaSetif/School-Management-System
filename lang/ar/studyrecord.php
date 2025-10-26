@@ -1,12 +1,14 @@
 <?php
 
 return [
+    'mainTitle' => 'دفتر النصوص',
     'navigation' => [
         'label' => 'دفتر النصوص',
         'group' => 'إدارة الأكاديمية',
     ],
+
     'fields' => [
-        'teacher_id' => 'معرّف الأستاذ',
+        'teacher_id' => 'الأستاذ',
         'time' => 'الوقت',
         'activity' => 'النشاط',
         'field' => 'المجال',
@@ -22,11 +24,8 @@ return [
         'updated_at' => 'تاريخ التحديث',
     ],
 
-    'actions' => [
-        'view' => 'عرض',
-        'edit' => 'تعديل',
-        'delete' => 'حذف',
+    'placeholders' => [
+        'no_goal' => 'لا يوجد هدف محدد',
+        'no_remarks' => 'لا توجد ملاحظات',
     ],
-
-    'mainTitle' => 'دفتر النصوص',
 ];

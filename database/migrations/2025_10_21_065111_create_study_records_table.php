@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('time');
             $table->string('activity');
             $table->string('field');
-            $table->string('subject');
+            $table->string('subject_id');
             $table->text('goal');
             $table->enum('status', ['pending', 'seen'])->default('pending');
             $table->text('remarks')->nullable();
