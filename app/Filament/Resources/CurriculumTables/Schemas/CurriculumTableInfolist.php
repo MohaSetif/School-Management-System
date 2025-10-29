@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CurriculumTables\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class CurriculumTableInfolist
@@ -11,27 +12,71 @@ class CurriculumTableInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('user_id')
-                    ->numeric(),
-                TextEntry::make('title'),
-                TextEntry::make('grade_level'),
-                TextEntry::make('subject'),
-                TextEntry::make('start_date')
-                    ->date(),
-                TextEntry::make('end_date')
-                    ->date(),
-                TextEntry::make('description')
-                    ->placeholder('-')
-                    ->columnSpanFull(),
-                TextEntry::make('table_data')
-                    ->placeholder('-')
-                    ->columnSpanFull(),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make('Basic Information')
+                    ->schema([
+                        TextEntry::make('title')
+                            ->label('Title')
+                            ->icon('heroicon-o-book-open')
+                            ->placeholder('-'),
+
+                        TextEntry::make('grade_level')
+                            ->label('Grade Level')
+                            ->icon('heroicon-o-academic-cap')
+                            ->placeholder('-'),
+
+                        TextEntry::make('subject')
+                            ->label('Subject')
+                            ->icon('heroicon-o-pencil')
+                            ->placeholder('-'),
+
+                        TextEntry::make('user_id')
+                            ->label('Created by User ID')
+                            ->icon('heroicon-o-user')
+                            ->numeric()
+                            ->placeholder('-'),
+                    ])
+                    ->columns(2),
+
+                Section::make('Dates')
+                    ->schema([
+                        TextEntry::make('start_date')
+                            ->label('Start Date')
+                            ->date()
+                            ->icon('heroicon-o-calendar')
+                            ->placeholder('-'),
+
+                        TextEntry::make('end_date')
+                            ->label('End Date')
+                            ->date()
+                            ->icon('heroicon-o-calendar')
+                            ->placeholder('-'),
+
+                        TextEntry::make('created_at')
+                            ->label('Created At')
+                            ->dateTime()
+                            ->icon('heroicon-o-clock')
+                            ->placeholder('-'),
+
+                        TextEntry::make('updated_at')
+                            ->label('Updated At')
+                            ->dateTime()
+                            ->icon('heroicon-o-clock')
+                            ->placeholder('-'),
+                    ])
+                    ->columns(2),
+
+                Section::make('Details')
+                    ->schema([
+                        TextEntry::make('description')
+                            ->label('Description')
+                            ->columnSpanFull()
+                            ->placeholder('-'),
+
+                        TextEntry::make('table_data')
+                            ->label('Table Data')
+                            ->columnSpanFull()
+                            ->placeholder('-'),
+                    ]),
             ]);
     }
 }
