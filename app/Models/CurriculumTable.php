@@ -10,10 +10,17 @@ class CurriculumTable extends Model
         'user_id',
         'title',
         'grade_level',
-        'subject',
+        'subjects',
         'start_date',
         'end_date',
-        'description',
-        'table_data',
     ];
+
+    protected $casts = [
+        'subjects' => 'array', // Automatically decode JSON
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

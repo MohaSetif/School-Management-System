@@ -16,11 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('grade_level');
-            $table->string('subject');
             $table->date('start_date');
             $table->date('end_date');
-            $table->text('description')->nullable();
-            $table->json('table_data')->nullable();
+            $table->json('subjects');
             $table->timestamps();
             
             $table->index(['user_id', 'grade_level', 'subject']);

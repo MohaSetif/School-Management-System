@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\CurriculumTables\Schemas;
 
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Schemas\Schema;
 
 class CurriculumTableInfolist
@@ -12,71 +13,94 @@ class CurriculumTableInfolist
     {
         return $schema
             ->components([
-                Section::make('Basic Information')
+                Section::make('General Information')
                     ->schema([
-                        TextEntry::make('title')
-                            ->label('Title')
-                            ->icon('heroicon-o-book-open')
-                            ->placeholder('-'),
-
                         TextEntry::make('grade_level')
                             ->label('Grade Level')
                             ->icon('heroicon-o-academic-cap')
                             ->placeholder('-'),
 
-                        TextEntry::make('subject')
-                            ->label('Subject')
-                            ->icon('heroicon-o-pencil')
+                        TextEntry::make('month')
+                            ->label('Month')
+                            ->icon('heroicon-o-calendar')
                             ->placeholder('-'),
 
-                        TextEntry::make('user_id')
-                            ->label('Created by User ID')
+                        TextEntry::make('year')
+                            ->label('Year')
+                            ->icon('heroicon-o-clock')
+                            ->placeholder('-'),
+
+                        TextEntry::make('school_name')
+                            ->label('School')
+                            ->icon('heroicon-o-building-library')
+                            ->placeholder('-'),
+
+                        TextEntry::make('teacher_name')
+                            ->label('Teacher')
                             ->icon('heroicon-o-user')
-                            ->numeric()
+                            ->placeholder('-'),
+
+                        TextEntry::make('user.name')
+                            ->label('Created by')
+                            ->icon('heroicon-o-user-circle')
                             ->placeholder('-'),
                     ])
-                    ->columns(2),
+                    ->columns(3),
 
-                Section::make('Dates')
+                Section::make('Subjects Overview')
                     ->schema([
-                        TextEntry::make('start_date')
-                            ->label('Start Date')
-                            ->date()
-                            ->icon('heroicon-o-calendar')
-                            ->placeholder('-'),
+                        RepeatableEntry::make('subjects')
+                            ->label('Subjects')
+                            ->schema([
+                                TextEntry::make('name')
+                                    ->label('Subject Name')
+                                    ->icon('heroicon-o-book-open'),
 
-                        TextEntry::make('end_date')
-                            ->label('End Date')
-                            ->date()
-                            ->icon('heroicon-o-calendar')
-                            ->placeholder('-'),
+                                RepeatableEntry::make('days')
+                                    ->label('Days')
+                                    ->schema([
+                                        TextEntry::make('day')
+                                            ->label('Day')
+                                            ->icon('heroicon-o-calendar-days'),
 
+                                        RepeatableEntry::make('topics')
+                                            ->label('Topics')
+                                            ->schema([
+                                                TextEntry::make('title')
+                                                    ->label('Topic Title')
+                                                    ->icon('heroicon-o-pencil'),
+
+                                                // ✅ FIXED: unique name for bullets
+                                                RepeatableEntry::make('bullets')
+                                                    ->label('Bullet Points')
+                                                    ->schema([
+                                                        TextEntry::make('point')
+                                                            ->label('Point')
+                                                            ->icon('heroicon-o-dot')
+                                                            ->placeholder('-'),
+                                                    ]),
+                                            ]),
+                                    ]),
+                            ]),
+                    ])
+                    ->collapsible()
+                    ->columns(1),
+
+                Section::make('Timestamps')
+                    ->schema([
                         TextEntry::make('created_at')
                             ->label('Created At')
-                            ->dateTime()
                             ->icon('heroicon-o-clock')
+                            ->dateTime()
                             ->placeholder('-'),
 
                         TextEntry::make('updated_at')
-                            ->label('Updated At')
-                            ->dateTime()
+                            ->label('Last Updated')
                             ->icon('heroicon-o-clock')
+                            ->dateTime()
                             ->placeholder('-'),
                     ])
                     ->columns(2),
-
-                Section::make('Details')
-                    ->schema([
-                        TextEntry::make('description')
-                            ->label('Description')
-                            ->columnSpanFull()
-                            ->placeholder('-'),
-
-                        TextEntry::make('table_data')
-                            ->label('Table Data')
-                            ->columnSpanFull()
-                            ->placeholder('-'),
-                    ]),
             ]);
     }
 }

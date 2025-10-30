@@ -4,6 +4,7 @@ namespace App\Filament\Resources\CurriculumTables\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -36,27 +37,31 @@ class CurriculumTableForm
                         return [];
                     })
                     ->required(),
-                Select::make('subject')
-                    ->options(function () {
-                        if (Auth::user()->isTeacher()) {
-                            return Auth::user()->teacher->subjects
-                                ->pluck('name', 'code')
-                                ->unique()
-                                ->sort()
-                                ->toArray();
-                        }
+                Repeater::make('subjects')
+                    ->label('Subjects')
+                    ->schema([
+                        TextInput::make('name')->label('Subject Name')->required(),
 
-                        return [];
-                    })
-                    ->required(),
+                        Repeater::make('days')
+                            ->schema([
+                                TextInput::make('day')->label('Day / Number')->required(),
+                                Repeater::make('topics')
+                                    ->schema([
+                                        TextInput::make('title')->label('Topic Title')->required(),
+                                        Repeater::make('bullets')
+                                            ->schema([
+                                                TextInput::make('')->label('Bullet point'),
+                                            ])
+                                            ->label('Bullet Points'),
+                                    ]),
+                            ])
+                            ->label('Days'),
+                    ])
+                    ->columnSpanFull(),
                 DatePicker::make('start_date')
                     ->required(),
                 DatePicker::make('end_date')
                     ->required(),
-                Textarea::make('description')
-                    ->columnSpanFull(),
-                Textarea::make('table_data')
-                    ->columnSpanFull(),
             ]);
     }
 }
