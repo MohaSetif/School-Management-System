@@ -79,4 +79,9 @@ class User extends Authenticatable
     {
         return $this->role === 'employee';
     }
+
+    public function curriculumTables()
+    {
+        return $this->hasMany(CurriculumTable::class);
+    }
 }
