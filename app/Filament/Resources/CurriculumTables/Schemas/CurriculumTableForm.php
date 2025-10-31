@@ -40,24 +40,50 @@ class CurriculumTableForm
                 Repeater::make('subjects')
                     ->label('Subjects')
                     ->schema([
-                        TextInput::make('name')->label('Subject Name')->required(),
+                        Select::make('name')
+                            ->label('Subject Name')
+                            ->options(function(){
+                                if (Auth::user()->isTeacher()) {
+                                    return Auth::user()->teacher->subjects
+                                        ->pluck('name', 'code')
+                                        ->unique()
+                                        ->sort()
+                                        ->toArray();
+                                }
+
+                                return [];
+                            })
+                            ->required(),
 
                         Repeater::make('days')
+                            ->label('Days')
                             ->schema([
-                                TextInput::make('day')->label('Day / Number')->required(),
+                                TextInput::make('day')
+                                    ->label('Day')
+                                    ->required(),
+
                                 Repeater::make('topics')
+                                    ->label('Topics')
                                     ->schema([
-                                        TextInput::make('title')->label('Topic Title')->required(),
+                                        TextInput::make('title')
+                                            ->label('Topic Title')
+                                            ->required(),
+
+                                        // ✅ Bullets must be structured as an array of {point: string}
                                         Repeater::make('bullets')
+                                            ->label('Bullet Points')
                                             ->schema([
-                                                TextInput::make('')->label('Bullet point'),
-                                            ])
-                                            ->label('Bullet Points'),
+                                                Textarea::make('point')
+                                                    ->label('Point')
+                                                    ->rows(1)
+                                                    ->placeholder('Enter bullet point...')
+                                                    ->required(),
+                                            ]),
                                     ]),
-                            ])
-                            ->label('Days'),
+                            ]),
                     ])
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->createItemButtonLabel('Add Subject'),
                 DatePicker::make('start_date')
                     ->required(),
                 DatePicker::make('end_date')
