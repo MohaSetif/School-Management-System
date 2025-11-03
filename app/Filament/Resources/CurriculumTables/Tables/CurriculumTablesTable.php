@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CurriculumTables\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -45,6 +46,11 @@ class CurriculumTablesTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                Action::make('planner')
+                    ->label('Planner')
+                    ->icon('heroicon-o-calendar-days')
+                    ->color('info')
+                    ->url(fn ($record) => route('filament.school_admin.resources.curriculum-tables.planner', ['record' => $record])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

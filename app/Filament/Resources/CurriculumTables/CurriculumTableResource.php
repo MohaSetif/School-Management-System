@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CurriculumTables;
 
+use App\Filament\Resources\CurriculumTableResource\Pages\CurriculumPlanner;
 use App\Filament\Resources\CurriculumTables\Pages\CreateCurriculumTable;
 use App\Filament\Resources\CurriculumTables\Pages\EditCurriculumTable;
 use App\Filament\Resources\CurriculumTables\Pages\ListCurriculumTables;
@@ -51,6 +52,7 @@ class CurriculumTableResource extends Resource
             'create' => CreateCurriculumTable::route('/create'),
             'view' => ViewCurriculumTable::route('/{record}'),
             'edit' => EditCurriculumTable::route('/{record}/edit'),
+            'planner' => CurriculumPlanner::route('/{record}/planner'),
         ];
     }
 }
