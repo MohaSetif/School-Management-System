@@ -76,7 +76,6 @@ class CurriculumTableInfolist
                                                     ->schema([
                                                         TextEntry::make('point')
                                                             ->label('Point')
-                                                            ->icon('heroicon-o-dot')
                                                             ->placeholder('-'),
                                                     ]),
                                             ]),

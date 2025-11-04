@@ -12,6 +12,7 @@ class CurriculumTable extends Model
         'grade_level',
         'subjects',
         'start_date',
+        'month',
         'end_date',
     ];
 

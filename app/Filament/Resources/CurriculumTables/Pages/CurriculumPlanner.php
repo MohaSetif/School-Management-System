@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\CurriculumTableResource\Pages;
 
 use App\Filament\Resources\CurriculumTables\CurriculumTableResource;
-use BackedEnum;
 use Filament\Resources\Pages\Page;
+use App\Models\CurriculumTable;
 
 class CurriculumPlanner extends Page
 {
@@ -12,18 +12,22 @@ class CurriculumPlanner extends Page
 
     protected string $view = 'filament.resources.curriculum-tables.pages.curriculum-planner';
 
-    protected static ?string $title = 'Curriculum Planner';
-
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
+    protected static ?string $title = 'Monthly Curriculum Planner';
 
     protected static ?string $navigationLabel = 'Planner';
 
     protected static ?string $slug = 'curriculum-planner';
 
-    public $record;
+    public $month;
+    public $records;
 
-    public function mount($record)
+    public function mount()
     {
-        $this->record = \App\Models\CurriculumTable::findOrFail($record);
+        // Example: Default to current month
+        $this->month = request()->get('month', now()->format('Y-m'));
+
+        $this->records = CurriculumTable::where('month', $this->month)
+            ->with('user') // if teacher info needed
+            ->get();
     }
 }

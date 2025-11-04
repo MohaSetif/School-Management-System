@@ -45,7 +45,7 @@ class CurriculumTableForm
                             ->options(function(){
                                 if (Auth::user()->isTeacher()) {
                                     return Auth::user()->teacher->subjects
-                                        ->pluck('name', 'code')
+                                        ->pluck('name')
                                         ->unique()
                                         ->sort()
                                         ->toArray();
@@ -88,6 +88,15 @@ class CurriculumTableForm
                     ->required(),
                 DatePicker::make('end_date')
                     ->required(),
+                DatePicker::make('month')
+                    ->label('Month')
+                    ->required()
+                    ->displayFormat('F Y') // shows "November 2025"
+                    ->native(false) // optional: better UI
+                    ->dehydrated(true)
+                    ->format('Y-m') // stores as "2025-11"
+                    ->placeholder('Select month')
+                    ->columnSpanFull(),
             ]);
     }
 }

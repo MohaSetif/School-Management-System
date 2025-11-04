@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('grade_level');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('month');
             $table->json('subjects');
             $table->timestamps();
             
