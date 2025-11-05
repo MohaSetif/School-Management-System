@@ -5,19 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التوزيع الشهري</title>
     <style>
+        /* ======== GENERAL STYLES ======== */
         body {
-            font-family: 'DejaVu Sans', sans-serif;
+            font-family: 'Amiri', 'Cairo', sans-serif;
             direction: rtl;
-            background: white;
-            color: black;
+            background: #fff;
+            color: #000;
             margin: 0;
             padding: 20px;
+            font-size: 15px;
+            line-height: 1.6;
         }
 
         .curriculum-docx {
             padding: 1rem 2rem;
-            background: white;
-            color: black;
+            background: #fff;
         }
 
         /* ======== HEADER ======== */
@@ -48,7 +50,7 @@
         .curriculum-table th,
         .curriculum-table td {
             border: 1px solid #000;
-            padding: 0.35rem;
+            padding: 0.4rem;
             vertical-align: top;
         }
 
@@ -60,7 +62,7 @@
         .day-cell {
             font-weight: bold;
             background: #f9f9f9;
-            width: 60px;
+            width: 70px;
         }
 
         .subject-cell {
@@ -103,6 +105,11 @@
         .page-break {
             page-break-after: always;
         }
+
+        /* ======== PRINT OPTIMIZATION ======== */
+        @page {
+            margin: 30px;
+        }
     </style>
 </head>
 <body>
@@ -133,19 +140,20 @@
                     <tr>
                         <th>الأيّام</th>
                         @foreach ($record->subjects as $subject)
-                            <th>{{ $subject['name'] ?? '-' }}</th>
+                            <th>{{ $subject['subject']['name'] ?? $subject['name'] ?? '-' }}</th>
                         @endforeach
                     </tr>
                 </thead>
 
                 <tbody>
                     @php
+                        // Reverse the day order (latest days first)
                         $allDays = collect($record->subjects)
                             ->pluck('days')
                             ->flatten(1)
                             ->pluck('day')
                             ->unique()
-                            ->sort()
+                            ->sortDesc()
                             ->values();
                     @endphp
 
