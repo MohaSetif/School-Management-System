@@ -16,9 +16,15 @@ class CurriculumPlanner extends Page
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-calendar-days';
 
-    protected static ?string $navigationLabel = 'Planner';
+    public function getTitle(): string
+    {
+        return __('curriculum.planner.title');
+    }
 
-    protected static ?string $slug = 'curriculum-planner';
+    public static function getNavigationLabel(): string
+    {
+        return __('curriculum.planner.navigation');
+    }
 
     public $record;
 

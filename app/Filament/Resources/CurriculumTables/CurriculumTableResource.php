@@ -28,6 +28,27 @@ class CurriculumTableResource extends Resource
         return CurriculumTableForm::configure($schema);
     }
 
+    public static function getNavigationLabel(): string
+    {
+        return __('curriculum.navigation.label');
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('curriculum.navigation.group');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('curriculum.mainTitle');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('curriculum.modelLabel');
+    
+    }
+
     public static function infolist(Schema $schema): Schema
     {
         return CurriculumTableInfolist::configure($schema);

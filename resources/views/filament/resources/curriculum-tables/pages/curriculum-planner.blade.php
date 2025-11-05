@@ -24,7 +24,7 @@
                             ->flatten(1)
                             ->pluck('day')
                             ->unique()
-                            ->sort()
+                            ->sortDesc()
                             ->values();
                     @endphp
 

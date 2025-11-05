@@ -21,9 +21,13 @@ class CurriculumTableForm
                     ->default(fn () => Auth::id())
                     ->dehydrated()
                     ->required(),
+
                 TextInput::make('title')
+                    ->label(__('curriculum.form.title'))
                     ->required(),
+
                 Select::make('grade_level')
+                    ->label(__('curriculum.form.grade_level'))
                     ->options(function () {
                         if (Auth::user()->isTeacher()) {
                             return Auth::user()->groups
@@ -33,15 +37,15 @@ class CurriculumTableForm
                                 ->map(fn ($name, $code) => "{$name} - {$code}")
                                 ->toArray();
                         }
-
                         return [];
                     })
                     ->required(),
+
                 Repeater::make('subjects')
-                    ->label('Subjects')
+                    ->label(__('curriculum.form.subjects'))
                     ->schema([
                         Select::make('name')
-                            ->label('Subject Name')
+                            ->label(__('curriculum.form.subject_name'))
                             ->options(function(){
                                 if (Auth::user()->isTeacher()) {
                                     return Auth::user()->teacher->subjects
@@ -50,52 +54,55 @@ class CurriculumTableForm
                                         ->sort()
                                         ->toArray();
                                 }
-
                                 return [];
                             })
                             ->required(),
 
                         Repeater::make('days')
-                            ->label('Days')
+                            ->label(__('curriculum.form.days'))
                             ->schema([
                                 TextInput::make('day')
-                                    ->label('Day')
+                                    ->label(__('curriculum.form.day'))
                                     ->required(),
 
                                 Repeater::make('topics')
-                                    ->label('Topics')
+                                    ->label(__('curriculum.form.topics'))
                                     ->schema([
                                         TextInput::make('title')
-                                            ->label('Topic Title')
+                                            ->label(__('curriculum.form.topic_title'))
                                             ->required(),
 
-                                        // ✅ Bullets must be structured as an array of {point: string}
                                         Repeater::make('bullets')
-                                            ->label('Bullet Points')
+                                            ->label(__('curriculum.form.bullets'))
                                             ->schema([
                                                 Textarea::make('point')
-                                                    ->label('Point')
+                                                    ->label(__('curriculum.form.point'))
                                                     ->rows(1)
-                                                    ->placeholder('Enter bullet point...')
+                                                    ->placeholder(__('curriculum.form.point_placeholder'))
                                                     ->required(),
                                             ]),
                                     ]),
                             ]),
                     ])
                     ->columnSpanFull()
-                    ->createItemButtonLabel('Add Subject'),
+                    ->createItemButtonLabel(__('curriculum.form.add_subject')),
+
                 DatePicker::make('start_date')
+                    ->label(__('curriculum.form.start_date'))
                     ->required(),
+
                 DatePicker::make('end_date')
+                    ->label(__('curriculum.form.end_date'))
                     ->required(),
+
                 DatePicker::make('month')
-                    ->label('Month')
+                    ->label(__('curriculum.form.month'))
                     ->required()
-                    ->displayFormat('F Y') // shows "November 2025"
-                    ->native(false) // optional: better UI
+                    ->displayFormat('F Y')
+                    ->native(false)
                     ->dehydrated(true)
-                    ->format('Y-m') // stores as "2025-11"
-                    ->placeholder('Select month')
+                    ->format('Y-m')
+                    ->placeholder(__('curriculum.form.select_month'))
                     ->columnSpanFull(),
             ]);
     }

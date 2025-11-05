@@ -13,69 +13,68 @@ class CurriculumTableInfolist
     {
         return $schema
             ->components([
-                Section::make('General Information')
+                Section::make(__('curriculum.infolist.general'))
                     ->schema([
                         TextEntry::make('grade_level')
-                            ->label('Grade Level')
+                            ->label(__('curriculum.infolist.grade_level'))
                             ->icon('heroicon-o-academic-cap')
                             ->placeholder('-'),
 
                         TextEntry::make('month')
-                            ->label('Month')
+                            ->label(__('curriculum.infolist.month'))
                             ->icon('heroicon-o-calendar')
                             ->placeholder('-'),
 
                         TextEntry::make('year')
-                            ->label('Year')
+                            ->label(__('curriculum.infolist.year'))
                             ->icon('heroicon-o-clock')
                             ->placeholder('-'),
 
                         TextEntry::make('school_name')
-                            ->label('School')
+                            ->label(__('curriculum.infolist.school'))
                             ->icon('heroicon-o-building-library')
                             ->placeholder('-'),
 
                         TextEntry::make('teacher_name')
-                            ->label('Teacher')
+                            ->label(__('curriculum.infolist.teacher'))
                             ->icon('heroicon-o-user')
                             ->placeholder('-'),
 
                         TextEntry::make('user.name')
-                            ->label('Created by')
+                            ->label(__('curriculum.infolist.created_by'))
                             ->icon('heroicon-o-user-circle')
                             ->placeholder('-'),
                     ])
                     ->columns(3),
 
-                Section::make('Subjects Overview')
+                Section::make(__('curriculum.infolist.subjects_overview'))
                     ->schema([
                         RepeatableEntry::make('subjects')
-                            ->label('Subjects')
+                            ->label(__('curriculum.infolist.subjects'))
                             ->schema([
                                 TextEntry::make('name')
-                                    ->label('Subject Name')
+                                    ->label(__('curriculum.infolist.subject_name'))
                                     ->icon('heroicon-o-book-open'),
 
                                 RepeatableEntry::make('days')
-                                    ->label('Days')
+                                    ->label(__('curriculum.infolist.days'))
                                     ->schema([
                                         TextEntry::make('day')
-                                            ->label('Day')
+                                            ->label(__('curriculum.infolist.day'))
                                             ->icon('heroicon-o-calendar-days'),
 
                                         RepeatableEntry::make('topics')
-                                            ->label('Topics')
+                                            ->label(__('curriculum.infolist.topics'))
                                             ->schema([
                                                 TextEntry::make('title')
-                                                    ->label('Topic Title')
+                                                    ->label(__('curriculum.infolist.topic_title'))
                                                     ->icon('heroicon-o-pencil'),
 
-                                                // ✅ FIXED: unique name for bullets
                                                 RepeatableEntry::make('bullets')
-                                                    ->label('Bullet Points')
+                                                    ->label(__('curriculum.infolist.bullets'))
                                                     ->schema([
                                                         TextEntry::make('point')
-                                                            ->label('Point')
+                                                            ->label(__('curriculum.infolist.point'))
                                                             ->placeholder('-'),
                                                     ]),
                                             ]),
@@ -85,16 +84,16 @@ class CurriculumTableInfolist
                     ->collapsible()
                     ->columns(1),
 
-                Section::make('Timestamps')
+                Section::make(__('curriculum.infolist.timestamps'))
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Created At')
+                            ->label(__('curriculum.infolist.created_at'))
                             ->icon('heroicon-o-clock')
                             ->dateTime()
                             ->placeholder('-'),
 
                         TextEntry::make('updated_at')
-                            ->label('Last Updated')
+                            ->label(__('curriculum.infolist.updated_at'))
                             ->icon('heroicon-o-clock')
                             ->dateTime()
                             ->placeholder('-'),
