@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->role === 'teacher';
     }
 
+    public function schoolSettings()
+    {
+        return $this->hasOne(SchoolSettings::class, 'director_id');
+    }
+
     public function teacher(): HasOne
     {
         return $this->hasOne(Teacher::class, 'user_id');

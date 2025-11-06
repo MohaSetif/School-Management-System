@@ -1,3 +1,8 @@
+@php
+use App\Models\Group;
+use App\Models\SchoolSettings;
+@endphp
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -5,7 +10,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التوزيع الشهري</title>
     <style>
-        /* ======== GENERAL STYLES ======== */
         body {
             font-family: 'Amiri', 'Cairo', sans-serif;
             direction: rtl;
@@ -22,7 +26,6 @@
             background: #fff;
         }
 
-        /* ======== HEADER ======== */
         .header-table {
             width: 100%;
             border-collapse: collapse;
@@ -35,7 +38,6 @@
             vertical-align: top;
         }
 
-        /* ======== MAIN TABLE ======== */
         .table-container {
             overflow-x: auto;
         }
@@ -88,7 +90,6 @@
             content: "ـ ";
         }
 
-        /* ======== FOOTER ======== */
         .footer-table {
             width: 100%;
             text-align: center;
@@ -106,7 +107,6 @@
             page-break-after: always;
         }
 
-        /* ======== PRINT OPTIMIZATION ======== */
         @page {
             margin: 30px;
         }
@@ -114,95 +114,102 @@
 </head>
 <body>
     <div class="curriculum-docx">
-    @foreach ($curriculums as $index => $record)
-        {{-- ======== HEADER ======== --}}
-        <header class="curriculum-header">
-            <table class="header-table">
-                <tr>
-                    <td>مديرية التربية والتعليم: لولاية سطيف</td>
-                    <td>الموسم الدراسي: {{ now()->year - 1 }}/{{ now()->year }}</td>
-                </tr>
-                <tr>
-                    <td>مفتشية التربية والتعليم: لمقاطعة قجال</td>
-                    <td>الصف: {{ $record->grade_level ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <td>ابتدائية: {{ $record->user->school_name ?? 'معزوز لخضر ـ أولاد صابرـ' }}</td>
-                    <td>الأستاذ: {{ $record->user->name ?? '-' }}</td>
-                </tr>
-            </table>
-        </header>
+        @foreach ($curriculums as $index => $record)
+            @php
 
-        {{-- ======== MAIN TABLE ======== --}}
-        <div class="table-container">
-            <table class="curriculum-table">
-                <thead>
+                $schoolName = env('APP_NAME');
+                $province = env('SCHOOL_PROVINCE');
+                $district = env('SCHOOL_DISTRICT');
+                
+                $group = Group::select('name', 'code')
+                    ->where('id', $record->grade_level)
+                    ->first();
+
+                $groupName = $group ? "{$group->name} - {$group->code}" : ($record->grade_level ?? '-');
+            @endphp
+
+            <header class="curriculum-header">
+                <table class="header-table">
                     <tr>
-                        <th>الأيّام</th>
-                        @foreach ($record->subjects as $subject)
-                            <th>{{ $subject['subject']['name'] ?? $subject['name'] ?? '-' }}</th>
-                        @endforeach
+                        <td>مديرية التربية والتعليم لولاية {{ $province }}</td>
+                        <td>الموسم الدراسي: {{ now()->year - 1 }}/{{ now()->year }}</td>
                     </tr>
-                </thead>
+                    <tr>
+                        <td>مفتشية التربية والتعليم لمقاطعة {{ $district }}</td>
+                        <td>الصف: {{ $groupName }}</td>
+                    </tr>
+                    <tr>
+                        <td>ابتدائية: {{ $schoolName }}</td>
+                        <td>الأستاذ: {{ $record->user->name ?? '-' }}</td>
+                    </tr>
+                </table>
+            </header>
 
-                <tbody>
-                    @php
-                        // Reverse the day order (latest days first)
-                        $allDays = collect($record->subjects)
-                            ->pluck('days')
-                            ->flatten(1)
-                            ->pluck('day')
-                            ->unique()
-                            ->sortDesc()
-                            ->values();
-                    @endphp
-
-                    @foreach ($allDays as $day)
+            <div class="table-container">
+                <table class="curriculum-table">
+                    <thead>
                         <tr>
-                            <td class="day-cell">{{ $day }}</td>
-
+                            <th>الأيّام</th>
                             @foreach ($record->subjects as $subject)
-                                @php
-                                    $dayData = collect($subject['days'] ?? [])->firstWhere('day', $day);
-                                @endphp
-                                <td class="subject-cell">
-                                    @if ($dayData)
-                                        @foreach ($dayData['topics'] ?? [] as $topic)
-                                            <p class="topic-line">
-                                                {{ $topic['title'] ?? '' }}
-                                            </p>
-                                            @if (!empty($topic['bullets']))
-                                                <ul class="topic-points">
-                                                    @foreach ($topic['bullets'] as $bullet)
-                                                        <li>{{ $bullet['point'] ?? '' }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </td>
+                                <th>{{ $subject['subject']['name'] ?? $subject['name'] ?? '-' }}</th>
                             @endforeach
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
 
-        {{-- ======== FOOTER ======== --}}
-        <footer class="signatures">
-            <table class="footer-table">
-                <tr>
-                    <td>الأستاذ</td>
-                    <td>السيد المدير</td>
-                    <td>السيد المفتش</td>
-                </tr>
-            </table>
-        </footer>
+                    <tbody>
+                        @php
+                            $allDays = collect($record->subjects)
+                                ->pluck('days')
+                                ->flatten(1)
+                                ->pluck('day')
+                                ->unique()
+                                ->sort()
+                                ->values();
+                        @endphp
 
-        @if (!$loop->last)
-            <div class="page-break"></div>
-        @endif
-    @endforeach
+                        @foreach ($allDays as $day)
+                            <tr>
+                                <td class="day-cell">{{ $day }}</td>
+
+                                @foreach ($record->subjects as $subject)
+                                    @php
+                                        $dayData = collect($subject['days'] ?? [])->firstWhere('day', $day);
+                                    @endphp
+                                    <td class="subject-cell">
+                                        @if ($dayData)
+                                            @foreach ($dayData['topics'] ?? [] as $topic)
+                                                <p class="topic-line">{{ $topic['title'] ?? '' }}</p>
+                                                @if (!empty($topic['bullets']))
+                                                    <ul class="topic-points">
+                                                        @foreach ($topic['bullets'] as $bullet)
+                                                            <li>{{ $bullet['point'] ?? '' }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="signatures">
+                <table class="footer-table">
+                    <tr>
+                        <td>الأستاذ</td>
+                        <td>السيد المدير</td>
+                        <td>السيد المفتش</td>
+                    </tr>
+                </table>
+            </footer>
+
+            @if (!$loop->last)
+                <div class="page-break"></div>
+            @endif
+        @endforeach
     </div>
 </body>
 </html>
