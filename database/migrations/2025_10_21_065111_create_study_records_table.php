@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('activity');
             $table->string('field');
             $table->string('subject_id');
+            $table->string('grade_level');
             $table->text('goal');
             $table->enum('status', ['pending', 'seen'])->default('pending');
             $table->text('remarks')->nullable();

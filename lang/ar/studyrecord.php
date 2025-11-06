@@ -13,6 +13,8 @@ return [
         'activity' => 'النشاط',
         'field' => 'المجال',
         'subject' => 'المادة',
+        'subject_id' => 'المادة',
+        'grade_level' => 'القسم',
         'goal' => 'الهدف',
         'status' => 'الحالة',
         'statuses' => [
@@ -22,6 +24,13 @@ return [
         'remarks' => 'ملاحظات',
         'created_at' => 'تاريخ الإنشاء',
         'updated_at' => 'تاريخ التحديث',
+    ],
+
+    'actions' => [
+        'view' => 'عرض',
+        'edit' => 'تعديل',
+        'delete' => 'حذف',
+        'download' => 'تحميل الملف',
     ],
 
     'placeholders' => [

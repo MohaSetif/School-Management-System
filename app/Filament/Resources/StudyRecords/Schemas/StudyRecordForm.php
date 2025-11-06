@@ -27,6 +27,20 @@ class StudyRecordForm
                 DateTimePicker::make('time')
                     ->label(__('studyrecord.fields.time'))
                     ->required(),
+                Select::make('grade_level')
+                    ->label(__('studyrecord.fields.grade_level'))
+                    ->options(function () {
+                        if (Auth::user()->isTeacher()) {
+                            return Auth::user()->groups
+                                ->pluck('name', 'code')
+                                ->unique()
+                                ->sort()
+                                ->map(fn ($name, $code) => "{$name} - {$code}")
+                                ->toArray();
+                        }
+                        return [];
+                    })
+                    ->required(),
                 TextInput::make('activity')
                     ->label(__('studyrecord.fields.activity'))
                     ->required(),
@@ -35,22 +49,22 @@ class StudyRecordForm
                     ->required(),
                 Select::make('subject_id')
                     ->label(__('studyrecord.fields.subject'))
-                    ->options(fn() => Auth::user()->teacher->subjects
-                        ->pluck('name', 'id'))
+                    ->options(function () {
+                        if (Auth::user()->isTeacher()) {
+                            return  Auth::user()->teacher->subjects
+                                ->pluck('name', 'id')
+                                ->unique()
+                                ->sort()
+                                ->toArray();
+                        }
+                        return [];
+                    })
                     ->searchable()
                     ->required(),
                 Textarea::make('goal')
                     ->label(__('studyrecord.fields.goal'))
                     ->required()
                     ->columnSpanFull(),
-                Select::make('status')
-                    ->label(__('studyrecord.fields.status'))
-                    ->required()
-                    ->options([
-                        'pending' => __('studyrecord.fields.statuses.pending'),
-                        'seen' => __('studyrecord.fields.statuses.seen'),
-                    ])
-                    ->default('pending'),
                 Textarea::make('remarks')
                     ->label(__('studyrecord.fields.remarks'))
                     ->columnSpanFull(),

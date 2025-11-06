@@ -12,6 +12,7 @@ class StudyRecord extends Model
         'activity',
         'field',
         'subject_id',
+        'grade_level',
         'goal',
         'status',
     ];

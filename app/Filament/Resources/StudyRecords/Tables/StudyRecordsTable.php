@@ -2,12 +2,15 @@
 
 namespace App\Filament\Resources\StudyRecords\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Mpdf\Mpdf;
 
 class StudyRecordsTable
 {
@@ -15,7 +18,7 @@ class StudyRecordsTable
     {
         return $table
             ->columns([
-                TextColumn::make('teacher_id')
+                TextColumn::make('teacher.user.name')
                     ->label(__('studyrecord.fields.teacher_id'))
                     ->sortable(),
                 TextColumn::make('time')
@@ -28,11 +31,26 @@ class StudyRecordsTable
                 TextColumn::make('field')
                     ->label(__('studyrecord.fields.field'))
                     ->searchable(),
-                TextColumn::make('subject')
+                TextColumn::make('subject.name')
                     ->label(__('studyrecord.fields.subject'))
                     ->searchable(),
                 TextColumn::make('status')
                     ->label(__('studyrecord.fields.status'))
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        'seen'    => __('studyrecord.fields.statuses.seen'),
+                        'pending' => __('studyrecord.fields.statuses.pending'),
+                        default   => $state,
+                    })
+                    ->badge() // render as badge
+                    ->colors([
+                        'success' => 'seen',
+                        'warning' => 'pending',
+                    ])
+                    ->icons([
+                        'heroicon-o-check-circle' => 'seen',
+                        'heroicon-o-clock'        => 'pending',
+                    ])
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->label(__('studyrecord.fields.created_at'))
@@ -51,6 +69,30 @@ class StudyRecordsTable
             ->recordActions([
                 ViewAction::make()->label(__('studyrecord.actions.view')),
                 EditAction::make()->label(__('studyrecord.actions.edit')),
+                Action::make('download')
+                    ->label(__('studyrecord.actions.download'))
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success')
+                    ->action(function ($record) {
+                        $html = view('pdf.record-card', [
+                            'record'   => $record->load(['teacher', 'subject']),
+                            'school'   => env('APP_NAME'),
+                            'province' => env('SCHOOL_PROVINCE'),
+                            'district' => env('SCHOOL_DISTRICT'),
+                        ])->render();
+
+                        $mpdf = new Mpdf([
+                            'format' => 'A4',
+                            'orientation' => 'P',
+                        ]);
+
+                        $mpdf->WriteHTML($html);
+                        $pdfContent = $mpdf->Output('', 'S');
+
+                        return response($pdfContent)
+                            ->header('Content-Type', 'application/pdf')
+                            ->header('Content-Disposition', 'attachment; filename="study-record-'.$record->id.'.pdf"');
+                    })
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

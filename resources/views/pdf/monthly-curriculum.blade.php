@@ -51,6 +51,11 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
             line-height: 1.7;
         }
 
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
         .curriculum-docx {
             background: #fff;
             padding: 2rem 2rem 3rem;
@@ -187,6 +192,10 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
 </head>
 
 <body>
+    <div class="header">
+        <h3>الجمهورية الجزائرية الديمقراطية الشعبية</h3>
+        <h4>وزارة التربية الوطنية</h4>
+    </div>
     <div class="curriculum-docx">
         @foreach ($curriculums as $record)
             @php
@@ -204,7 +213,6 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
                     ->flatten(1)
                     ->pluck('day')
                     ->unique()
-                    ->sort()
                     ->values();
             @endphp
 
