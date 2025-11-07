@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\StudyRecords\Tables;
 
+use App\Models\StudyRecord;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -69,30 +70,12 @@ class StudyRecordsTable
             ->recordActions([
                 ViewAction::make()->label(__('studyrecord.actions.view')),
                 EditAction::make()->label(__('studyrecord.actions.edit')),
-                Action::make('download')
-                    ->label(__('studyrecord.actions.download'))
+                Action::make('downloadPdf')
+                    ->label('تحميل')
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
-                    ->action(function ($record) {
-                        $html = view('pdf.record-card', [
-                            'record'   => $record->load(['teacher', 'subject']),
-                            'school'   => env('APP_NAME'),
-                            'province' => env('SCHOOL_PROVINCE'),
-                            'district' => env('SCHOOL_DISTRICT'),
-                        ])->render();
-
-                        $mpdf = new Mpdf([
-                            'format' => 'A4',
-                            'orientation' => 'P',
-                        ]);
-
-                        $mpdf->WriteHTML($html);
-                        $pdfContent = $mpdf->Output('', 'S');
-
-                        return response($pdfContent)
-                            ->header('Content-Type', 'application/pdf')
-                            ->header('Content-Disposition', 'attachment; filename="study-record-'.$record->id.'.pdf"');
-                    })
+                    ->url(fn (StudyRecord $record): string => route('study-records.download', $record))
+                    ->openUrlInNewTab(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -11,3 +11,5 @@ Route::get('/', function () {
 Route::get('/download-curriculum/{month}', [CurriculumDownloadController::class, 'download'])
     ->name('download.curriculum')
     ->middleware('auth');
+
+Route::get('/study-records/{id}/download', [App\Http\Controllers\StudyRecordDownloadController::class, 'download'])->name('study-records.download');
