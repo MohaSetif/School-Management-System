@@ -43,7 +43,7 @@ class TeacherStats extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $subjectCounts->keys()->toArray(),
+            'labels' => $subjectCounts->pluck('name')->toArray(),
         ];
     }
 

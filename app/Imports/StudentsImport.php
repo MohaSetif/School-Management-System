@@ -9,80 +9,125 @@ use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Imports\HeadingRowFormatter;
-use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate; // 👈 import this class
+use PhpOffice\PhpSpreadsheet\Shared\Date as ExcelDate;
 
-// Disable automatic heading formatting globally
 HeadingRowFormatter::default('none');
 
 class StudentsImport implements ToModel, WithHeadingRow
 {
+    private array $groups = [];
+
+    public function __construct()
+    {
+        // Cache all groups once (IMPORTANT performance fix)
+        $this->groups = Group::all()->keyBy(function ($g) {
+            return $g->code . '_' . $g->name;
+        })->toArray();
+    }
+
     public function model(array $row)
     {
-        // Convert Excel serial date to Carbon if it's numeric
-        $dateOfBirth = null;
-        if (!empty($row['تاريخ الازدياد'])) {
-            if (is_numeric($row['تاريخ الازدياد'])) {
-                $dateOfBirth = Carbon::instance(ExcelDate::excelToDateTimeObject($row['تاريخ الازدياد']));
-            } else {
-                $dateOfBirth = Carbon::parse($row['تاريخ الازدياد']);
-            }
+        // -----------------------------
+        // 1. Validate required fields
+        // -----------------------------
+        $identifier = trim($row['رقم التعريف'] ?? '');
+
+        if (!$identifier) {
+            Log::warning('Skipped row: missing student_identifier', $row);
+            return null;
         }
 
-        $enrollmentDate = null;
-        if (!empty($row['تاريخ التسجيل'])) {
-            if (is_numeric($row['تاريخ التسجيل'])) {
-                $enrollmentDate = Carbon::instance(ExcelDate::excelToDateTimeObject($row['تاريخ التسجيل']));
-            } else {
-                $enrollmentDate = Carbon::parse($row['تاريخ التسجيل']);
-            }
-        }
+        // -----------------------------
+        // 2. Parse dates safely
+        // -----------------------------
+        $dateOfBirth = $this->parseDate($row['تاريخ الازدياد'] ?? null);
+        $enrollmentDate = $this->parseDate($row['تاريخ التسجيل'] ?? null);
 
+        // -----------------------------
+        // 3. Resolve group (FAST lookup)
+        // -----------------------------
         $groupId = null;
 
-        if (!empty($row['القسم']) && !empty($row['السنة'])) {
-            // Try to match both السنة (year) and القسم (class code)
-            $group = Group::where('name', $row['السنة'])
-                        ->where('code', $row['القسم'])
-                        ->first();
+        $code = $row['القسم'] ?? null;
+        $name = $row['السنة'] ?? null;
 
-            Log::info("Looking for group with code: {$row['القسم']} and name: {$row['السنة']}");
+        if ($code && $name) {
+            $key = $code . '_' . $name;
 
-            if (!$group) {
-                // Fallback: match by code only
-                $group = Group::where('code', $row['القسم'])->first();
-                Log::info("Fallback: Looking for group with code: {$row['القسم']}");
+            if (isset($this->groups[$key])) {
+                $groupId = $this->groups[$key]['id'];
+            } else {
+                Log::warning("Group not found: {$key}");
             }
-
-            $groupId = $group?->id;
-            Log::info('Importing student: ' . $row['اللقب'] . ' ' . $row['الاسم'] . ', Group: ' . ($group ? $group->name : 'Not Found'));
         }
 
+        // -----------------------------
+        // 4. Create student
+        // -----------------------------
         return new Student([
-            'student_identifier'      => $row['رقم التعريف'],
-            'last_name'               => $row['اللقب'],
-            'first_name'              => $row['الاسم'],
-            'gender'                  => $row['الجنس'] === 'ذكر' ? 'male' : 'female',
-            'date_of_birth'           => $dateOfBirth,
+            'student_identifier' => $identifier,
+            'last_name' => $row['اللقب'] ?? null,
+            'first_name' => $row['الاسم'] ?? null,
 
-            'is_judicial_birth'       => !empty($row['مولود بحكم']),
-            'has_birth_certificate'   => $row['عقد الميلاد'] ?? 'normal',
+            'gender' => $this->normalizeGender($row['الجنس'] ?? null),
+            'date_of_birth' => $dateOfBirth,
+
+            'is_judicial_birth' => !empty($row['مولود بحكم']),
+            'has_birth_certificate' => $row['عقد الميلاد'] ?? 'normal',
+
             'birth_registration_year' => $row['سنة التسجيل في سجل الولادات'] ?? null,
-            'birth_certificate_number'=> $row['رقم عقد الميلاد'] ?? null,
-            'place_of_birth'          => $row['مكان الازدياد'] ?? null,
+            'birth_certificate_number' => $row['رقم عقد الميلاد'] ?? null,
+            'place_of_birth' => $row['مكان الازدياد'] ?? null,
 
-            'academic_year'           => $row['السنة'] ?? null,
-            'group_id'                => $groupId,
-            'schooling_system'        => $row['نظام التمدرس'] ?? null,
-            'enrollment_number'       => $row['رقم القيد'] ?? null,
-            'enrollment_date'         => $enrollmentDate,
+            'academic_year' => $name,
+            'group_id' => $groupId,
 
-            'is_orphan'               => !empty($row['اليتم']),
-            'is_needy'                => !empty($row['معوز']),
-            'health_status'           => $row['الحالة الصحية'] ?? null,
-            'psychological_status'    => $row['الحالة النفسية'] ?? null,
-            'is_sector_child'         => !empty($row['أبناء القطاع']),
+            'schooling_system' => $row['نظام التمدرس'] ?? null,
+            'enrollment_number' => $row['رقم القيد'] ?? null,
+            'enrollment_date' => $enrollmentDate,
 
-            'is_active'               => true,
+            'is_orphan' => !empty($row['اليتم']),
+            'is_needy' => !empty($row['معوز']),
+            'health_status' => $row['الحالة الصحية'] ?? null,
+            'psychological_status' => $row['الحالة النفسية'] ?? null,
+            'is_sector_child' => !empty($row['أبناء القطاع']),
+
+            'is_active' => true,
         ]);
+    }
+
+    // -----------------------------
+    // Helpers
+    // -----------------------------
+
+    private function parseDate($value): ?Carbon
+    {
+        if (empty($value))
+            return null;
+
+        try {
+            if (is_numeric($value)) {
+                return Carbon::instance(ExcelDate::excelToDateTimeObject($value));
+            }
+
+            return Carbon::parse($value);
+        } catch (\Exception $e) {
+            Log::warning("Invalid date format", ['value' => $value]);
+            return null;
+        }
+    }
+
+    private function normalizeGender($value): string
+    {
+        return match (trim($value)) {
+            'ذكر' => 'male',
+            'أنثى' => 'female',
+            default => 'unknown',
+        };
+    }
+
+    public function headingRow(): int
+    {
+        return 7;
     }
 }

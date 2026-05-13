@@ -4,14 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
 
-            $table->string('student_identifier')->unique(); // رقم التعريف
+            $table->integer('student_identifier'); // رقم التعريف
             $table->string('last_name'); // اللقب
             $table->string('first_name'); // الاسم
             $table->enum('gender', ['male', 'female']); // الجنس

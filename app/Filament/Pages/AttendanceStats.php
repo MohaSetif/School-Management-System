@@ -28,13 +28,13 @@ class AttendanceStats extends Page
 
     protected function loadStats(): void
     {
-        $totalDays = SchoolSettings::first()->working_days ?? 0;
+        $totalDays = SchoolSettings::first()?->working_days ?? 0;
 
         $totalStudents = Student::count();
 
         $totalAttendances = $totalDays * $totalStudents;
         $totalabsences = Attendance_record::where('status', 'absent')->count();
-        $realisticAttendance = $totalAttendances - Attendance_record::where('status', 'absent')->count();
+        $realisticAttendance = $totalAttendances - $totalabsences; // reuse variable — avoids duplicate query
 
         $attendancePercent = $totalDays > 0
             ? round(($realisticAttendance * 100) / $totalAttendances, 2)

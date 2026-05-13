@@ -106,19 +106,25 @@ class BulkAttendance extends Page implements HasForms
         $students = Student::where('group_id', $this->group_id)
             ->where('is_active', true)
             ->orderBy('first_name')
-            ->get();
+            ->get(['id', 'first_name', 'last_name', 'student_identifier']);
 
-        $this->students = $students->map(function ($student) {
-            $existingRecord = Attendance_record::where('student_id', $student->id)
-                ->whereDate('attendance_date', $this->attendance_date)
-                ->first();
+        $studentIds = $students->pluck('id');
+
+        // Load all existing attendance records for these students on this date in ONE query
+        $existingRecords = Attendance_record::whereIn('student_id', $studentIds)
+            ->whereDate('attendance_date', $this->attendance_date)
+            ->get(['student_id', 'status', 'notes'])
+            ->keyBy('student_id');
+
+        $this->students = $students->map(function ($student) use ($existingRecords) {
+            $existingRecord = $existingRecords->get($student->id);
 
             return [
-                'id' => $student->id,
-                'name' => $student->full_name,
+                'id'                 => $student->id,
+                'name'               => $student->full_name,
                 'student_identifier' => $student->student_identifier,
-                'status' => $existingRecord?->status ?? 'present',
-                'notes' => $existingRecord?->notes ?? '',
+                'status'             => $existingRecord?->status ?? 'present',
+                'notes'              => $existingRecord?->notes ?? '',
             ];
         })->toArray();
     }
@@ -147,22 +153,24 @@ class BulkAttendance extends Page implements HasForms
             return;
         }
 
-        $attendanceDate = Carbon::parse($this->attendance_date)->startOfDay();
+        $attendanceDate = Carbon::parse($this->attendance_date)->startOfDay()->toDateString();
+        $markedBy = Auth::id(); // Resolved once server-side — never from user input
 
-        foreach ($this->students as $studentData) {
-            Attendance_record::updateOrCreate(
-                [
-                    'student_id' => $studentData['id'],
-                    'attendance_date' => $attendanceDate,
-                ],
-                [
-                    'group_id' => $this->group_id,
-                    'marked_by' => Auth::id(),
-                    'status' => $studentData['status'],
-                    'notes' => $studentData['notes'],
-                ]
-            );
-        }
+        // Build all rows for a single upsert — one INSERT/UPDATE statement for all students
+        $rows = array_map(fn ($studentData) => [
+            'student_id'      => $studentData['id'],
+            'attendance_date' => $attendanceDate,
+            'group_id'        => $this->group_id,
+            'marked_by'       => $markedBy,
+            'status'          => $studentData['status'],
+            'notes'           => $studentData['notes'],
+        ], $this->students);
+
+        Attendance_record::upsert(
+            $rows,
+            uniqueBy: ['student_id', 'attendance_date'], // unique constraint keys
+            update:   ['group_id', 'marked_by', 'status', 'notes']
+        );
 
         $this->checkConsecutiveAbsences();
 
@@ -175,16 +183,22 @@ class BulkAttendance extends Page implements HasForms
 
     protected function checkConsecutiveAbsences(): void
     {
-        // Get all students we just saved attendance for
         $studentIds = collect($this->students)->pluck('id');
 
+        // Build a name lookup map from the already-loaded students list — no extra query
+        $studentNames = collect($this->students)->pluck('name', 'id');
+
+        // Load ALL absences for ALL students in a single query, then group in PHP
+        $allAbsences = Attendance_record::whereIn('student_id', $studentIds)
+            ->where('status', 'absent')
+            ->orderBy('attendance_date')
+            ->get(['student_id', 'attendance_date'])
+            ->groupBy('student_id');
+
         foreach ($studentIds as $studentId) {
-            // Get all absences for this student ordered by date
-            $absences = Attendance_record::where('student_id', $studentId)
-                ->where('status', 'absent')
-                ->orderBy('attendance_date')
+            $absences = ($allAbsences->get($studentId) ?? collect())
                 ->pluck('attendance_date')
-                ->map(fn($d) => \Carbon\Carbon::parse($d)->startOfDay());
+                ->map(fn ($d) => Carbon::parse($d)->startOfDay());
 
             if ($absences->isEmpty()) {
                 continue;
@@ -194,46 +208,55 @@ class BulkAttendance extends Page implements HasForms
             $startDate = $absences[0];
 
             for ($i = 1; $i < $absences->count(); $i++) {
-                $prev = $absences[$i - 1];
+                $prev    = $absences[$i - 1];
                 $current = $absences[$i];
 
                 if ($current->isSameDay($prev->copy()->addDay())) {
-                    // Consecutive day
                     $streak++;
                 } else {
-                    // Streak broke, check previous streak
                     if ($streak >= 3) {
-                        $this->createAbsenceNotification($studentId, $startDate, $prev, $streak);
+                        $this->createAbsenceNotification(
+                            $studentId,
+                            $startDate,
+                            $prev,
+                            $streak,
+                            $studentNames->get($studentId, 'Unknown')
+                        );
                     }
-                    $streak = 1;
+                    $streak    = 1;
                     $startDate = $current;
                 }
             }
 
-            // Final check for the last streak
             if ($streak >= 3) {
-                $this->createAbsenceNotification($studentId, $startDate, $absences->last(), $streak);
+                $this->createAbsenceNotification(
+                    $studentId,
+                    $startDate,
+                    $absences->last(),
+                    $streak,
+                    $studentNames->get($studentId, 'Unknown')
+                );
             }
         }
     }
 
-    protected function createAbsenceNotification($studentId, $startDate, $endDate, $count): void
+    protected function createAbsenceNotification($studentId, $startDate, $endDate, $count, string $studentName = 'Unknown'): void
     {
         AbsenceNotification::create([
-            'student_id' => $studentId,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
+            'student_id'       => $studentId,
+            'start_date'       => $startDate,
+            'end_date'         => $endDate,
             'consecutive_days' => $count,
         ]);
 
-        // Also show a notification
+        // Student name is passed in from the already-loaded students list — no extra query
         Notification::make()
             ->title(__('attendance.notifications.consecutive_absences_title'))
             ->body(__('attendance.notifications.consecutive_absences_body', [
-                'student' => Student::find($studentId)?->full_name ?? 'Unknown',
-                'count' => $count,
-                'start' => $startDate->format('Y-m-d'),
-                'end' => $endDate->format('Y-m-d'),
+                'student' => $studentName,
+                'count'   => $count,
+                'start'   => $startDate->format('Y-m-d'),
+                'end'     => $endDate->format('Y-m-d'),
             ]))
             ->warning()
             ->send();
