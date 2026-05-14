@@ -9,7 +9,6 @@ use Filament\Widgets\ChartWidget;
 
 class TeacherStats extends ChartWidget
 {
-    // ✅ Make it non-static and set in getHeading()
     protected ?string $heading = null;
 
     public function getHeading(): string
@@ -43,7 +42,10 @@ class TeacherStats extends ChartWidget
                     ],
                 ],
             ],
-            'labels' => $subjectCounts->pluck('name')->toArray(),
+            'labels' => $subjectCounts
+                ->pluck('name')
+                ->map(fn($name) => __("profile.subjects.$name"))
+                ->toArray(),
         ];
     }
 
