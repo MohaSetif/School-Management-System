@@ -46,4 +46,6 @@ return [
             'body' => 'فشل في تحديث المواد: :message',
         ],
     ],
+
+    'purpose' => "Select the subjects you currently teach."
 ];

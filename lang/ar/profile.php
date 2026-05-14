@@ -8,6 +8,9 @@ return [
         'email' => 'البريد الإلكتروني',
     ],
 
+    'status' => 'الحالة',
+    'active' => 'نشط',
+
     'roles' => [
         'teacher' => 'أستاذ',
         'student' => 'تلميذ',
@@ -18,7 +21,8 @@ return [
 
     'teacher' => [
         'title' => 'المواد التي تُدرّس',
-        'save_button' => 'حفظ المواد',
+        'save_button' => 'حفظ',
+        'subjects' => 'المواد',
     ],
 
     'student' => [
@@ -46,4 +50,23 @@ return [
             'body' => 'فشل في تحديث المواد: :message',
         ],
     ],
+
+    'subjects' => [
+        'Mathematics' => 'الرياضيات',
+        'Science' => 'العلوم',
+        'English' => 'اللغة الإنجليزية',
+        'Arabic' => 'اللغة العربية',
+        'Islamic Studies' => 'العلوم الإسلامية',
+        'History' => 'التاريخ',
+        'Geography' => 'الجغرافيا',
+        'Physics' => 'الفيزياء',
+        'Chemistry' => 'الكيمياء',
+        'Biology' => 'علم الأحياء',
+        'Computer_science' => 'علوم الحاسب',
+        'Art' => 'الفن',
+        'Music' => 'الموسيقى',
+        'Physical_education' => 'التربية البدنية',
+    ],
+
+    'purpose' => 'اختر المواد التي تُدرّس حاليًا.'
 ];

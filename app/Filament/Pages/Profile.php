@@ -40,16 +40,18 @@ class Profile extends Page
         $this->user = Auth::user();
 
         $roleMap = [
-            'teacher'   => 'teacher',
-            'headmaster'=> 'headmaster',
-            'employee'  => 'employee',
+            'teacher' => 'teacher',
+            'headmaster' => 'headmaster',
+            'employee' => 'employee',
         ];
 
         $this->userType = $roleMap[$this->user->role] ?? 'default';
         $this->profile = $this->user->{$roleMap[$this->user->role]} ?? $this->user;
 
         if ($this->userType === 'teacher') {
-            $this->selectedSubjects = $this->profile->subjects?->pluck('id')->toArray() ?? [];
+            // Ensure a Teacher record exists for this user
+            $this->profile = \App\Models\Teacher::firstOrCreate(['user_id' => $this->user->id]);
+            $this->selectedSubjects = $this->profile->subjects()->pluck('subjects.id')->toArray();
             $this->subjects = cache()->remember('subjects.all', 3600, fn() => \App\Models\Subject::all());
         }
     }
@@ -79,6 +81,10 @@ class Profile extends Page
     {
         try {
             if ($this->userType !== 'teacher') {
+                throw new Exception(__('profile.errors.teacher_only'));
+            }
+
+            if (!($this->profile instanceof \App\Models\Teacher)) {
                 throw new Exception(__('profile.errors.teacher_only'));
             }
 
