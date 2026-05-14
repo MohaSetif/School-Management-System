@@ -38,10 +38,6 @@ class StudentsTable
                 TextColumn::make('academic_year')
                     ->label(__('students.fields.academic_year'))
                     ->sortable(),
-                
-                TextColumn::make('group_id')
-                    ->label(__('students.fields.group_id'))
-                    ->sortable(),
 
                 TextColumn::make('date_of_birth')
                     ->label(__('students.fields.date_of_birth')),
@@ -59,7 +55,8 @@ class StudentsTable
             ->filters([
                 SelectFilter::make('group_id')
                     ->label(__('students.filters.group'))
-                    ->relationship('group', 'name'),
+                    ->relationship('group', 'name')
+                    ->getOptionLabelFromRecordUsing(fn($record) => "{$record->name} (N°{$record->code})"),
 
                 SelectFilter::make('is_orphan')
                     ->label(__('students.filters.is_orphan')),

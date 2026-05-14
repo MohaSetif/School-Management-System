@@ -39,7 +39,7 @@ class EmployeeResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('resources.employees');
+        return __('resources.employee');
     }
 
     public static function form(Schema $schema): Schema

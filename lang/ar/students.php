@@ -43,7 +43,9 @@ return [
 
     'filters' => [
         'group' => 'الفوج',
-        'is_active' => 'الحالة',
+        'is_active' => 'حالة النشاط',
+        'is_orphan' => 'يتيم',
+        'is_needy' => 'محتاج',
     ],
 
     'actions' => [

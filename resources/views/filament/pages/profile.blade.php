@@ -408,8 +408,7 @@
                                         {{ __('profile.teacher.save_button') }}
                                     </span>
 
-                                    <span wire:loading class="inline-flex items-center gap-2">
-                                        Saving
+                                    <span wire:loading class="inline-flex items-center gap-12">
                                         <svg class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
                                             viewBox="0 0 24 24">
                                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
