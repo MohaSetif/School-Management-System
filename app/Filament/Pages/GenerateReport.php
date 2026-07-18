@@ -87,7 +87,7 @@ class GenerateReport extends Page implements HasForms
 
         $school = SchoolSettings::firstOrFail();
 
-        $content = (string) ($data['content'] ?? '<p></p>');
+        $content = (string) ($data['content'] ?? '');
 
         $html = view('pdf.report', [
             'school_name'   => $school->school_type . $school->school_name ?? '',

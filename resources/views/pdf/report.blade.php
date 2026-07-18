@@ -116,15 +116,13 @@
             <h4>{{ $directorate }}</h4>
             <h4>{{ $institution }}</h4>
             <h4>مقاطعة: {{ $municipality }}</h4>
-            <p>{{ $school_name }} - {{ $location }} -</p>
             <p>رقم الإرسال: {{ $ref_number }}</p>
         </div>
         
         <div class="left-info">
             <p>{{ $location }} في: {{ $date }}</p>
             <p>من: {{ $from }}</p>
-            <p>:إلى السيد</p>
-            <p>{{ $to }}</p>
+            <p>إلى السيد: {{ $to }}</p>
         </div>
     </div>
 

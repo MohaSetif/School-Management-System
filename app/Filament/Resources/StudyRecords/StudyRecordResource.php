@@ -71,6 +71,7 @@ class StudyRecordResource extends Resource
             'create' => CreateStudyRecord::route('/create'),
             'view' => ViewStudyRecord::route('/{record}'),
             'edit' => EditStudyRecord::route('/{record}/edit'),
+            'pdf' => Pages\StudyRecordPdf::route('/{record}/pdf'),
         ];
     }
 }

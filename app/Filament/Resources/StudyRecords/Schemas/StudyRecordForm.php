@@ -30,7 +30,7 @@ class StudyRecordForm
                 Select::make('grade_level')
                     ->label(__('studyrecord.fields.grade_level'))
                     ->options(function () {
-                        if (Auth::user()->isTeacher()) {
+                        if (Auth::user()->isTeacher() || Auth::user()->isHeadmaster()) {
                             return Auth::user()->groups
                                 ->pluck('name', 'code')
                                 ->unique()
@@ -50,7 +50,7 @@ class StudyRecordForm
                 Select::make('subject_id')
                     ->label(__('studyrecord.fields.subject'))
                     ->options(function () {
-                        if (Auth::user()->isTeacher()) {
+                        if (Auth::user()->isTeacher() || Auth::user()->isHeadmaster()) {
                             return  Auth::user()->teacher->subjects
                                 ->pluck('name', 'id')
                                 ->unique()
@@ -68,6 +68,22 @@ class StudyRecordForm
                 Textarea::make('remarks')
                     ->label(__('studyrecord.fields.remarks'))
                     ->columnSpanFull(),
+                Select::make('status')
+                    ->label(__('studyrecord.fields.status'))
+                    ->options(function (){
+                        if(Auth::user()->isHeadmaster()){
+                            return [
+                                'pending' => __('studyrecord.fields.statuses.pending'),
+                                'seen' => __('studyrecord.fields.statuses.seen'),
+                            ];
+                        }
+                        else{
+                            return [
+                                'pending' => __('studyrecord.fields.statuses.pending'),
+                            ];
+                        }
+                    })
+                    ->required()
             ]);
     }
 }

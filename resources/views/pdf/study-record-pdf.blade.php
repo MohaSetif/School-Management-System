@@ -1,114 +1,184 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>سجل رقم {{ $record->id }}</title>
-    <style>
-        body {
-            direction: rtl;
-            text-align: right;
-            background-color: #f8f9fa;
-            color: #333;
-            margin: 40px auto;
-            max-width: 800px;
-            line-height: 1.8;
-        }
+<meta charset="UTF-8">
 
-        h1 {
-            text-align: center;
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            font-size: 26px;
-            letter-spacing: 1px;
-        }
+<style>
+    @page {
+        margin: 18mm;
+    }
 
-        .record-info {
-            background-color: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-        }
+    body {
+        font-family: "Cairo", "DejaVu Sans", sans-serif;
+        direction: rtl;
+        color: #222;
+        font-size: 13px;
+        line-height: 1.6;
+    }
 
-        .record-info p {
-            margin: 8px 0;
-            font-size: 16px;
-        }
+    *{
+        box-sizing:border-box;
+    }
 
-        .record-info span {
-            font-weight: bold;
-            color: #007bff;
-        }
+    .header{
+        border-bottom:3px solid #1f4e79;
+        padding-bottom:12px;
+        margin-bottom:20px;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-        }
+    .title{
+        font-size:24px;
+        font-weight:bold;
+        color:#1f4e79;
+        margin:0;
+    }
 
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 12px;
-            text-align: center;
-            font-size: 15px;
-        }
+    .subtitle{
+        color:#666;
+        margin-top:4px;
+        font-size:12px;
+    }
 
-        th {
-            background-color: #007bff;
-            color: white;
-            font-weight: normal;
-        }
+    .info-table{
+        width:100%;
+        border-collapse:collapse;
+        margin-bottom:20px;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f2f7fb;
-        }
+    .info-table td{
+        border:1px solid #d9d9d9;
+        padding:10px;
+        vertical-align:top;
+    }
 
-        tr:hover {
-            background-color: #e9f3ff;
-        }
+    .label{
+        width:18%;
+        font-weight:bold;
+        color:#1f4e79;
+        background:#f4f7fb;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 14px;
-            color: #777;
-        }
-    </style>
+    .value{
+        width:32%;
+    }
+
+    table.data{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:15px;
+    }
+
+    table.data th{
+        background:#1f4e79;
+        color:white;
+        font-weight:bold;
+        padding:10px;
+        border:1px solid #1f4e79;
+        font-size:13px;
+    }
+
+    table.data td{
+        border:1px solid #d9d9d9;
+        padding:10px;
+        text-align:center;
+        font-size:13px;
+    }
+
+    .section-title{
+        font-size:16px;
+        font-weight:bold;
+        color:#1f4e79;
+        margin:18px 0 10px;
+        border-right:4px solid #1f4e79;
+        padding-right:8px;
+    }
+
+    .footer{
+        margin-top:35px;
+        border-top:1px solid #ccc;
+        padding-top:10px;
+        font-size:11px;
+        color:#777;
+        text-align:center;
+    }
+
+    .status{
+        font-weight:bold;
+    }
+
+</style>
 </head>
-<body>
-    <h1>سجل رقم {{ $record->id }}</h1>
 
-    <div class="record-info">
-        <p><span>النشاط:</span> {{ $record->activity }}</p>
-        <p><span>المجال:</span> {{ $record->field }}</p>
-        <p><span>المعلم:</span> {{ $record->teacher->user->name ?? '-' }}</p>
-        <p><span>المادة:</span> {{ $record->subject->name ?? '-' }}</p>
+<body>
+
+<div class="header">
+    <div class="title">
+        تقرير السجل
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>التاريخ</th>
-                <th>الحالة</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ $record->created_at->format('Y-m-d') }}</td>
-                <td>{{ $record->status }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="subtitle">
+        رقم السجل: {{ $record->id }}
+    </div>
+</div>
 
-    <footer>
-        <p>تم إنشاء هذا السجل تلقائياً بواسطة النظام</p>
-    </footer>
+
+<table class="info-table">
+
+<tr>
+    <td class="label">النشاط</td>
+    <td class="value">{{ $record->activity }}</td>
+
+    <td class="label">المجال</td>
+    <td class="value">{{ $record->field }}</td>
+</tr>
+
+<tr>
+    <td class="label">المعلم</td>
+    <td class="value">{{ $record->teacher->user->name ?? '-' }}</td>
+
+    <td class="label">المادة</td>
+    <td class="value">{{ $record->subject->name ?? '-' }}</td>
+</tr>
+
+<tr>
+    <td class="label">الهدف</td>
+    <td colspan="3">
+        {{ $record->goal ?? '-' }}
+    </td>
+</tr>
+
+</table>
+
+
+<div class="section-title">
+تفاصيل السجل
+</div>
+
+<table class="data">
+
+<thead>
+<tr>
+    <th>تاريخ الإنشاء</th>
+    <th>الحالة</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+    <td>{{ $record->created_at->format('Y-m-d') }}</td>
+    <td class="status">{{ $record->status }}</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<div class="footer">
+تم إنشاء هذا التقرير بواسطة نظام إدارة المدرسة<br>
+{{ now()->format('Y-m-d H:i') }}
+</div>
+
 </body>
 </html>
