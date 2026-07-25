@@ -10,3 +10,17 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+.feature-pill {
+
+    @apply
+    px-4
+    py-2
+    rounded-full
+    bg-white/5
+    border
+    border-white/10
+    text-sm
+    text-zinc-300;
+
+}
