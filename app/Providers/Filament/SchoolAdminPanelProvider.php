@@ -49,10 +49,6 @@ class SchoolAdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Slate,
             ])
-            ->when(
-                app()->getLocale() === 'ar',
-                fn (Panel $panel) => $panel->direction('rtl'),
-            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

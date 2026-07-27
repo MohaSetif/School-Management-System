@@ -53,17 +53,18 @@ return [
 
     'subjects' => [
         'Mathematics' => 'الرياضيات',
-        'Science' => 'علوم الطبيعة و الحياة',
+        'Natural Science' => 'علوم الطبيعة و الحياة',
         'English' => 'اللغة الإنجليزية',
+        'French' => 'اللغة الفرنسية',
         'Arabic' => 'اللغة العربية',
         'Islamic Studies' => 'العلوم الإسلامية',
         'History' => 'التاريخ',
         'Geography' => 'الجغرافيا',
         'Physics' => 'الفيزياء',
-        'Computer_science' => 'الإعلام الآلي',
+        'Computer Science' => 'الإعلام الآلي',
         'Art' => 'التربية التشكيلية',
         'Music' => 'الموسيقى',
-        'Physical_education' => 'التربية البدنية',
+        'Physical Education' => 'التربية البدنية',
     ],
 
     'purpose' => 'اختر المواد التي تُدرّس حاليًا.'
