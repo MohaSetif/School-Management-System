@@ -6,11 +6,11 @@
 
     @vite(['resources/css/app.css','resources/js/app.js'])
 
-    <title>SchoolOS</title>
+    <title>CampusMS</title>
 </head>
 
 
-<body class="bg-zinc-950 text-white">
+<body class="bg-zinc-950 text-white overflow-x-hidden">
 
 
 <section class="relative min-h-screen overflow-hidden bg-[#05070f]">
@@ -19,30 +19,7 @@
 
     <div class="absolute inset-0">
 
-        <div class="
-            absolute
-            top-[-200px]
-            left-1/2
-            -translate-x-1/2
-            w-[900px]
-            h-[900px]
-            rounded-full
-            bg-blue-600/20
-            blur-[160px]">
-        </div>
-
-
-        <div class="
-            absolute
-            bottom-0
-            left-0
-            w-full
-            h-px
-            bg-gradient-to-r
-            from-transparent
-            via-blue-500/50
-            to-transparent">
-        </div>
+        <div class="relative h-full w-full bg-slate-950"><div class="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_2px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:40px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div></div>
 
     </div>
 
@@ -77,8 +54,7 @@
                 font-bold
                 tracking-tight">
 
-                Campus<span class="text-blue-500">
-                    MS
+                CampusMS<span class="text-blue-500">
                 </span>
 
             </div>
@@ -115,7 +91,7 @@
 
 
 
-            <a href="/admin"
+            <a href="/school_admin"
                class="
                rounded-xl
                bg-blue-600
@@ -149,7 +125,7 @@
         max-w-7xl
         mx-auto
         px-6
-        pt-28">
+        pt-20">
 
 
 
@@ -248,7 +224,7 @@
                 flex-wrap">
 
 
-                <a href="/admin"
+                <a href="/school_admin"
                    class="
                    rounded-xl
                    bg-white
@@ -963,7 +939,7 @@ from one intelligent dashboard.
     text-sm
     text-zinc-400">
 
-school-management.local/admin
+school-management.local/school_admin
 
 </div>
 
@@ -994,7 +970,7 @@ school-management.local/admin
     font-bold
     mb-8">
 
-SchoolOS
+CampusMS
 
 </h3>
 
@@ -1566,6 +1542,7 @@ Notifications
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -1622,107 +1599,6 @@ Performance analytics
 
 
 
-
-
-
-
-
-
-<!-- Finance -->
-
-
-<div class="
-    roadmap-item
-    relative
-    md:flex
-    gap-10">
-
-
-<div class="
-    hidden
-    md:flex
-    w-10
-    h-10
-    rounded-full
-    bg-emerald-600
-    items-center
-    justify-center
-    z-10">
-
-💰
-
-</div>
-
-
-
-<div class="
-    flex-1
-    rounded-3xl
-    border
-    border-white/10
-    bg-white/5
-    p-8">
-
-
-<h3 class="
-    text-2xl
-    font-bold">
-
-Financial Management
-
-</h3>
-
-
-
-<p class="
-    mt-3
-    text-zinc-400">
-
-Handle tuition, payments
-and financial reports.
-
-</p>
-
-
-
-<div class="
-    mt-6
-    flex
-    flex-wrap
-    gap-3">
-
-
-<span class="feature-pill">
-Invoices
-</span>
-
-
-<span class="feature-pill">
-Payment tracking
-</span>
-
-
-<span class="feature-pill">
-Financial reports
-</span>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
 <!-- Communication -->
 
 
@@ -1757,6 +1633,7 @@ Financial reports
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -1851,6 +1728,7 @@ Messaging
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -1991,11 +1869,12 @@ of schools.
 
 
 <div class="
-    trust-card
+    flex-1
     rounded-3xl
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -2036,11 +1915,12 @@ controlled permissions.
 
 
 <div class="
-    trust-card
+    flex-1
     rounded-3xl
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -2082,11 +1962,12 @@ administrators.
 
 
 <div class="
-    trust-card
+    flex-1
     rounded-3xl
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -2132,6 +2013,7 @@ into meaningful insights.
     border
     border-white/10
     bg-white/5
+    backdrop-blur-xl
     p-8">
 
 
@@ -2182,19 +2064,7 @@ expansion.
 
 <!-- Background glow -->
 
-<div class="
-    cta-glow
-    absolute
-    top-1/2
-    left-1/2
-    -translate-x-1/2
-    -translate-y-1/2
-    w-[500px]
-    h-[500px]
-    rounded-full
-    bg-indigo-600/30
-    blur-[120px]">
-</div>
+<div class="absolute inset-0 -z-10 h-full w-full bg-black [background:radial-gradient(125%_125%_at_50%_10%,#09090b_40%,#63e_100%)]"></div>
 
 
 
@@ -2253,7 +2123,7 @@ with one powerful platform.
 
 
 
-<a href="/admin"
+<a href="/school_admin"
 class="
 px-8
 py-4
@@ -2306,7 +2176,7 @@ Explore Platform
 
 <footer class="
     border-t
-    border-white/10
+    border-indigo-300/70
     py-10">
 
 
@@ -2332,7 +2202,7 @@ Explore Platform
     text-xl">
 
 
-SchoolOS
+CampusMS
 
 
 </h3>
@@ -2369,7 +2239,7 @@ Features
 </a>
 
 
-<a href="/admin"
+<a href="/school_admin"
 class="hover:text-white transition">
 
 Dashboard
@@ -2396,7 +2266,7 @@ Contact
 
 
 © {{ date('Y') }}
-SchoolOS.
+CampusMS.
 All rights reserved.
 
 
