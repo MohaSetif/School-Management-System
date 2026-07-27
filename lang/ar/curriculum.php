@@ -65,6 +65,7 @@ return [
         'edit' => 'تعديل',
         'planner' => 'التخطيط الشهري',
         'delete_selected' => 'حذف المحدد',
+        'download_monthly' => 'تحميل التوزيع الشهري',
     ],
 
     'planner' => [

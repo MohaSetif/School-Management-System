@@ -81,7 +81,13 @@
             @php
                 $schedules = $this->schedules;
                 
-                $days = ['الأحد' => 'Sunday', 'الإثنين' => 'Monday', 'الثلاثاء' => 'Tuesday', 'الأربعاء' => 'Wednesday', 'الخميس' => 'Thursday'];
+                $days = [
+                    __('calendar.days.sunday') => 'Sunday', 
+                    __('calendar.days.monday') => 'Monday', 
+                    __('calendar.days.tuesday') => 'Tuesday', 
+                    __('calendar.days.wednesday') => 'Wednesday', 
+                    __('calendar.days.thursday') => 'Thursday'
+                ];
                 $groupedSchedules = $schedules->groupBy('day_of_week');
                 
                 $colors = [

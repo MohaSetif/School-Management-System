@@ -1,65 +1,65 @@
 <?php
 
 return [
-    'label' => 'التوزيع الأسبوعي',
-    'weeklySchedule' => 'التوزيع الأسبوعي',
-    'noClasses' => 'لا وجود لحصص',
+    'label' => 'Weekly Schedule',
+    'weeklySchedule' => 'Weekly Schedule',
+    'noClasses' => 'No classes available',
 
     'form' => [
-        'add_new' => 'إضافة حصة جديدة',
+        'add_new' => 'Add new class',
     ],
 
     'buttons' => [
-        'save' => 'حفظ الجدول',
-        'saving' => 'جارٍ الحفظ...',
+        'save' => 'Save Schedule',
+        'saving' => 'Saving...',
     ],
 
-    'weekly_schedule' => 'الجدول الأسبوعي',
+    'weekly_schedule' => 'Weekly Schedule',
 
     'filter' => [
-        'all_classes' => 'كل الأقسام',
-        'button' => 'تصفية',
+        'all_classes' => 'All Classes',
+        'button' => 'Filter',
     ],
 
     'fields' => [
-        'dayofWeek' => 'اليوم',
-        'startTime' => 'وقت البداية',
-        'endTime' => 'وقت النهاية',
-        'teacher' => 'المعلم',
-        'class' => 'القسم',
-        'subject' => 'المادة',
+        'dayofWeek' => 'Day',
+        'startTime' => 'Start Time',
+        'endTime' => 'End Time',
+        'teacher' => 'Teacher',
+        'class' => 'Class',
+        'subject' => 'Subject',
     ],
 
     'days' => [
-        'monday' => 'الإثنين',
-        'tuesday' => 'الثلاثاء',
-        'wednesday' => 'الأربعاء',
-        'thursday' => 'الخميس',
-        'friday' => 'الجمعة',
-        'saturday' => 'السبت',
-        'sunday' => 'الأحد',
+        'monday' => 'Monday',
+        'tuesday' => 'Tuesday',
+        'wednesday' => 'Wednesday',
+        'thursday' => 'Thursday',
+        'friday' => 'Friday',
+        'saturday' => 'Saturday',
+        'sunday' => 'Sunday',
     ],
 
-    'totalClasses' => 'مجموع الحصص',
-    'teachers' => 'الأساتذة',
-    'classes' => 'الأفواج',
+    'totalClasses' => 'Total Classes',
+    'teachers' => 'Teachers',
+    'classes' => 'Classes',
 
     'notifications' => [
         'invalid_time' => [
-            'title' => 'خطأ في التوقيت',
-            'body' => 'يجب أن يكون وقت النهاية بعد وقت البداية.',
+            'title' => 'Invalid Time',
+            'body' => 'End time must be after start time.',
         ],
         'teacher_conflict' => [
-            'title' => 'تعارض في الجدول',
-            'body' => 'المعلم المحدد لديه حصة أخرى في هذا الوقت.',
+            'title' => 'Schedule Conflict',
+            'body' => 'The selected teacher has another class at this time.',
         ],
         'group_conflict' => [
-            'title' => 'تعارض في الجدول',
-            'body' => 'هذا القسم لديه حصة أخرى في نفس الوقت.',
+            'title' => 'Schedule Conflict',
+            'body' => 'This class has another session at the same time.',
         ],
         'success' => [
-            'title' => 'تم بنجاح!',
-            'body' => 'تمت إضافة الحصة إلى الجدول بنجاح.',
+            'title' => 'Success!',
+            'body' => 'Class added to the schedule successfully.',
         ],
     ],
 ];

@@ -1,51 +1,72 @@
 <?php
 
 return [
-    'mainTitle' => 'حسابي',
-    'label' => 'حسابي الخاص',
+    'mainTitle' => 'My Profile',
+    'label' => 'My Personal Profile',
     'form' => [
-        'full_name' => 'الاسم الكامل',
-        'email' => 'البريد الإلكتروني',
+        'full_name' => 'Full Name',
+        'email' => 'Email',
     ],
 
+    'status' => 'Status',
+    'active' => 'Active',
+
     'roles' => [
-        'teacher' => 'أستاذ',
-        'student' => 'تلميذ',
-        'headmaster' => 'مدير',
-        'employee' => 'موظف',
-        'default' => 'مستخدم',
+        'teacher' => 'Teacher',
+        'student' => 'Student',
+        'headmaster' => 'Headmaster',
+        'employee' => 'Employee',
+        'default' => 'User',
     ],
 
     'teacher' => [
-        'title' => 'المواد التي تُدرّس',
-        'save_button' => 'حفظ المواد',
+        'title' => 'Taught Subjects',
+        'save_button' => 'Save',
+        'subjects' => 'Subjects',
     ],
 
     'student' => [
-        'title' => 'معلومات التلميذ',
-        'class' => 'القسم',
-        'roll_number' => 'رقم التسجيل',
-        'not_assigned' => 'غير محدد',
+        'title' => 'Student Information',
+        'class' => 'Class',
+        'roll_number' => 'Roll Number',
+        'not_assigned' => 'Not Assigned',
     ],
 
     'default' => [
-        'no_info' => 'لا توجد معلومات إضافية متاحة.',
+        'no_info' => 'No additional information available.',
     ],
 
     'errors' => [
-        'teacher_only' => 'فقط الأساتذة يمكنهم تعديل المواد.',
+        'teacher_only' => 'Only teachers can edit subjects.',
     ],
 
     'notifications' => [
         'success' => [
-            'title' => 'تم بنجاح!',
-            'body' => 'تم تحديث المواد الخاصة بك.',
+            'title' => 'Success!',
+            'body' => 'Your subjects have been updated.',
         ],
         'error' => [
-            'title' => 'خطأ',
-            'body' => 'فشل في تحديث المواد: :message',
+            'title' => 'Error',
+            'body' => 'Failed to update subjects: :message',
         ],
     ],
 
-    'purpose' => "Select the subjects you currently teach."
+    'subjects' => [
+        'Mathematics' => 'Mathematics',
+        'Science' => 'Science',
+        'English' => 'English Language',
+        'Arabic' => 'Arabic Language',
+        'Islamic Studies' => 'Islamic Studies',
+        'History' => 'History',
+        'Geography' => 'Geography',
+        'Physics' => 'Physics',
+        'Chemistry' => 'Chemistry',
+        'Biology' => 'Biology',
+        'Computer_science' => 'Computer Science',
+        'Art' => 'Art',
+        'Music' => 'Music',
+        'Physical_education' => 'Physical Education',
+    ],
+
+    'purpose' => 'Select the subjects you currently teach.'
 ];

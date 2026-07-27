@@ -1,0 +1,67 @@
+<?php
+
+return [
+    'entry_ticket' => [
+        'title' => 'تذكرة تأخير / غياب',
+        'absent_ticket' => 'تذكرة غياب',
+        'late_ticket' => 'تذكرة تأخير',
+        'ticket_number' => 'رقم التذكرة',
+        'student_name' => 'اسم الطالب',
+        'class_group' => 'الصف / المجموعة',
+        'attendance_status' => 'وضع الحضور',
+        'status' => [
+            'absent' => 'غائب',
+            'late' => 'متأخر',
+            'excused' => 'معذور',
+            'early_exit' => 'خروج مبكر',
+            'present' => 'حاضر',
+        ],
+        'reason' => 'السبب',
+        'signature' => 'التوقيع',
+        'printed_on' => 'طُبِع بتاريخ',
+    ],
+    
+    'monthly_curriculum' => [
+        'unspecified_school' => 'مدرسة غير محددة',
+        'default_province' => 'سطيف',
+        'default_district' => 'قجال',
+        'title' => 'التوزيع الشهري',
+        'republic' => 'الجمهورية الجزائرية الديمقراطية الشعبية',
+        'ministry' => 'وزارة التربية الوطنية',
+        'directorate' => 'مديرية التربية والتعليم لولاية',
+        'academic_year' => 'الموسم الدراسي',
+        'inspectorate' => 'مفتشية التربية والتعليم لمقاطعة',
+        'class' => 'الصف',
+        'primary_school' => 'ابتدائية',
+        'teacher' => 'الأستاذ',
+        'days' => 'الأيّام',
+        'director' => 'السيد المدير',
+        'inspector' => 'السيد المفتش',
+    ],
+    
+    'report' => [
+        'title' => 'قائمة المؤطرين',
+        'republic' => 'الجمهورية الجزائرية الديمقراطية الشعبية',
+        'ministry' => 'وزارة التربية الوطنية',
+        'municipality' => 'مقاطعة',
+        'ref_number' => 'رقم الإرسال',
+        'at' => 'في',
+        'from' => 'من',
+        'to' => 'إلى السيد',
+        'default_signature' => 'السيد المدير',
+    ],
+    
+    'study_record' => [
+        'title' => 'تقرير السجل',
+        'record_number' => 'رقم السجل',
+        'activity' => 'النشاط',
+        'field' => 'المجال',
+        'teacher' => 'المعلم',
+        'subject' => 'المادة',
+        'goal' => 'الهدف',
+        'details' => 'تفاصيل السجل',
+        'created_at' => 'تاريخ الإنشاء',
+        'status' => 'الحالة',
+        'footer' => 'تم إنشاء هذا التقرير بواسطة نظام إدارة المدرسة',
+    ],
+];

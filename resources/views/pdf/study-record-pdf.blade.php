@@ -113,11 +113,11 @@
 
 <div class="header">
     <div class="title">
-        تقرير السجل
+        {{ __('pdf.study_record.title') }}
     </div>
 
     <div class="subtitle">
-        رقم السجل: {{ $record->id }}
+        {{ __('pdf.study_record.record_number') }}: {{ $record->id }}
     </div>
 </div>
 
@@ -125,23 +125,23 @@
 <table class="info-table">
 
 <tr>
-    <td class="label">النشاط</td>
+    <td class="label">{{ __('pdf.study_record.activity') }}</td>
     <td class="value">{{ $record->activity }}</td>
 
-    <td class="label">المجال</td>
+    <td class="label">{{ __('pdf.study_record.field') }}</td>
     <td class="value">{{ $record->field }}</td>
 </tr>
 
 <tr>
-    <td class="label">المعلم</td>
+    <td class="label">{{ __('pdf.study_record.teacher') }}</td>
     <td class="value">{{ $record->teacher->user->name ?? '-' }}</td>
 
-    <td class="label">المادة</td>
+    <td class="label">{{ __('pdf.study_record.subject') }}</td>
     <td class="value">{{ $record->subject->name ?? '-' }}</td>
 </tr>
 
 <tr>
-    <td class="label">الهدف</td>
+    <td class="label">{{ __('pdf.study_record.goal') }}</td>
     <td colspan="3">
         {{ $record->goal ?? '-' }}
     </td>
@@ -151,15 +151,15 @@
 
 
 <div class="section-title">
-تفاصيل السجل
+{{ __('pdf.study_record.details') }}
 </div>
 
 <table class="data">
 
 <thead>
 <tr>
-    <th>تاريخ الإنشاء</th>
-    <th>الحالة</th>
+    <th>{{ __('pdf.study_record.created_at') }}</th>
+    <th>{{ __('pdf.study_record.status') }}</th>
 </tr>
 </thead>
 
@@ -176,7 +176,7 @@
 
 
 <div class="footer">
-تم إنشاء هذا التقرير بواسطة نظام إدارة المدرسة<br>
+{{ __('pdf.study_record.footer') }}<br>
 {{ now()->format('Y-m-d H:i') }}
 </div>
 

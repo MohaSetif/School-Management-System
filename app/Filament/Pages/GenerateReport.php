@@ -71,13 +71,13 @@ class GenerateReport extends Page implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            TextInput::make('directorate')->label('المديرية')->required(),
-            TextInput::make('institution')->label('المؤسسة')->required(),
-            TextInput::make('from')->label('من')->required(),
-            TextInput::make('to')->label('إلى')->required(),
-            TextInput::make('ref_number')->label('رقم الإرسال')->required(),
-            TextInput::make('subject')->label('الموضوع')->required(),
-            RichEditor::make('content')->label('المحتوى')->required(),
+            TextInput::make('directorate')->label(__('reports.form.directorate'))->required(),
+            TextInput::make('institution')->label(__('reports.form.institution'))->required(),
+            TextInput::make('from')->label(__('reports.form.from'))->required(),
+            TextInput::make('to')->label(__('reports.form.to'))->required(),
+            TextInput::make('ref_number')->label(__('reports.form.ref_number'))->required(),
+            TextInput::make('subject')->label(__('reports.form.subject'))->required(),
+            RichEditor::make('content')->label(__('reports.form.content'))->required(),
         ];
     }
 
@@ -112,11 +112,11 @@ class GenerateReport extends Page implements HasForms
         $fileName = 'report_' . uniqid() . '.pdf';
         $filePath = $directory . '/' . $fileName;
 
-        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'default_font' => 'dejavusans']);
         $mpdf->WriteHTML($html);
         $mpdf->Output($filePath, 'F');
 
-        Report::create([
+        $report = Report::create([
             'school_name'   => $school->school_name ?? '',
             'date'          => now()->toDateString(),
             'from'          => $data['from'],
@@ -129,10 +129,11 @@ class GenerateReport extends Page implements HasForms
             'municipality'  => $school->municipality ?? '',
             'location'      => $school->location ?? '',
             'content'       => $content,
-            'file_path'     => 'reports/'.$fileName,
+            'file_path'     => 'reports/' . $fileName,
         ]);
 
-        return response()->download($filePath);
+        // Redirect to the download route — Livewire cannot return a file download over XHR
+        return redirect()->route('reports.download', $report);
     }
 
 }

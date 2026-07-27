@@ -105,7 +105,7 @@ class AttendanceRecordsTable
                 EditAction::make()->label(__('attendance.common.edit')),
                 DeleteAction::make()->label(__('attendance.common.delete')),
                 Action::make('download_ticket')
-                    ->label('تحميل التذكرة')
+                    ->label(__('attendance.actions.download_ticket'))
                     ->icon('heroicon-o-printer')
                     ->visible(fn ($record) => in_array($record->status, ['absent', 'exit_before_time']))
                     ->action(function ($record) {

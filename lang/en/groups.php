@@ -1,31 +1,39 @@
 <?php
 
 return [
-    'mainTitle' => 'قائمة الأفواج',
+    'mainTitle' => 'Groups List',
     'navigation' => [
-        'label' => 'الأقسام',
-        'group' => 'إدارة الأقسام',
+        'label' => 'Classes',
+        'group' => 'Classes Management',
     ],
     'fields' => [
-        'name' => 'القسم',
-        'code' => 'الفوج',
-        'description' => 'الوصف',
-        'teachers' => 'المعلمين المخصصين',
-        'students_count' => 'عدد الطلاب',
-        'is_active' => 'نشط',
+        'name' => 'Class',
+        'code' => 'Group Code',
+        'description' => 'Description',
+        'teachers' => 'Assigned Teachers',
+        'students_count' => 'Students Count',
+        'is_active' => 'Active',
     ],
     'pages' => [
-        'list' => 'قائمة الأقسام',
-        'create' => 'إضافة قسم',
-        'edit' => 'تعديل القسم',
-        'view' => 'عرض القسم',
+        'list' => 'Classes List',
+        'create' => 'Create Class',
+        'edit' => 'Edit Class',
+        'view' => 'View Class',
     ],
 
     'classes' => [
-        '1st year' => 'السنة الأولى',
-        '2nd year' => 'السنة الثانية',
-        '3rd year' => 'السنة الثالثة',
-        '4th year' => 'السنة الرابعة',
-        '5th year' => 'السنة الخامسة',
+        '1st year' => '1st Year',
+        '2nd year' => '2nd Year',
+        '3rd year' => '3rd Year',
+        '4th year' => '4th Year',
+        '5th year' => '5th Year',
+    ],
+
+    'levels' => [
+        'first' => 'First',
+        'second' => 'Second',
+        'third' => 'Third',
+        'fourth' => 'Fourth',
+        'fifth' => 'Fifth',
     ],
 ];

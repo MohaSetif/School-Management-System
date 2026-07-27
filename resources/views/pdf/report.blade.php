@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قائمة المؤطرين</title>
+    <title>{{ __('pdf.report.title') }}</title>
     <style>
         body { 
             font-family: 'Arial', 'DejaVu Sans', sans-serif;
@@ -106,8 +106,8 @@
 
     <!-- Header Section -->
     <div class="header">
-        <h3>الجمهورية الجزائرية الديمقراطية الشعبية</h3>
-        <h4>وزارة التربية الوطنية</h4>
+        <h3>{{ __('pdf.report.republic') }}</h3>
+        <h4>{{ __('pdf.report.ministry') }}</h4>
     </div>
 
     <!-- Document Information -->
@@ -115,14 +115,14 @@
         <div class="right-info">
             <h4>{{ $directorate }}</h4>
             <h4>{{ $institution }}</h4>
-            <h4>مقاطعة: {{ $municipality }}</h4>
-            <p>رقم الإرسال: {{ $ref_number }}</p>
+            <h4>{{ __('pdf.report.municipality') }}: {{ $municipality }}</h4>
+            <p>{{ __('pdf.report.ref_number') }}: {{ $ref_number }}</p>
         </div>
         
         <div class="left-info">
-            <p>{{ $location }} في: {{ $date }}</p>
-            <p>من: {{ $from }}</p>
-            <p>إلى السيد: {{ $to }}</p>
+            <p>{{ $location }} {{ __('pdf.report.at') }}: {{ $date }}</p>
+            <p>{{ __('pdf.report.from') }}: {{ $from }}</p>
+            <p>{{ __('pdf.report.to') }}: {{ $to }}</p>
         </div>
     </div>
 
@@ -136,7 +136,7 @@
 
     <!-- Signature Section -->
     <div class="signature-area">
-        <p class="signature-title">{{ $signature_title ?? 'السيد المدير' }}</p>
+        <p class="signature-title">{{ $signature_title ?? __('pdf.report.default_signature') }}</p>
         <p class="director-name">{{ $director_name ?? '' }}</p>
     </div>
 

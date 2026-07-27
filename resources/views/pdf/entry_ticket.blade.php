@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
-    <title>تذكرة تأخير / غياب</title>
+    <title>{{ __('pdf.entry_ticket.title') }}</title>
     <style>
         * {
             margin: 0;
@@ -174,51 +174,51 @@
                 <div class="school-name">{{ config('app.name') }}</div>
             </div>
             <div class="ticket-type centered">
-                {{ $record->status === 'absent' ? 'تذكرة غياب' : 'تذكرة تأخير' }}
+                {{ $record->status === 'absent' ? __('pdf.entry_ticket.absent_ticket') : __('pdf.entry_ticket.late_ticket') }}
             </div>
         </div>
 
         <div class="meta-top">
-            <span class="meta-left">رقم التذكرة: {{ $record->id ?? '—' }}</span>
+            <span class="meta-left">{{ __('pdf.entry_ticket.ticket_number') }}: {{ $record->id ?? '—' }}</span>
             <span class="meta-right">{{ optional($record->created_at)->format('Y-m-d — H:i') ?? now()->format('Y-m-d — H:i') }}</span>
         </div>
 
         <div class="divider"></div>
 
         <div class="row">
-            <div class="label">اسم الطالب</div>
+            <div class="label">{{ __('pdf.entry_ticket.student_name') }}</div>
             <div class="value">{{ optional($record->student)->name ?? optional($record->student)->full_name ?? '—' }}</div>
         </div>
 
         <div class="row">
-            <div class="label">الصف / المجموعة</div>
+            <div class="label">{{ __('pdf.entry_ticket.class_group') }}</div>
             <div class="value">{{ optional($record->group)->name ?? '—' }}</div>
         </div>
 
         <div class="row">
-            <div class="label">وضع الحضور</div>
+            <div class="label">{{ __('pdf.entry_ticket.attendance_status') }}</div>
             <div class="value">
                 @switch($record->status)
-                    @case('absent') غائب @break
-                    @case('late') متأخر @break
-                    @case('excused') معذور @break
-                    @case('exit_before_time') خروج مبكر @break
-                    @default حاضر
+                    @case('absent') {{ __('pdf.entry_ticket.status.absent') }} @break
+                    @case('late') {{ __('pdf.entry_ticket.status.late') }} @break
+                    @case('excused') {{ __('pdf.entry_ticket.status.excused') }} @break
+                    @case('exit_before_time') {{ __('pdf.entry_ticket.status.early_exit') }} @break
+                    @default {{ __('pdf.entry_ticket.status.present') }}
                 @endswitch
             </div>
         </div>
 
         <div class="reason">
-            <div class="reason-label">السبب:</div>
+            <div class="reason-label">{{ __('pdf.entry_ticket.reason') }}:</div>
             <div>{{ $record->notes ?? '—' }}</div>
         </div>
 
         <div class="footer">
             <div class="sig">
-                التوقيع
+                {{ __('pdf.entry_ticket.signature') }}
             </div>
             <div class="meta">
-                <div>طُبِع بتاريخ: {{ now()->format('Y-m-d H:i') }}</div>
+                <div>{{ __('pdf.entry_ticket.printed_on') }}: {{ now()->format('Y-m-d H:i') }}</div>
             </div>
         </div>
     </div>

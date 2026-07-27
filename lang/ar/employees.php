@@ -43,4 +43,17 @@ return [
         'created_at' => 'تاريخ الإنشاء',
         'updated_at' => 'آخر تحديث',
     ],
+
+    'roles' => [
+        'nazir' => 'ناظر',
+        'specialized_educator' => 'مربي متخصص',
+        'cook' => 'طباخ',
+        'assistant_cook' => 'مساعد طباخ',
+        'janitor' => 'حاجب',
+        'night_janitor' => 'حاجب ليلي',
+        'cleaner' => 'منظف',
+        'bursar' => 'مقتصد',
+        'assistant_bursar' => 'مساعد مقتصد',
+        'lab_tech' => 'مخبري',
+    ],
 ];

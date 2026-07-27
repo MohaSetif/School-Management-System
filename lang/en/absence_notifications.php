@@ -1,25 +1,25 @@
 <?php
 
 return [
-    'mainTitle' => 'الطلاب ذوي الغيابات المتكررة',
+    'mainTitle' => 'Students with Frequent Absences',
     'fields' => [
-        'student' => 'الطالب',
-        'start_date' => 'تاريخ البداية',
-        'end_date' => 'تاريخ النهاية',
-        'consecutive_days' => 'أيام الغياب المتتالية',
-        'notified' => 'تم الإخطار',
-        'created_at' => 'تاريخ الإخطار',
+        'student' => 'Student',
+        'start_date' => 'Start Date',
+        'end_date' => 'End Date',
+        'consecutive_days' => 'Consecutive Absence Days',
+        'notified' => 'Notified',
+        'created_at' => 'Notification Date',
     ],
     'hints' => [
-        'consecutive_days' => 'عدد الأيام التي تغيب فيها الطالب على التوالي',
-        'notified' => 'يشير إلى ما إذا كان ولي الأمر قد تم إخباره بالغياب',
+        'consecutive_days' => 'Number of days the student has been absent consecutively',
+        'notified' => 'Indicates whether the parent has been notified of the absence',
     ],
     'filters' => [
-        'recent' => 'الأحدث (آخر 7 أيام)',
+        'recent' => 'Recent (last 7 days)',
     ],
     'navigation' => [
-        'label' => 'إشعارات الغياب',
-        'group' => 'إدارة الغياب',
+        'label' => 'Absence Notifications',
+        'group' => 'Absence Management',
     ],
 
 ];

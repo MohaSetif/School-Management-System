@@ -1,64 +1,64 @@
 <?php
 
 return [
-    'mainTitle' => 'الرسائل الإدارية',
+    'mainTitle' => 'Administrative Letters',
     'navigation' => [
-        'label' => 'البريد الصادر',
-        'group' => 'إدارة الأكاديمية',
-        'label2'=> 'رسالة جديدة',
-        'label3'=> 'إعداد تقرير',
+        'label' => 'Outgoing Mail',
+        'group' => 'Academy Management',
+        'label2'=> 'New Letter',
+        'label3'=> 'Generate Report',
     ],
 
     'infolist' => [
-        'generalInfo' => 'معلومات التقرير',
-        'schoolInfo' => 'معلومات المؤسسة',
-        'content' => 'محتوى التقرير',
-        'actions' => 'إجراءات',
+        'generalInfo' => 'Report Information',
+        'schoolInfo' => 'Institution Information',
+        'content' => 'Report Content',
+        'actions' => 'Actions',
     ],
 
     'form' => [
-        'school_name'   => 'اسم المدرسة',
-        'director_name' => 'اسم المدير',
-        'directorate'   => 'المديرية',
-        'institution'   => 'المؤسسة',
-        'municipality'  => 'البلدية',
-        'location'      => 'المكان',
-        'date'          => 'التاريخ',
-        'from'          => 'من',
-        'to'            => 'إلى',
-        'ref_number'    => 'رقم الإرسال',
-        'subject'       => 'الموضوع',
-        'content'       => 'المحتوى',
-        'created_at'    => 'تاريخ الكتابة'
+        'school_name'   => 'School Name',
+        'director_name' => 'Director Name',
+        'directorate'   => 'Directorate',
+        'institution'   => 'Institution',
+        'municipality'  => 'Municipality',
+        'location'      => 'Location',
+        'date'          => 'Date',
+        'from'          => 'From',
+        'to'            => 'To',
+        'ref_number'    => 'Reference Number',
+        'subject'       => 'Subject',
+        'content'       => 'Content',
+        'created_at'    => 'Writing Date'
     ],
 
     'buttons' => [
-        'generate_report' => 'توليد التقرير',
+        'generate_report' => 'Generate Report',
     ],
 
-    'fileNotFound' => 'الملف غير موجود',
+    'fileNotFound' => 'File not found',
 
     'notifications' => [
-        'success_generated' => 'تم إنشاء التقرير وحفظه بنجاح.',
-        'error_missing_fields' => 'الرجاء ملء جميع الحقول المطلوبة قبل إنشاء التقرير.',
+        'success_generated' => 'Report successfully generated and saved.',
+        'error_missing_fields' => 'Please fill in all required fields before generating the report.',
     ],
 
     'pdf' => [
-        'school_name'   => 'اسم المدرسة',
-        'director_name' => 'مدير المدرسة',
-        'directorate'   => 'المديرية',
-        'institution'   => 'المؤسسة',
-        'municipality'  => 'البلدية',
-        'location'      => 'المكان',
-        'date'          => 'التاريخ',
-        'from'          => 'من',
-        'to'            => 'إلى',
-        'ref_number'    => 'رقم الإرسال',
-        'subject'       => 'الموضوع',
-        'content'       => 'المحتوى',
+        'school_name'   => 'School Name',
+        'director_name' => 'School Director',
+        'directorate'   => 'Directorate',
+        'institution'   => 'Institution',
+        'municipality'  => 'Municipality',
+        'location'      => 'Location',
+        'date'          => 'Date',
+        'from'          => 'From',
+        'to'            => 'To',
+        'ref_number'    => 'Reference Number',
+        'subject'       => 'Subject',
+        'content'       => 'Content',
     ],
 
     'actions' => [
-        'download' => 'تحميل التقرير',
+        'download' => 'Download Report',
     ],
 ];

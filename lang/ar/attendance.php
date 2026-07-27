@@ -28,6 +28,10 @@ return [
         'until' => 'إلى',
     ],
 
+    'actions' => [
+        'download_ticket' => 'تحميل التذكرة',
+    ],
+
     'common' => [
         'no_records' => 'لا توجد سجلات حضور',
         'create'     => 'تسجيل حضور جديد',
@@ -65,5 +69,17 @@ return [
         'success_saved' => 'تم حفظ الحضور لـ :count طالب.',
         'consecutive_absences_title' => 'تم اكتشاف غيابات متتالية',
         'consecutive_absences_body' => 'الطالب رقم :student غاب لمدة :count أيام متتالية (من :start إلى :end).',
+    ],
+
+    'stats' => [
+        'nav_label' => 'إحصائيات الحضور',
+        'title' => 'إحصائيات الحضور والغياب',
+        'total_students' => 'عدد الطلبة',
+        'total_days' => 'عدد أيام العمل',
+        'realistic_attendance' => 'الحضور الفعلي',
+        'total_attendances' => 'الحضور الكلي',
+        'attendance_percent' => 'نسبة الحضور',
+        'absence_percent' => 'نسبة الغياب',
+        'last_update' => 'آخر تحديث:',
     ],
 ];

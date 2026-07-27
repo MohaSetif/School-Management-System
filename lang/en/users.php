@@ -1,31 +1,31 @@
 <?php
 
 return [
-    'mainTitle' => 'المستخدمون',
+    'mainTitle' => 'Users',
     'navigation' => [
-        'label' => 'المستخدمون',
-        'group' => 'إدارة المستخدمين',
+        'label' => 'Users',
+        'group' => 'Users Management',
     ],
     'fields' => [
-        'name' => 'الاسم',
-        'email' => 'البريد الإلكتروني',
-        'phone' => 'الهاتف',
-        'role' => 'الدور',
-        'password' => 'كلمة المرور',
-        'is_active' => 'نشط',
-        'created_at' => 'تاريخ الإنشاء',
+        'name' => 'Name',
+        'email' => 'Email',
+        'phone' => 'Phone',
+        'role' => 'Role',
+        'password' => 'Password',
+        'is_active' => 'Active',
+        'created_at' => 'Created At',
     ],
     'roles' => [
-        'teacher' => 'معلم',
-        'employee' => 'موظف',
-        'headmaster' => 'مدير المدرسة',
+        'teacher' => 'Teacher',
+        'employee' => 'Employee',
+        'headmaster' => 'Headmaster',
     ],
     'pages' => [
-        'list' => 'قائمة المستخدمين',
-        'create' => 'إضافة مستخدم',
-        'edit' => 'تعديل المستخدم',
-        'view' => 'عرض المستخدم',
+        'list' => 'Users List',
+        'create' => 'Create User',
+        'edit' => 'Edit User',
+        'view' => 'View User',
     ],
 
-    'user' => 'مستخدم'
+    'user' => 'User'
 ];

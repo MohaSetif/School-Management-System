@@ -71,7 +71,7 @@ class StudyRecordsTable
                 ViewAction::make()->label(__('studyrecord.actions.view')),
                 EditAction::make()->label(__('studyrecord.actions.edit')),
                 Action::make('downloadPdf')
-                    ->label('تحميل')
+                    ->label(__('studyrecord.actions.download'))
                     ->icon('heroicon-o-arrow-down-tray')
                     ->color('success')
                     ->url(fn (StudyRecord $record): string => route('study-records.download', $record))

@@ -31,6 +31,7 @@ return [
         'edit' => 'تعديل',
         'delete' => 'حذف',
         'download' => 'تحميل الملف',
+        'view_report' => 'عرض التقرير',
     ],
 
     'placeholders' => [

@@ -33,16 +33,16 @@ class EmployeeForm
                 Select::make('role')
                     ->label(__('employees.form.role'))
                     ->options([
-                        'ناظر' => 'ناظر',
-                        'مربي متخصص' => 'مربي متخصص',
-                        'طباخ' => 'طباخ',
-                        'مساعد طباخ' => 'مساعد طباخ',
-                        'حاجب' => 'حاجب',
-                        'حاجب ليلي' => 'حاجب ليلي',
-                        'منظف' => 'منظف',
-                        'مقتصد' => 'مقتصد',
-                        'مساعد مقتصد' => 'مساعد مقتصد',
-                        'مخبري' => 'مخبري',
+                        'ناظر' => __('employees.roles.nazir'),
+                        'مربي متخصص' => __('employees.roles.specialized_educator'),
+                        'طباخ' => __('employees.roles.cook'),
+                        'مساعد طباخ' => __('employees.roles.assistant_cook'),
+                        'حاجب' => __('employees.roles.janitor'),
+                        'حاجب ليلي' => __('employees.roles.night_janitor'),
+                        'منظف' => __('employees.roles.cleaner'),
+                        'مقتصد' => __('employees.roles.bursar'),
+                        'مساعد مقتصد' => __('employees.roles.assistant_bursar'),
+                        'مخبري' => __('employees.roles.lab_tech'),
                     ])
                     ->required()
                     ->native(false),

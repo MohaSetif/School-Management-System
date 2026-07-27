@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'create' => 'إضافة',
-    'view' => 'عرض',
-    'edit' => 'تعديل',
-    'delete' => 'حذف',
+    'create' => 'Create',
+    'view' => 'View',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
 ];

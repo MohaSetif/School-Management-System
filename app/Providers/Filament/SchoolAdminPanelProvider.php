@@ -30,15 +30,20 @@ class SchoolAdminPanelProvider extends PanelProvider
                 'language-en' => MenuItem::make()
                     ->label('English')
                     ->icon('heroicon-o-language')
+                    ->url(fn () => route('lang.switch', 'en'))
                     ->visible(fn () => app()->getLocale() !== 'en'),
                 'language-ar' => MenuItem::make()
                     ->label('العربية')
-                    ->icon('heroicon-o-language') 
+                    ->icon('heroicon-o-language')
+                    ->url(fn () => route('lang.switch', 'ar'))
                     ->visible(fn () => app()->getLocale() !== 'ar'),
             ])
             ->id('school_admin')
             ->path('school_admin')
             ->spa()
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
             ->login()
             ->colors([
                 'primary' => Color::Slate,

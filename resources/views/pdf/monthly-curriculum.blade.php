@@ -25,9 +25,9 @@ $user = auth()->user();
 $school = $user?->schoolSettings
     ?? SchoolSettings::first(); // fallback to first if teacher has none
 
-$schoolName = $school->school_name ?? env('APP_NAME', 'مدرسة غير محددة');
-$province   = $school->province ?? env('SCHOOL_PROVINCE', 'سطيف');
-$district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
+$schoolName = $school->school_name ?? env('APP_NAME', __('pdf.monthly_curriculum.unspecified_school'));
+$province   = $school->province ?? env('SCHOOL_PROVINCE', __('pdf.monthly_curriculum.default_province'));
+$district   = $school->district ?? env('SCHOOL_DISTRICT', __('pdf.monthly_curriculum.default_district'));
 @endphp
 
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التوزيع الشهري</title>
+    <title>{{ __('pdf.monthly_curriculum.title') }}</title>
     <style>
         /* ==============
            GLOBAL STYLE
@@ -193,8 +193,8 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
 
 <body>
     <div class="header">
-        <h3>الجمهورية الجزائرية الديمقراطية الشعبية</h3>
-        <h4>وزارة التربية الوطنية</h4>
+        <h3>{{ __('pdf.monthly_curriculum.republic') }}</h3>
+        <h4>{{ __('pdf.monthly_curriculum.ministry') }}</h4>
     </div>
     <div class="curriculum-docx">
         @foreach ($curriculums as $record)
@@ -220,16 +220,16 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
             <header class="curriculum-header">
                 <table class="header-table">
                     <tr>
-                        <td>مديرية التربية والتعليم لولاية {{ $province }}</td>
-                        <td>الموسم الدراسي: {{ now()->year - 1 }}/{{ now()->year }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.directorate') }} {{ $province }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.academic_year') }}: {{ now()->year - 1 }}/{{ now()->year }}</td>
                     </tr>
                     <tr>
-                        <td>مفتشية التربية والتعليم لمقاطعة {{ $district }}</td>
-                        <td>الصف: {{ $groupName }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.inspectorate') }} {{ $district }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.class') }}: {{ $groupName }}</td>
                     </tr>
                     <tr>
-                        <td>ابتدائية: {{ $schoolName }}</td>
-                        <td>الأستاذ: {{ $record->user?->name ?? '-' }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.primary_school') }}: {{ $schoolName }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.teacher') }}: {{ $record->user?->name ?? '-' }}</td>
                     </tr>
                 </table>
             </header>
@@ -239,7 +239,7 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
                 <table class="curriculum-table">
                     <thead>
                         <tr>
-                            <th>الأيّام</th>
+                            <th>{{ __('pdf.monthly_curriculum.days') }}</th>
                             @foreach ($record->subjects ?? [] as $subject)
                                 <th>{{ $resolveSubject($subject) }}</th>
                             @endforeach
@@ -283,9 +283,9 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', 'قجال');
             <footer class="signatures">
                 <table class="footer-table">
                     <tr>
-                        <td>الأستاذ</td>
-                        <td>السيد المدير</td>
-                        <td>السيد المفتش</td>
+                        <td>{{ __('pdf.monthly_curriculum.teacher') }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.director') }}</td>
+                        <td>{{ __('pdf.monthly_curriculum.inspector') }}</td>
                     </tr>
                 </table>
             </footer>

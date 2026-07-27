@@ -1,63 +1,62 @@
 <?php
 
 return [
-    'mainTitle' => 'غيابات الإداريين',
+    'mainTitle' => 'Administrative Absences',
     'navigation' => [
-        'label' => 'غيابات أعضاء هيئة التدريس',
-        'group' => 'إدارة الغياب'
+        'label' => 'Academic Members Absences',
+        'group' => 'Absence Management'
     ],
     'form' => [
         'tabs' => [
-            'main' => 'الغياب',
-            'additional' => 'إضافي',
+            'main' => 'Absence',
+            'additional' => 'Additional',
         ],
         'sections' => [
-            'main' => 'تفاصيل الغياب',
-            'additional' => 'معلومات إضافية',
-            'audit' => 'تدقيق',
-            'details' => 'تفاصيل',
+            'main' => 'Absence Details',
+            'additional' => 'Additional Information',
+            'audit' => 'Audit',
+            'details' => 'Details',
         ],
         'fields' => [
-            'member' => 'العضو الأكاديمي',
-            'absence_date' => 'تاريخ الغياب',
-            'reason' => 'السبب',
-            'notes' => 'ملاحظات',
-            'status' => 'الحالة',
-            'reason' => 'السبب',
-            'created_at' => 'تاريخ الإنشاء',
-            'updated_at' => 'تاريخ التحديث',
+            'member' => 'Academic Member',
+            'absence_date' => 'Absence Date',
+            'reason' => 'Reason',
+            'notes' => 'Notes',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ],
         'status' => [
-            'present' => 'حاضر',
-            'absent' => 'غائب',
-            'late' => 'متأخر',
-            'excused' => 'معذور',
-            'exit_before_time' => 'خرج قبل الوقت',
+            'present' => 'Present',
+            'absent' => 'Absent',
+            'late' => 'Late',
+            'excused' => 'Excused',
+            'exit_before_time' => 'Exit Before Time',
         ]
     ],
     'table' => [
         'columns' => [
-            'member' => 'العضو الأكاديمي',
-            'absence_date' => 'تاريخ الغياب',
-            'reason' => 'السبب',
-            'created_at' => 'تاريخ الإنشاء',
+            'member' => 'Academic Member',
+            'absence_date' => 'Absence Date',
+            'reason' => 'Reason',
+            'created_at' => 'Created At',
         ],
         'filters' => [
             //
         ],
         'actions' => [
-            'view' => 'عرض',
-            'edit' => 'تعديل',
-            'delete' => 'حذف',
+            'view' => 'View',
+            'edit' => 'Edit',
+            'delete' => 'Delete',
         ],
         'bulk_actions' => [
-            'delete_selected' => 'حذف المحدد',
+            'delete_selected' => 'Delete Selected',
         ],
     ],
     'messages' => [
-        'created_successfully' => 'تم إنشاء الغياب بنجاح.',
-        'updated_successfully' => 'تم تحديث الغياب بنجاح.',
-        'deleted_successfully' => 'تم حذف الغياب بنجاح.',
-        'deleted_selected_successfully' => 'تم حذف الغيابات المحددة بنجاح.',
+        'created_successfully' => 'Absence created successfully.',
+        'updated_successfully' => 'Absence updated successfully.',
+        'deleted_successfully' => 'Absence deleted successfully.',
+        'deleted_selected_successfully' => 'Selected absences deleted successfully.',
     ],
 ];

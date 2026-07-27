@@ -46,6 +46,11 @@ class GroupResource extends Resource
         return __('resources.groups');
     }
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->isHeadmaster();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return GroupForm::configure($schema);

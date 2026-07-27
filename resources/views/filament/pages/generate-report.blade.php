@@ -2,7 +2,7 @@
     {{ $this->form }}
 
     <x-filament::button wire:click="generateReport" color="primary" class="mt-4">
-        توليد التقرير
+        {{ __('reports.buttons.generate_report') }}
     </x-filament::button>
 
     <script>

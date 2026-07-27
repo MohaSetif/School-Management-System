@@ -1,24 +1,24 @@
 <?php
 
 return [
-    'mainTitle' => 'الجمعيات',
+    'mainTitle' => 'Associations',
     'fields' => [
-        'name' => 'اسم الجمعية',
-        'email' => 'البريد الإلكتروني',
-        'serial_number' => 'الرقم التسلسلي',
-        'establishment_date' => 'تاريخ التأسيس',
-        'renew_date' => 'تاريخ التجديد',
-        'score' => 'النقاط',
-        'created_at' => 'تاريخ الإضافة',
-        'updated_at' => 'آخر تحديث',
+        'name' => 'Association Name',
+        'email' => 'Email',
+        'serial_number' => 'Serial Number',
+        'establishment_date' => 'Establishment Date',
+        'renew_date' => 'Renewal Date',
+        'score' => 'Score',
+        'created_at' => 'Created At',
+        'updated_at' => 'Last Updated',
     ],
 
     'sections' => [
-        'association_info' => 'معلومات الجمعية',
-        'contact_info' => 'معلومات الاتصال',
-        'dates' => 'التواريخ',
-        'balance' => 'الرصيد',
+        'association_info' => 'Association Information',
+        'contact_info' => 'Contact Information',
+        'dates' => 'Dates',
+        'balance' => 'Balance',
     ],
 
-    'label' => 'الجمعيات'
+    'label' => 'Associations'
 ];

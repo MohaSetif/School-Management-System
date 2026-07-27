@@ -11,7 +11,7 @@
             <table class="curriculum-table">
                 <thead>
                     <tr>
-                        <th>اليوم</th>
+                        <th>{{ __('curriculum.infolist.day') }}</th>
                         @foreach ($record->subjects as $subject)
                             <th>{{ $subject['name'] ?? '-' }}</th>
                         @endforeach
@@ -63,7 +63,7 @@
 
         {{-- Footer --}}
         <footer class="planner-footer">
-            <p>حرر بتاريخ: {{ $record->created_at?->format('Y-m-d') ?? '-' }}</p>
+            <p>{{ __('curriculum.infolist.created_at') }}: {{ $record->created_at?->format('Y-m-d') ?? '-' }}</p>
         </footer>
     </div>
 

@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'create' => 'إنشاء :resource',
-    'edit' => 'تعديل :resource',
-    'view' => 'عرض :resource',
-    'delete' => 'حذف :resource',
+    'create' => 'Create :resource',
+    'edit' => 'Edit :resource',
+    'view' => 'View :resource',
+    'delete' => 'Delete :resource',
 ];

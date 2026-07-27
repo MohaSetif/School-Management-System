@@ -19,11 +19,11 @@ class ListCurriculumTables extends ListRecords
         return [
             CreateAction::make(),
             Action::make('download_monthly_curriculums')
-                ->label('تحميل التوزيع الشهري')
+                ->label(__('curriculum.actions.download_monthly'))
                 ->icon('heroicon-o-arrow-down-tray')
                 ->form([
                     DatePicker::make('month')
-                        ->label('الشهر')
+                        ->label(__('curriculum.infolist.month'))
                         ->required()
                         ->format('Y-m')
                         ->displayFormat('F Y')
@@ -36,7 +36,7 @@ class ListCurriculumTables extends ListRecords
 
                     if ($curriculums === 0) {
                         Notification::make()
-                            ->title('لا توجد مناهج لهذا الشهر')
+                            ->title(__('curriculum.messages.no_curriculum'))
                             ->danger()
                             ->send();
                         return;

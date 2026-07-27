@@ -17,7 +17,7 @@ class ViewStudyRecord extends ViewRecord
         return [
             EditAction::make(),
             Action::make('pdf')
-                ->label('عرض التقرير')
+                ->label(__('studyrecord.actions.view_report'))
                 ->icon('heroicon-o-document-text')
                 ->url(fn () => StudyRecordResource::getUrl('pdf', [
                     'record' => $this->record,

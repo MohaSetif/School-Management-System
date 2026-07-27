@@ -14,8 +14,15 @@ use Illuminate\Support\Facades\DB;
 class AttendanceStats extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
-    protected static ?string $navigationLabel = 'إحصائيات الحضور';
-    protected static ?string $title = 'إحصائيات الحضور والغياب';
+    public static function getNavigationLabel(): string
+    {
+        return __('attendance.stats.nav_label');
+    }
+
+    public function getTitle(): string
+    {
+        return __('attendance.stats.title');
+    }
 
     protected string $view = 'filament.pages.attendance-stats';
 
