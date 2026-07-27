@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\SetLocale;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -40,7 +41,7 @@ class SchoolAdminPanelProvider extends PanelProvider
             ])
             ->id('school_admin')
             ->path('school_admin')
-            ->spa()
+            ->spa(false)
             ->registration()
             ->passwordReset()
             ->emailVerification()
@@ -48,6 +49,10 @@ class SchoolAdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Slate,
             ])
+            ->when(
+                app()->getLocale() === 'ar',
+                fn (Panel $panel) => $panel->direction('rtl'),
+            )
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -69,9 +74,12 @@ class SchoolAdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                // Apply locale on every Filament request
+                SetLocale::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
             ]);
     }
 }
+

@@ -18,6 +18,7 @@ class GroupSeeder extends Seeder
             ['name' => '1st year', 'code' => 1, 'description' => 'First grade'],
             ['name' => '2nd year', 'code' => 1, 'description' => 'Second grade'],
             ['name' => '3rd year', 'code' => 1, 'description' => 'Third grade'],
+            ['name' => '4th year', 'code' => 1, 'description' => 'Fourth grade'],
             ['name' => '5th year', 'code' => 1, 'description' => 'Fifth grade'],
         ];
 

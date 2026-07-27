@@ -11,8 +11,9 @@ Route::get('/', function () {
 Route::get('/lang/{locale}', function (string $locale) {
     if (in_array($locale, ['en', 'ar'])) {
         session(['locale' => $locale]);
+        session()->save(); // ensure session is written before redirect
     }
-    return redirect()->back();
+    return redirect()->to(url()->previous(filament()->getUrl()));
 })->name('lang.switch');
 
 Route::get('/download-curriculum/{month}', [CurriculumDownloadController::class, 'download'])

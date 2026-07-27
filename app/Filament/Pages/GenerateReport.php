@@ -132,8 +132,7 @@ class GenerateReport extends Page implements HasForms
             'file_path'     => 'reports/' . $fileName,
         ]);
 
-        // Redirect to the download route — Livewire cannot return a file download over XHR
-        return redirect()->route('reports.download', $report);
+        return response()->download($filePath);
     }
 
 }
