@@ -64,6 +64,11 @@ class StudyRecordResource extends Resource
         ];
     }
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()->isTeacher() ?? false;
+    }
+
     public static function getPages(): array
     {
         return [

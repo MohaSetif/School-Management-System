@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use App\Models\SchoolSettings;
+use Illuminate\Support\Facades\Log;
 use Mpdf\Mpdf;
 
 class ReportDownloadController extends Controller
 {
     public function download(Report $report)
     {
-        // Ensure the file path still exists on disk; if not, regenerate on-the-fly
         $filePath = storage_path('app/' . $report->file_path);
 
         if (file_exists($filePath)) {

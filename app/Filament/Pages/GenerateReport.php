@@ -13,8 +13,10 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Log;
 
 class GenerateReport extends Page implements HasForms
 {
@@ -53,14 +55,25 @@ class GenerateReport extends Page implements HasForms
     public $reference_number;
     public $content;
 
+    protected ?SchoolSettings $school = null;
+
     public function mount(): void
     {
-        $school = SchoolSettings::first();
+        $this->school = SchoolSettings::first();
+
+        if(!$this->school){
+             Notification::make()
+            ->warning()
+            ->title(__("reports.notifications.warning_title"))
+            ->body(__("reports.notifications.warning_body"))
+            ->persistent()
+            ->send();
+        }
 
         $this->form->fill([
             'directorate' => '',
-            'institution' => $school ? ($school->school_type . ' ' . $school->school_name) : '',
-            'from'        => $school?->director->name ?? '',
+            'institution' => $this->school ? ($this->school->school_type . ' ' . $this->school->school_name) : '',
+            'from'        => $this->school?->director->name ?? '',
             'to'          => '',
             'ref_number'  => '',
             'subject'     => '',
@@ -72,8 +85,8 @@ class GenerateReport extends Page implements HasForms
     {
         return [
             TextInput::make('directorate')->label(__('reports.form.directorate'))->required(),
-            TextInput::make('institution')->label(__('reports.form.institution'))->required(),
-            TextInput::make('from')->label(__('reports.form.from'))->required(),
+            TextInput::make('institution')->label(__('reports.form.institution'))->readOnly()->required(),
+            TextInput::make('from')->label(__('reports.form.from'))->readOnly()->required(),
             TextInput::make('to')->label(__('reports.form.to'))->required(),
             TextInput::make('ref_number')->label(__('reports.form.ref_number'))->required(),
             TextInput::make('subject')->label(__('reports.form.subject'))->required(),
@@ -84,9 +97,7 @@ class GenerateReport extends Page implements HasForms
     public function generateReport()
     {
         $data = $this->form->getState();
-
-        $school = SchoolSettings::firstOrFail();
-
+        $school = $this->school ?? SchoolSettings::firstOrFail();
         $content = (string) ($data['content'] ?? '');
 
         $html = view('pdf.report', [

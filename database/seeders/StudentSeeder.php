@@ -24,7 +24,7 @@ class StudentSeeder extends Seeder
                 $lastName = $faker->lastName;
 
                 Student::create([
-                    'student_identifier' => $faker->unique(),
+                    'student_identifier' => $faker->unique()->numberBetween(100000, 999999),
                     'first_name'         => $firstName,
                     'last_name'          => $lastName,
                     'gender'             => $gender,
@@ -38,7 +38,7 @@ class StudentSeeder extends Seeder
                     'place_of_birth'        => $faker->city(),
 
                     // School details
-                    'academic_year'    => $faker->randomElement(['أولى', 'ثانية', 'ثالثة', 'رابعة', 'خامسة']),
+                    'academic_year'    => $faker->randomElement(['1st year', '2nd year', '3rd year', '4th year', '5th year']),
                     'group_id'         => $group->id,
                     'schooling_system' => $faker->randomElement(['public', 'private']),
                     'enrollment_number'=> $faker->numerify('ENR###'),

@@ -41,6 +41,8 @@ return [
     'notifications' => [
         'success_generated' => 'Report successfully generated and saved.',
         'error_missing_fields' => 'Please fill in all required fields before generating the report.',
+        'warning_title' => 'School Settings Required',
+        'warning_body' => 'Please create the school settings first. This information is used throughout the system and some features may not work correctly without it.',
     ],
 
     'pdf' => [
