@@ -75,6 +75,7 @@ class StudentForm
                     ->schema([
                         TextInput::make('academic_year')
                             ->label(__('students.fields.academic_year'))
+                            ->formatStateUsing(fn ($state) => __("students.$state"))
                             ->maxLength(255),
 
                         Select::make('group_id')

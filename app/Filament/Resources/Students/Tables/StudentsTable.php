@@ -37,6 +37,7 @@ class StudentsTable
 
                 TextColumn::make('academic_year')
                     ->label(__('students.fields.academic_year'))
+                    ->formatStateUsing(fn ($state) => __("students.$state"))
                     ->sortable(),
 
                 TextColumn::make('date_of_birth')

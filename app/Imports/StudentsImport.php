@@ -79,7 +79,7 @@ class StudentsImport implements ToModel, WithHeadingRow
             'birth_certificate_number' => $row['رقم عقد الميلاد'] ?? null,
             'place_of_birth' => $row['مكان الازدياد'] ?? null,
 
-            'academic_year' => $name,
+            'academic_year' => $this->normalizeAcademicYear($name),
             'group_id' => $groupId,
 
             'schooling_system' => $row['نظام التمدرس'] ?? null,
@@ -129,5 +129,17 @@ class StudentsImport implements ToModel, WithHeadingRow
     public function headingRow(): int
     {
         return 7;
+    }
+
+    private function normalizeAcademicYear(?string $value): ?string
+    {
+        return match (trim($value ?? '')) {
+            'السنة الأولى', '1st year', 'First year', 'first year', 'أولى' => 'first_year',
+            'السنة الثانية', '2nd year', 'Second year', 'second year', 'ثانية' => 'second_year',
+            'السنة الثالثة', '3rd year', 'Third year', 'third year', 'ثالثة' => 'third_year',
+            'السنة الرابعة', '4th year', 'Fourth year', 'fourth year', 'رابعة' => 'fourth_year',
+            'السنة الخامسة', '5th year', 'Fifth year', 'fifth year', 'خامسة' => 'fifth_year',
+            default => null,
+        };
     }
 }

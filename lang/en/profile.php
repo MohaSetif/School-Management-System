@@ -53,19 +53,18 @@ return [
 
     'subjects' => [
         'Mathematics' => 'Mathematics',
-        'Science' => 'Science',
+        'Natural Science' => 'Science',
         'English' => 'English Language',
+        'French' => 'French Language',
         'Arabic' => 'Arabic Language',
         'Islamic Studies' => 'Islamic Studies',
         'History' => 'History',
         'Geography' => 'Geography',
         'Physics' => 'Physics',
-        'Chemistry' => 'Chemistry',
-        'Biology' => 'Biology',
-        'Computer_science' => 'Computer Science',
+        'Computer Science' => 'Computer Science',
         'Art' => 'Art',
         'Music' => 'Music',
-        'Physical_education' => 'Physical Education',
+        'Physical Education' => 'Physical Education',
     ],
 
     'purpose' => 'Select the subjects you currently teach.'

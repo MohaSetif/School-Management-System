@@ -22,7 +22,7 @@ class StudyRecordForm
                     ->disabled()
                     ->dehydrated(false),
                 Hidden::make('teacher_id')
-                    ->default(fn() => Auth::user()->teacher->id)
+                    ->default(fn() => Auth::user()->id)
                     ->required(),
                 DateTimePicker::make('time')
                     ->label(__('studyrecord.fields.time'))
@@ -70,19 +70,13 @@ class StudyRecordForm
                     ->columnSpanFull(),
                 Select::make('status')
                     ->label(__('studyrecord.fields.status'))
-                    ->options(function (){
-                        if(Auth::user()->isHeadmaster()){
-                            return [
-                                'pending' => __('studyrecord.fields.statuses.pending'),
-                                'seen' => __('studyrecord.fields.statuses.seen'),
-                            ];
-                        }
-                        else{
-                            return [
-                                'pending' => __('studyrecord.fields.statuses.pending'),
-                            ];
-                        }
-                    })
+                    ->options([
+                        'pending' => __('studyrecord.fields.statuses.pending'),
+                        'seen' => __('studyrecord.fields.statuses.seen'),
+                    ])
+                    ->default('pending')
+                    ->disabled(fn () => ! Auth::user()->isHeadmaster())
+                    ->dehydrated()
                     ->required()
             ]);
     }

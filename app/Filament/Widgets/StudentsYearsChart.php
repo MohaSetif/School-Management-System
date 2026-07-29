@@ -39,7 +39,7 @@ class StudentsYearsChart extends ChartWidget
     protected function getData(): array
     {
         // Use the ACTUAL values stored in the database for academic_year
-        $yearValues = ['أولى', 'ثانية', 'ثالثة', 'رابعة', 'خامسة'];
+        $yearValues = ['first_year', 'second_year', 'third_year', 'fourth_year', 'fifth_year'];
         
         // These are for display labels
         $labels = [

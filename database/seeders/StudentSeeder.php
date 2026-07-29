@@ -38,7 +38,7 @@ class StudentSeeder extends Seeder
                     'place_of_birth'        => $faker->city(),
 
                     // School details
-                    'academic_year'    => $faker->randomElement(['1st year', '2nd year', '3rd year', '4th year', '5th year']),
+                    'academic_year'    => $faker->randomElement(['first_year', 'second_year', 'third_year', 'fourth_year', 'fifth_year']),
                     'group_id'         => $group->id,
                     'schooling_system' => $faker->randomElement(['public', 'private']),
                     'enrollment_number'=> $faker->numerify('ENR###'),
