@@ -4,6 +4,7 @@ namespace App\Filament\Resources\StudyRecords\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -16,11 +17,9 @@ class StudyRecordForm
     {
         return $schema
             ->components([
-                TextInput::make('teacher.name')
+                Placeholder::make('teacher')
                     ->label(__('studyrecord.fields.teacher_id'))
-                    ->default(fn() => Auth::user()->name)
-                    ->disabled()
-                    ->dehydrated(false),
+                    ->content(fn () => Auth::user()->name),
                 Hidden::make('teacher_id')
                     ->default(fn() => Auth::user()->id)
                     ->required(),
@@ -50,13 +49,15 @@ class StudyRecordForm
                 Select::make('subject_id')
                     ->label(__('studyrecord.fields.subject'))
                     ->options(function () {
-                        if (Auth::user()->isTeacher() || Auth::user()->isHeadmaster()) {
-                            return  Auth::user()->teacher->subjects
-                                ->pluck('name', 'id')
+                        if (Auth::user()->isTeacher()) {
+                            return Auth::user()
+                                ->subjects()
+                                ->pluck('subjects.name', 'subjects.id')
                                 ->unique()
                                 ->sort()
                                 ->toArray();
                         }
+
                         return [];
                     })
                     ->searchable()

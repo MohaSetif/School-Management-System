@@ -8,6 +8,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -79,11 +80,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return $this->hasOne(SchoolSettings::class, 'director_id');
     }
 
-    public function teacher(): HasOne
-    {
-        return $this->hasOne(Teacher::class, 'user_id');
-    }
-
     public function isEmployee()
     {
         return $this->role === 'employee';
@@ -97,5 +93,14 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
+    }
+
+     public function subjects(): BelongsToMany{
+        return $this->belongsToMany(Subject::class, 'subject_teacher'); 
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }

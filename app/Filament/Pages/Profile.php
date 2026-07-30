@@ -50,7 +50,6 @@ class Profile extends Page
 
         if ($this->userType === 'teacher') {
             // Ensure a Teacher record exists for this user
-            $this->profile = \App\Models\Teacher::firstOrCreate(['user_id' => $this->user->id]);
             $this->selectedSubjects = $this->profile->subjects()->pluck('subjects.id')->toArray();
             $this->subjects = cache()->remember('subjects.all', 3600, fn() => \App\Models\Subject::all());
         }
@@ -81,10 +80,6 @@ class Profile extends Page
     {
         try {
             if ($this->userType !== 'teacher') {
-                throw new Exception(__('profile.errors.teacher_only'));
-            }
-
-            if (!($this->profile instanceof \App\Models\Teacher)) {
                 throw new Exception(__('profile.errors.teacher_only'));
             }
 

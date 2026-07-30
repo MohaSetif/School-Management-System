@@ -15,6 +15,7 @@ class StudyRecord extends Model
         'grade_level',
         'goal',
         'status',
+        'remarks',
     ];
 
     public function user()
@@ -26,5 +27,4 @@ class StudyRecord extends Model
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
-
 }
