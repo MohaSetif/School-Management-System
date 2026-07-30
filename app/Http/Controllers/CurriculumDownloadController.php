@@ -14,7 +14,7 @@ class CurriculumDownloadController extends Controller
             ->get();
 
         if ($curriculums->isEmpty()) {
-            abort(404, 'لا توجد مناهج لهذا الشهر');
+            abort(404, __('curriculum.no_curriculums_found'));
         }
 
         // Use the PDF-specific view (without Filament components)

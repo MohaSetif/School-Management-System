@@ -88,7 +88,7 @@ class GenerateReport extends Page implements HasForms
             TextInput::make('institution')->label(__('reports.form.institution'))->readOnly()->required(),
             TextInput::make('from')->label(__('reports.form.from'))->readOnly()->required(),
             TextInput::make('to')->label(__('reports.form.to'))->required(),
-            TextInput::make('ref_number')->label(__('reports.form.ref_number'))->required(),
+            TextInput::make('ref_number')->numeric()->label(__('reports.form.ref_number'))->required(),
             TextInput::make('subject')->label(__('reports.form.subject'))->required(),
             RichEditor::make('content')->label(__('reports.form.content'))->required(),
         ];

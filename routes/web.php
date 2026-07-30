@@ -22,7 +22,12 @@ Route::get('/download-curriculum/{month}', [CurriculumDownloadController::class,
 
 
 Route::get('/study-records/{id}/download', [App\Http\Controllers\StudyRecordDownloadController::class, 'download'])->name('study-records.download');
+Route::get('/study-records/{id}/show', [App\Http\Controllers\StudyRecordDownloadController::class, 'show'])->name('study-records.show');
 
 Route::get('/reports/{report}/download', [App\Http\Controllers\ReportDownloadController::class, 'download'])
     ->name('reports.download')
+    ->middleware('auth');
+
+Route::get('/reports/{report}/show', [App\Http\Controllers\ReportDownloadController::class, 'show'])
+    ->name('reports.show')
     ->middleware('auth');

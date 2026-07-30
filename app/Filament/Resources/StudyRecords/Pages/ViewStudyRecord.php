@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\StudyRecords\Pages;
 
 use App\Filament\Resources\StudyRecords\StudyRecordResource;
+use App\Models\StudyRecord;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -16,13 +17,12 @@ class ViewStudyRecord extends ViewRecord
     {
         return [
             EditAction::make(),
-            Action::make('pdf')
-                ->label(__('studyrecord.actions.view_report'))
-                ->icon('heroicon-o-document-text')
-                ->url(fn () => StudyRecordResource::getUrl('pdf', [
-                    'record' => $this->record,
-                ]))
-                ->openUrlInNewTab(),
+            Action::make('downloadPdf')
+                    ->label(__('studyrecord.actions.download'))
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('success')
+                    ->url(fn (StudyRecord $record): string => route('study-records.download', $record))
+                    ->openUrlInNewTab(),
 
             DeleteAction::make(),
         ];

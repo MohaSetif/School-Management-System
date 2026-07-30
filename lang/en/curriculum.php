@@ -8,6 +8,8 @@ return [
         'group' => 'Academic Content',
     ],
 
+    'no_curriculums_found' => 'No curriculums found for this month.',
+
     'form' => [
         'title' => 'Distribution Title',
         'grade_level' => 'Grade Level',

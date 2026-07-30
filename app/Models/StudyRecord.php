@@ -17,9 +17,9 @@ class StudyRecord extends Model
         'status',
     ];
 
-    public function teacher()
+    public function user()
     {
-        return $this->belongsTo(Teacher::class, 'teacher_id');
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 
     public function subject()

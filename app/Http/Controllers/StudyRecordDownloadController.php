@@ -9,7 +9,7 @@ class StudyRecordDownloadController extends Controller
 {
     public function download($id)
     {
-        $record = StudyRecord::with(['teacher.user', 'subject'])->findOrFail($id);
+        $record = StudyRecord::with(['user', 'subject'])->findOrFail($id);
 
         $html = view('pdf.study-record-pdf', [
             'record' => $record,
@@ -30,6 +30,19 @@ class StudyRecordDownloadController extends Controller
         return response($mpdf->Output('', 'S'), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="study_record_' . $id . '.pdf"',
+        ]);
+    }
+
+    public function show(StudyRecord $record)
+    {
+        $filePath = storage_path('app/' . $record->file_path);
+
+        if (! file_exists($filePath)) {
+            abort(404);
+        }
+
+        return response()->file($filePath, [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 }

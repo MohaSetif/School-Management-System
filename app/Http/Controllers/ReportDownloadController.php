@@ -13,7 +13,9 @@ class ReportDownloadController extends Controller
     {
         $filePath = storage_path('app/' . $report->file_path);
 
-        if (file_exists($filePath)) {
+        if (! file_exists($filePath)) {
+            abort(404);
+        }else{
             return response()->download($filePath, 'report_' . $report->id . '.pdf');
         }
 
@@ -39,6 +41,19 @@ class ReportDownloadController extends Controller
         return response($mpdf->Output('', 'S'), 200, [
             'Content-Type'        => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="report_' . $report->id . '.pdf"',
+        ]);
+    }
+
+    public function show(Report $report)
+    {
+        $filePath = storage_path('app/' . $report->file_path);
+
+        if (! file_exists($filePath)) {
+            abort(404);
+        }
+
+        return response()->file($filePath, [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 }

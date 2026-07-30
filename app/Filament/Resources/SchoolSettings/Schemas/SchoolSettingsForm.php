@@ -60,6 +60,7 @@ class SchoolSettingsForm
                     ->required(),
 
                 TextInput::make('identification_number')
+                    ->numeric()
                     ->label(__('school_settings.fields.identification_number'))
                     ->required(),
 
@@ -67,6 +68,7 @@ class SchoolSettingsForm
                     ->label(__('school_settings.fields.date_established')),
 
                 TextInput::make('date_established_number')
+                    ->numeric()
                     ->label(__('school_settings.fields.date_established_number')),
 
                 TextInput::make('working_days')

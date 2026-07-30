@@ -19,7 +19,7 @@ class StudyRecordsTable
     {
         return $table
             ->columns([
-                TextColumn::make('teacher.user.name')
+                TextColumn::make('user.name')
                     ->label(__('studyrecord.fields.teacher_id'))
                     ->sortable(),
                 TextColumn::make('time')

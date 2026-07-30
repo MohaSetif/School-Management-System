@@ -14,7 +14,7 @@ class StudyRecordInfolist
             Section::make(__('studyrecord.mainTitle'))
                 ->columns(2)
                 ->schema([
-                    TextEntry::make('teacher.user.name')
+                    TextEntry::make('user.name')
                         ->label(__('studyrecord.fields.teacher_id'))
                         ->icon('heroicon-o-user-circle')
                         ->placeholder('-'),

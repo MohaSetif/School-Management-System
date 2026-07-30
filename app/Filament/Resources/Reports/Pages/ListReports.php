@@ -13,7 +13,7 @@ class ListReports extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->label(__('actions.create'))->url('/generate-report'),
+            CreateAction::make()->label(__('actions.create'))->url('/school_admin/generate-report'),
         ];
     }
 }
