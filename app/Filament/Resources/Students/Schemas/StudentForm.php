@@ -73,20 +73,21 @@ class StudentForm
 
                 Section::make(__('students.sections.academic_info'))
                     ->schema([
-                        TextInput::make('academic_year')
+                        Select::make('academic_year')
                             ->label(__('students.fields.academic_year'))
-                            ->formatStateUsing(fn ($state) => __("students.$state"))
-                            ->maxLength(255),
+                            ->options([
+                                'first_year' => __('students.first_year'),
+                                'second_year' => __('students.second_year'),
+                                'third_year' => __('students.third_year'),
+                                'fourth_year' => __('students.fourth_year'),
+                                'fifth_year' => __('students.fifth_year'),
+                            ])
+                            ->required(),
 
-                        Select::make('group_id')
+                        TextInput::make('group_id')
                             ->label(__('students.fields.group_id'))
-                            ->options(function (callable $get) {
-                                // $get('academic_year') will fetch the current value of academic_year field
-                                $academicYear = $get('academic_year');
-
-                                return Group::where('name', $academicYear)->pluck('code', 'id');
-                            })
-                            ->searchable(),
+                            ->numeric()
+                            ->required(),
 
                         TextInput::make('schooling_system')
                             ->label(__('students.fields.schooling_system'))

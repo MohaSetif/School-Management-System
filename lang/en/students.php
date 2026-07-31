@@ -39,6 +39,11 @@ return [
         'personal_info' => 'Personal Information',
         'academic_info' => 'Academic Information',
         'social_health' => 'Social & Health Status',
+        'birth_infor' => 'Birth Information',
+        'school_infor' => 'Schooling Information',
+        'social_infor' => 'Social Status',
+        'health_infor' => 'Health Status',
+        'timestamps' => 'Created & Updated At',
     ],
 
     'filters' => [

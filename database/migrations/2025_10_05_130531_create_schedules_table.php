@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
             $table->foreignId('subject_id')->constrained('subjects')->cascadeOnDelete();
-            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
+            $table->foreignId('teacher_id')->constrained('users')->cascadeOnDelete();
             $table->string('day_of_week');
             $table->time('start_time');
             $table->time('end_time');

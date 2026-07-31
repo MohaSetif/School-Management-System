@@ -39,6 +39,11 @@ return [
         'personal_info' => 'المعلومات الشخصية',
         'academic_info' => 'المعلومات الأكاديمية',
         'social_health' => 'الوضعية الاجتماعية والصحية',
+        'birth_infor' => 'معلومات الولادة',
+        'school_infor' => 'معلومات التمدرس',
+        'social_infor' => 'الوضعية الاجتماعية',
+        'health_infor' => 'الوضعية الصحية',
+        'timestamps' => 'تاريخ الإضافة والتعديل',
     ],
 
     'filters' => [

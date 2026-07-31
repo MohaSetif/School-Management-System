@@ -51,16 +51,6 @@ class StudentsImport implements ToModel, WithHeadingRow
         $code = $row['القسم'] ?? null;
         $name = $row['السنة'] ?? null;
 
-        if ($code && $name) {
-            $key = $code . '_' . $name;
-
-            if (isset($this->groups[$key])) {
-                $groupId = $this->groups[$key]['id'];
-            } else {
-                Log::warning("Group not found: {$key}");
-            }
-        }
-
         // -----------------------------
         // 4. Create student
         // -----------------------------
@@ -80,7 +70,7 @@ class StudentsImport implements ToModel, WithHeadingRow
             'place_of_birth' => $row['مكان الازدياد'] ?? null,
 
             'academic_year' => $this->normalizeAcademicYear($name),
-            'group_id' => $groupId,
+            'group_id' => $row['القسم'] ?? null,
 
             'schooling_system' => $row['نظام التمدرس'] ?? null,
             'enrollment_number' => $row['رقم القيد'] ?? null,
