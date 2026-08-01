@@ -44,7 +44,7 @@ class SchoolAdminPanelProvider extends PanelProvider
             ->spa(false)
             ->registration()
             ->passwordReset()
-            ->emailVerification()
+            //->emailVerification()
             ->login()
             ->colors([
                 'primary' => Color::Slate,
