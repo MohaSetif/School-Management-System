@@ -129,7 +129,7 @@ class GenerateReport extends Page implements HasForms
         $fileName = 'report_' . uniqid() . '.pdf';
         $filePath = $directory . '/' . $fileName;
 
-        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'default_font' => 'dejavusans']);
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'default_font' => 'dejavusans', 'tempDir' => storage_path('app/mpdf-tmp'),]);
         $mpdf->WriteHTML($html);
         $mpdf->Output($filePath, 'F');
 
