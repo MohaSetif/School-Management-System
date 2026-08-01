@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('month');
             $table->json('subjects');
             $table->timestamps();
-
             $table->index(['user_id', 'grade_level']);
         });
     }
