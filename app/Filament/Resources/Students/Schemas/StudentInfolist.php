@@ -35,7 +35,7 @@ class StudentInfolist
                                     ->badge()
                                     ->color(fn ($state) => match ($state) {
                                         'male' => 'info',
-                                        'female' => 'pink',
+                                        'female' => 'danger',
                                         default => 'gray',
                                     }),
 
@@ -83,9 +83,10 @@ class StudentInfolist
 
                                 TextEntry::make('academic_year')
                                     ->label(__('students.fields.academic_year'))
+                                    ->formatStateUsing(fn (string $state): string => __('students.' . $state))
                                     ->badge(),
 
-                                TextEntry::make('group.name')
+                                TextEntry::make('group.code')
                                     ->label(__('students.fields.group'))
                                     ->badge()
                                     ->color('primary'),

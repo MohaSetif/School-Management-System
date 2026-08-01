@@ -22,11 +22,11 @@ return [
     ],
 
     'classes' => [
-        '1st year' => '1st Year',
-        '2nd year' => '2nd Year',
-        '3rd year' => '3rd Year',
-        '4th year' => '4th Year',
-        '5th year' => '5th Year',
+        'first_year' => '1st Year',
+        'second_year' => '2nd Year',
+        'third_year' => '3rd Year',
+        'fourth_year' => '4th Year',
+        'fifth_year' => '5th Year',
     ],
 
     'levels' => [

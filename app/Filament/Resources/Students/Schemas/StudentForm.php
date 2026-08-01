@@ -84,9 +84,17 @@ class StudentForm
                             ])
                             ->required(),
 
-                        TextInput::make('group_id')
-                            ->label(__('students.fields.group_id'))
-                            ->numeric()
+                       Select::make('group_id')
+                            ->relationship(
+                                name: 'group',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn ($query) => $query->select('id', 'name', 'code')
+                            )
+                            ->getOptionLabelFromRecordUsing(
+                                fn (Group $record) => __('students.' . $record->name) . ' (' . __('students.fields.group') . " {$record->code})"
+                            )
+                            ->searchable(['name', 'code'])
+                            ->preload()
                             ->required(),
 
                         TextInput::make('schooling_system')

@@ -21,6 +21,7 @@ class GroupsTable
             ->columns([
                 TextColumn::make('name')
                     ->label(__('groups.fields.name'))
+                    ->formatStateUsing(fn (string $state): string => __('groups.classes.' . $state))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('code')

@@ -33,6 +33,9 @@ return [
         'health_status' => 'Health Status',
         'psychological_status' => 'Psychological Status',
         'is_sector_child' => 'Sector Child',
+        'group_with_code' => ':name (Group :code)',
+        'created_at' => 'Created At',
+        'updated_at' => 'Updated At',
     ],
 
     'sections' => [

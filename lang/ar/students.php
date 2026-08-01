@@ -33,6 +33,9 @@ return [
         'health_status' => 'الحالة الصحية',
         'psychological_status' => 'الحالة النفسية',
         'is_sector_child' => 'ابن قطاع',
+        'group_with_code' => ':name (الفوج :code)',
+        'created_at' => 'تاريخ الإضافة',
+        'updated_at' => 'تاريخ التعديل',
     ],
 
     'sections' => [

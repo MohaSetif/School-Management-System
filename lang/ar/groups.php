@@ -2,6 +2,11 @@
 
 return [
     'mainTitle' => 'قائمة الأفواج',
+    'sections' => [
+        'general' => 'معلومات عامة',
+        'statistics' => 'إحصائيات',
+        'metadata' => "تاريخ الإضافة و التعديل",
+    ],
     'navigation' => [
         'label' => 'الأقسام',
         'group' => 'إدارة الأقسام',
@@ -13,6 +18,9 @@ return [
         'teachers' => 'المعلمين المخصصين',
         'students_count' => 'عدد الطلاب',
         'is_active' => 'نشط',
+        'created_at' => 'تاريخ الإضافة',
+        'updated_at' => 'تاريخ التعديل',
+        'academic_year' => 'السنة الدراسية',
     ],
     'pages' => [
         'list' => 'قائمة الأقسام',
@@ -22,11 +30,11 @@ return [
     ],
 
     'classes' => [
-        '1st year' => 'السنة الأولى',
-        '2nd year' => 'السنة الثانية',
-        '3rd year' => 'السنة الثالثة',
-        '4th year' => 'السنة الرابعة',
-        '5th year' => 'السنة الخامسة',
+        'first_year' => 'السنة الأولى',
+        'second_year' => 'السنة الثانية',
+        'third_year' => 'السنة الثالثة',
+        'fourth_year' => 'السنة الرابعة',
+        'fifth_year' => 'السنة الخامسة',
     ],
 
     'levels' => [

@@ -15,11 +15,11 @@ class GroupForm
                 Select::make('name')
                     ->label(__('groups.fields.name'))
                     ->options([
-                        'أولى' => __('groups.levels.first'),
-                        'ثانية' => __('groups.levels.second'),
-                        'ثالثة' => __('groups.levels.third'),
-                        'رابعة' => __('groups.levels.fourth'),
-                        'خامسة' => __('groups.levels.fifth'),
+                        'first_year' => __('groups.levels.first'),
+                        'second_year' => __('groups.levels.second'),
+                        'third_year' => __('groups.levels.third'),
+                        'fourth_year' => __('groups.levels.fourth'),
+                        'fifth_year' => __('groups.levels.fifth'),
                     ])
                     ->required(),
                 TextInput::make('code')

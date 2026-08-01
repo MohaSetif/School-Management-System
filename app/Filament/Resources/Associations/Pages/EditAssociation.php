@@ -16,8 +16,8 @@ class EditAssociation extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make()->label(__('actions.create')),
-            DeleteAction::make()->label(__('actions.create')),
+            ViewAction::make()->label(__('actions.view')),
+            DeleteAction::make()->label(__('actions.delete')),
         ];
     }
 }

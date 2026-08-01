@@ -15,11 +15,11 @@ class GroupSeeder extends Seeder
     public function run(): void
     {
         $groups = [
-            ['name' => '1st year', 'code' => 1, 'description' => 'First grade'],
-            ['name' => '2nd year', 'code' => 1, 'description' => 'Second grade'],
-            ['name' => '3rd year', 'code' => 1, 'description' => 'Third grade'],
-            ['name' => '4th year', 'code' => 1, 'description' => 'Fourth grade'],
-            ['name' => '5th year', 'code' => 1, 'description' => 'Fifth grade'],
+            ['name' => 'first_year', 'code' => 1, 'description' => 'First grade'],
+            ['name' => 'second_year', 'code' => 1, 'description' => 'Second grade'],
+            ['name' => 'third_year', 'code' => 1, 'description' => 'Third grade'],
+            ['name' => 'fourth_year', 'code' => 1, 'description' => 'Fourth grade'],
+            ['name' => 'fifth_year', 'code' => 1, 'description' => 'Fifth grade'],
         ];
 
         $teachers = User::where('role', 'teacher')->get();

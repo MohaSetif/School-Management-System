@@ -15,7 +15,7 @@ class ViewGroup extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make()->label(__('actions.edit')),
+            EditAction::make()->label(__('actions.edit'))->visible(fn() => Auth::user()->isHeadmaster()),
         ];
     }
 }

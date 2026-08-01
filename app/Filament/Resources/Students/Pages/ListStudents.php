@@ -6,6 +6,7 @@ use App\Filament\Resources\Students\StudentResource;
 use App\Filament\Traits\TranslatablePageTitle;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Facades\Auth;
 
 class ListStudents extends ListRecords
 {
@@ -15,7 +16,7 @@ class ListStudents extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->label(__('actions.create')),
+            CreateAction::make()->label(__('actions.add'))->visible(fn() => Auth::user()->isHeadmaster()),
         ];
     }
 }

@@ -14,7 +14,7 @@ class ListMemberAbsences extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->label(__('actions.create')),
+            CreateAction::make()->label(__('actions.add')),
         ];
     }
 }
