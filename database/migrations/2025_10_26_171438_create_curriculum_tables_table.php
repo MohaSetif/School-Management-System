@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('curriculum_tables', function (Blueprint $table) {
@@ -21,14 +18,11 @@ return new class extends Migration
             $table->string('month');
             $table->json('subjects');
             $table->timestamps();
-            
-            $table->index(['user_id', 'grade_level', 'subject']);
+
+            $table->index(['user_id', 'grade_level']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('curriculum_tables');
