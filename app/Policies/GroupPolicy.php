@@ -13,7 +13,7 @@ class GroupPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class GroupPolicy
      */
     public function view(User $user, Group $group): bool
     {
-        return false;
+        return true;
     }
 
     /**

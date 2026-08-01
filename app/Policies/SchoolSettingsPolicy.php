@@ -13,7 +13,7 @@ class SchoolSettingsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class SchoolSettingsPolicy
      */
     public function view(User $user, SchoolSettings $schoolSettings): bool
     {
-        return false;
+        return true;
     }
 
     /**

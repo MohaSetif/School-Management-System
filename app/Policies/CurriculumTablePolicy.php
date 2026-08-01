@@ -13,7 +13,7 @@ class CurriculumTablePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class CurriculumTablePolicy
      */
     public function view(User $user, CurriculumTable $curriculumTable): bool
     {
-        return false;
+        return true;
     }
 
     /**

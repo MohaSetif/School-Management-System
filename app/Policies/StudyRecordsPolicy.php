@@ -13,7 +13,7 @@ class StudyRecordsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class StudyRecordsPolicy
      */
     public function view(User $user, StudyRecord $studyRecord): bool
     {
-        return false;
+        return true;
     }
 
     /**
