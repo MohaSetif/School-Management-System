@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -81,6 +82,7 @@ class StudentsTable
                 Action::make('import')
                     ->label(__('students.actions.import'))
                     ->icon('heroicon-o-arrow-up-tray')
+                    ->visible(fn() => Auth::user()->isHeadmaster())
                     ->color('success')
                     ->form([
                         FileUpload::make('file')

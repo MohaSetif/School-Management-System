@@ -15,6 +15,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\Auth;
 use Mpdf\Mpdf;
 use Illuminate\Support\Facades\Log;
 
@@ -24,6 +25,11 @@ class GenerateReport extends Page implements HasForms
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
     protected string $view = 'filament.pages.generate-report';
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()->isHeadmaster();
+    }
 
     public function getTitle(): string
     {
