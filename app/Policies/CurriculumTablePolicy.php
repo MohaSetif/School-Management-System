@@ -29,7 +29,7 @@ class CurriculumTablePolicy
      */
     public function create(User $user): bool
     {
-        return $user->isTeacher();
+        return $user->isTeacher() || $user->isHeadmaster();
     }
 
     /**

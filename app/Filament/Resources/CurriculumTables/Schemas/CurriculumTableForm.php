@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CurriculumTables\Schemas;
 
+use App\Models\Group;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
@@ -29,15 +30,17 @@ class CurriculumTableForm
                 Select::make('grade_level')
                     ->label(__('curriculum.form.grade_level'))
                     ->options(function () {
-                        if (Auth::user()->isTeacher()) {
-                            return Auth::user()->groups
-                                ->pluck('name', 'code')
-                                ->unique()
-                                ->sort()
-                                ->map(fn ($name, $code) => "{$name} - {$code}")
-                                ->toArray();
-                        }
-                        return [];
+                        $user = Auth::user();
+
+                        $groups = $user->isHeadmaster()
+                            ? Group::where('is_active', true)->get()
+                            : $user->groups()
+                                ->where('groups.is_active', true)
+                                ->get();
+
+                        return $groups->mapWithKeys(fn ($group) => [
+                            $group->id => __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})" 
+                        ]);
                     })
                     ->required(),
 
@@ -48,7 +51,7 @@ class CurriculumTableForm
                             ->label(__('curriculum.form.subject_name'))
                             ->options(function(){
                                 if (Auth::user()->isTeacher()) {
-                                    return Auth::user()->teacher->subjects
+                                    return Auth::user()->subjects
                                         ->pluck('name')
                                         ->unique()
                                         ->sort()

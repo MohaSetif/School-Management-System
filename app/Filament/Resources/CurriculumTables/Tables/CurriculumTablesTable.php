@@ -34,7 +34,7 @@ class CurriculumTablesTable
                             ->orWhere('id', $state)
                             ->first();
 
-                        return $group?->name ?? $state ?? '-';
+                        return $group ? __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})" : '-';
                     })
                     ->searchable(),
 
@@ -63,16 +63,12 @@ class CurriculumTablesTable
             ->filters([])
             ->recordActions([
                 ViewAction::make()
-                    ->label(__('curriculum.actions.view')),
+                    ->label(__('curriculum.actions.planner'))
+                    ->icon('heroicon-o-calendar-days')
+                    ->color('info'),
 
                 EditAction::make()
                     ->label(__('curriculum.actions.edit')),
-
-                Action::make('planner')
-                    ->label(__('curriculum.actions.planner'))
-                    ->icon('heroicon-o-calendar-days')
-                    ->color('info')
-                    ->url(fn ($record) => route('filament.school_admin.resources.curriculum-tables.planner', ['record' => $record])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

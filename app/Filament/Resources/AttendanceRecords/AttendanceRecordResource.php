@@ -38,7 +38,7 @@ class AttendanceRecordResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('resources.attendance');
+        return __('resources.attendance_record');
     }
 
     public static function form(Schema $schema): Schema

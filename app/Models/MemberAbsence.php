@@ -16,26 +16,26 @@ class MemberAbsence extends Model
 
     public function member()
     {
-        return $this->belongsTo(AcademicMember::class, 'member_id');
+        return $this->belongsTo(User::class, 'member_id');
     }
 
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class, 'member_id');
-    }
+    // public function employee()
+    // {
+    //     return $this->belongsTo(Employee::class, 'member_id');
+    // }
 
-    public function getMemberFullNameAttribute(): ?string
-    {
-        if ($this->member_type === 'academic') {
-            return optional($this->academicMember)->full_name
-                ?? optional($this->academicMember)->last_name . ' ' . optional($this->academicMember)->first_name;
-        }
+    // public function getMemberFullNameAttribute(): ?string
+    // {
+    //     if ($this->member_type === 'academic') {
+    //         return optional($this->academicMember)->full_name
+    //             ?? optional($this->academicMember)->last_name . ' ' . optional($this->academicMember)->first_name;
+    //     }
 
-        if ($this->member_type === 'employee') {
-            return optional($this->employee)->full_name
-                ?? optional($this->employee)->last_name . ' ' . optional($this->employee)->first_name;
-        }
+    //     if ($this->member_type === 'employee') {
+    //         return optional($this->employee)->full_name
+    //             ?? optional($this->employee)->last_name . ' ' . optional($this->employee)->first_name;
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 }

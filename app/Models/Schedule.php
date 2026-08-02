@@ -18,7 +18,7 @@ class Schedule extends Model
 
     public function teacher(): BelongsTo
         {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'teacher_id');
     }
 
     public function subject(): BelongsTo

@@ -80,14 +80,17 @@
 
             @php
                 $schedules = $this->schedules;
-                
-                $days = [
-                    __('calendar.days.sunday') => 'Sunday', 
-                    __('calendar.days.monday') => 'Monday', 
-                    __('calendar.days.tuesday') => 'Tuesday', 
-                    __('calendar.days.wednesday') => 'Wednesday', 
-                    __('calendar.days.thursday') => 'Thursday'
-                ];
+
+                $startOfWeek = \Carbon\Carbon::now()->startOfWeek(\Carbon\Carbon::SUNDAY);
+
+                $days = [];
+
+                for ($i = 0; $i < 5; $i++) {
+                    $date = $startOfWeek->copy()->addDays($i);
+
+                    $days[$date->translatedFormat('l d/m')] = strtolower($date->format('l'));
+                }
+
                 $groupedSchedules = $schedules->groupBy('day_of_week');
                 
                 $colors = [
@@ -102,17 +105,19 @@
             <div class="overflow-x-auto">
                 <div class="min-w-full inline-block align-middle">
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 p-6">
-                        @foreach($days as $arabicDay => $englishDay)
+                        @foreach($days as $displayDay => $databaseDay)
                             <div class="bg-gray-50 dark:bg-gray-900/50 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
                                 {{-- Day Header --}}
                                 <div class="bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white">
-                                    <h3 class="font-bold text-lg text-center">{{ $arabicDay }}</h3>
+                                    <h3 class="font-bold text-lg text-center">
+                                        {{ $displayDay }}
+                                    </h3>
                                 </div>
 
                                 {{-- Schedule Items --}}
                                 <div class="p-3 space-y-2 min-h-[200px]">
                                     @php
-                                        $daySchedules = $groupedSchedules->get($arabicDay, collect());
+                                        $daySchedules = $groupedSchedules->get($databaseDay, collect());
                                     @endphp
 
                                     @forelse($daySchedules as $index => $schedule)
@@ -132,7 +137,7 @@
 
                                             {{-- Subject --}}
                                             <div class="font-bold text-sm text-gray-900 dark:text-white mb-1">
-                                                {{ $schedule->subject->name }}
+                                                {{ __('profile.subjects.' . $schedule->subject->name) }}
                                             </div>
 
                                             {{-- Group/Class --}}
@@ -140,7 +145,9 @@
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                                                 </svg>
-                                                <span>{{ $schedule->group->name }} ({{ $schedule->group->code }})</span>
+                                                <span>
+                                                    {{ __('students.' . $schedule->group->name) . ' (' . __('students.fields.group') . " {$schedule->group->code})" }}
+                                                </span>
                                             </div>
 
                                             {{-- Teacher --}}
@@ -148,7 +155,7 @@
                                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                                 </svg>
-                                                <span>{{ $schedule->teacher->user->name }}</span>
+                                                <span>{{ $schedule->teacher->name }}</span>
                                             </div>
 
                                             {{-- Room (if exists) --}}

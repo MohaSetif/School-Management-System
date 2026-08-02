@@ -103,4 +103,9 @@ class User extends Authenticatable implements FilamentUser//, MustVerifyEmail
     {
         return $this->hasMany(Schedule::class);
     }
+
+    public function absences()
+    {
+        return $this->hasMany(MemberAbsence::class, 'member_id');
+    }
 }

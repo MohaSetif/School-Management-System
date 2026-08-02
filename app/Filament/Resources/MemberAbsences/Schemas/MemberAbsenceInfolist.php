@@ -15,7 +15,7 @@ class MemberAbsenceInfolist
             Section::make(__('members_absence.form.sections.details'))
                 ->columns(2)
                 ->schema([
-                    TextEntry::make('member_full_name')
+                    TextEntry::make('member.name')
                         ->label(__('members_absence.form.fields.member'))
                         ->placeholder('-'),
 
@@ -32,12 +32,12 @@ class MemberAbsenceInfolist
                             __('members_absence.form.fields.status.absent') => 'danger',
                             __('members_absence.form.fields.status.late') => 'warning',
                             __('members_absence.form.fields.status.excused') => 'info',
+                            __('members_absence.form.fields.status.exit_before_time') => 'secondary',
                             default => 'gray',
                         }),
 
                     TextEntry::make('reason')
                         ->label(__('members_absence.form.fields.reason'))
-                        ->html()
                         ->columnSpanFull()
                         ->placeholder(__('members_absence.form.fields.no_reason')),
                 ]),

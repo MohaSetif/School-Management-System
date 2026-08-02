@@ -21,16 +21,19 @@ class AttendanceRecordForm
                     ->label(__('attendance.group'))
                     ->options(function () {
                         $user = Auth::user();
-                        if ($user->isHeadmaster()) {
-                            return Group::where('is_active', true)->pluck('name', 'id');
-                        }
-                        return $user->groups()
-                                    ->where('groups.is_active', true)
-                                    ->pluck('groups.name', 'groups.id');
+
+                        $groups = $user->isHeadmaster()
+                            ? Group::where('is_active', true)->get()
+                            : $user->groups()
+                                ->where('groups.is_active', true)
+                                ->get();
+
+                        return $groups->mapWithKeys(fn ($group) => [
+                            $group->id => __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})" 
+                        ]);
                     })
                     ->required()
-                    ->reactive()
-                    ->afterStateUpdated(fn (callable $set) => $set('student_id', null)),
+                    ->reactive(),
 
                 Select::make('student_id')
                     ->label(__('attendance.student'))

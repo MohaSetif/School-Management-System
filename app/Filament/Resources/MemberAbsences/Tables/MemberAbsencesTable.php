@@ -15,9 +15,9 @@ class MemberAbsencesTable
     {
         return $table
             ->columns([
-                TextColumn::make('teacher_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('member.name')
+                    ->label(__('members_absence.form.fields.member'))
+                    ->searchable(),
                 TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),

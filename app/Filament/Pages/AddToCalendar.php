@@ -5,7 +5,7 @@ namespace App\Filament\Pages;
 use App\Models\Group;
 use App\Models\Schedule;
 use App\Models\Subject;
-use App\Models\Teacher;
+use App\Models\User;
 use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -34,7 +34,7 @@ class AddToCalendar extends Page
 
     public function getSchedulesProperty()
     {
-        return Schedule::with(['group', 'subject', 'teacher.user'])
+        return Schedule::with(['group', 'subject', 'teacher'])
             ->when($this->appliedGroupId, fn($q) => $q->where('group_id', $this->appliedGroupId))
             ->orderBy('day_of_week')
             ->orderBy('start_time')
@@ -71,11 +71,11 @@ class AddToCalendar extends Page
             Select::make('day_of_week')
                 ->label(__('calendar.fields.dayofWeek'))
                 ->options([
-                    'الأحد' => __('calendar.days.sunday'),
-                    'الإثنين' => __('calendar.days.monday'),
-                    'الثلاثاء' => __('calendar.days.tuesday'),
-                    'الأربعاء' => __('calendar.days.wednesday'),
-                    'الخميس' => __('calendar.days.thursday'),
+                    'sunday' => __('calendar.days.sunday'),
+                    'monday' => __('calendar.days.monday'),
+                    'tuesday' => __('calendar.days.tuesday'),
+                    'wednesday' => __('calendar.days.wednesday'),
+                    'thursday' => __('calendar.days.thursday'),
                 ])
                 ->required(),
 
@@ -84,34 +84,56 @@ class AddToCalendar extends Page
 
             Select::make('teacher_id')
                 ->label(__('calendar.fields.teacher'))
-                ->options(
-                    Teacher::with('user')->get()
-                        ->mapWithKeys(fn($t) => $t->user ? [$t->id => $t->user->name] : [])
+                ->options(fn () =>
+                    User::where('role', 'teacher')
+                        ->orderBy('name')
+                        ->pluck('name', 'id')
                 )
                 ->searchable()
                 ->required()
-                ->reactive(),
+                ->live()
+                ->afterStateUpdated(function ($state, callable $set) {
+                    $set('group_id', null);
+                    $set('subject_id', null);
+                }),
 
             Select::make('group_id')
                 ->label(__('calendar.fields.class'))
-                ->options(
-                    Group::all()->mapWithKeys(fn($g) => [$g->id => $g->name . ' (' . $g->code . ')'])
-                )
+                ->options(function (callable $get) {
+                    $teacherId = $get('teacher_id');
+
+                    if (! $teacherId) {
+                        return [];
+                    }
+
+                    return User::find($teacherId)
+                        ?->groups()
+                        ->orderBy('name')
+                        ->orderBy('code')
+                        ->get()
+                        ->mapWithKeys(fn ($group) => [
+                            $group->id => __('students.' . $group->name) . ' - ' . $group->code,
+                        ])
+                        ?? [];
+                })
                 ->searchable()
-                ->required(),
+                ->required()
+                ->live(),
 
             Select::make('subject_id')
                 ->label(__('calendar.fields.subject'))
                 ->options(function (callable $get) {
                     $teacherId = $get('teacher_id');
+
                     if (! $teacherId) {
-                        return Subject::pluck('name', 'id');
+                        return [];
                     }
 
-                    $teacher = Teacher::with('subjects')->find($teacherId);
-                    return $teacher
-                        ? $teacher->subjects->pluck('name', 'id')
-                        : Subject::pluck('name', 'id');
+                    return User::find($teacherId)
+                        ?->subjects()
+                        ->orderBy('name')
+                        ->pluck('subjects.name', 'subjects.id')
+                        ?? [];
                 })
                 ->searchable()
                 ->required(),

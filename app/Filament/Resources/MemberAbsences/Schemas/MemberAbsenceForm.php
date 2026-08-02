@@ -8,6 +8,7 @@ use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 
 class MemberAbsenceForm
@@ -35,8 +36,9 @@ class MemberAbsenceForm
                 'teacher_' . $teacher->id => $teacher->name,
             ]);
         // Merge both collections into one
-        $members = $academicMembers->merge($employees);
-        $members = $members->merge($teachers);
+        $members = $academicMembers
+                    ->union($employees)
+                    ->union($teachers);
 
         return $schema->components([
             Select::make('member_key')
@@ -50,8 +52,9 @@ class MemberAbsenceForm
                 ->label(__('members_absence.form.fields.absence_date'))
                 ->required(),
 
-            RichEditor::make('reason')
+            Textarea::make('reason')
                 ->label(__('members_absence.form.fields.reason'))
+                ->rows(4)
                 ->required(),
 
             Select::make('status')
