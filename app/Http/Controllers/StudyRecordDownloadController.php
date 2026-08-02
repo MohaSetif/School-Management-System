@@ -15,6 +15,11 @@ class StudyRecordDownloadController extends Controller
             'record' => $record,
         ])->render();
 
+        $tempDir = storage_path('app/mpdf-tmp');
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0775, true);
+        }
+
         $mpdf = new Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4-L',
@@ -23,6 +28,7 @@ class StudyRecordDownloadController extends Controller
             'margin_right' => 10,
             'margin_top' => 10,
             'margin_bottom' => 10,
+            'tempDir' => $tempDir,
         ]);
 
         $mpdf->WriteHTML($html);
