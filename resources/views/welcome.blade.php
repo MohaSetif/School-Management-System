@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <title>CampusMS</title>
 </head>
@@ -15,22 +16,40 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="relative z-20 max-w-7xl mx-auto px-6 pt-8">
-        <div class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl px-6 py-4">
-            <div class="text-xl font-bold tracking-tight">{{ __('welcome.nav.brand') }}<span class="text-blue-500"></span></div>
-
-            <div class="hidden md:flex items-center gap-8 text-sm text-zinc-400">
-                <a href="#features" class="hover:text-white transition">{{ __('welcome.nav.features') }}</a>
-                <a href="#dashboard" class="hover:text-white transition">{{ __('welcome.nav.platform') }}</a>
-                <a href="#security" class="hover:text-white transition">{{ __('welcome.nav.security') }}</a>
+    <nav
+    x-data="{ open: false }"
+    class="relative z-[9999] max-w-7xl mx-auto px-4 sm:px-6 pt-6">
+        <div class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl px-4 sm:px-6 py-4">
+            <!-- Logo -->
+            <div class="min-w-0 flex-1">
+                <div class="truncate text-lg sm:text-xl font-bold tracking-tight">
+                    {{ __('welcome.nav.brand') }}
+                </div>
             </div>
 
-            <div class="flex items-center gap-4">
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center gap-8 text-sm text-zinc-400 mx-8">
+                <a href="#features" class="hover:text-white transition whitespace-nowrap">
+                    {{ __('welcome.nav.features') }}
+                </a>
+
+                <a href="#platform" class="hover:text-white transition whitespace-nowrap">
+                    {{ __('welcome.nav.platform') }}
+                </a>
+
+                <a href="#security" class="hover:text-white transition whitespace-nowrap">
+                    {{ __('welcome.nav.security') }}
+                </a>
+            </div>
+
+            <!-- Desktop Actions -->
+            <div class="hidden lg:flex items-center gap-4 flex-shrink-0">
+
                 <div class="flex rounded-xl border border-white/10 bg-white/5 p-1 backdrop-blur-md">
                     @foreach (['en' => 'EN', 'ar' => 'AR'] as $locale => $label)
                         <a
                             href="{{ route('lang.switch', $locale) }}"
-                            class="min-w-14 rounded-lg px-3 py-2 text-center text-sm font-medium transition-all duration-300
+                            class="min-w-[52px] rounded-lg px-3 py-2 text-center text-sm font-medium transition-all duration-300
                             {{ app()->getLocale() === $locale
                                 ? 'bg-white text-zinc-900'
                                 : 'text-zinc-400 hover:bg-white/10 hover:text-white'
@@ -40,7 +59,100 @@
                         </a>
                     @endforeach
                 </div>
-                <a href="/school_admin" class="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium hover:bg-blue-500 transition">{{ __('welcome.nav.dashboard') }}</a>
+
+                <a
+                    href="/school_admin"
+                    class="whitespace-nowrap rounded-xl bg-cyan-700 px-5 py-2.5 text-sm font-medium transition hover:bg-cyan-500">
+                    {{ __('welcome.nav.dashboard') }}
+                </a>
+
+            </div>
+
+            <!-- Mobile Button -->
+            <button
+                @click="open = !open"
+                class="lg:hidden relative flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 backdrop-blur-md transition hover:bg-white/10">
+
+                <span class="sr-only">Toggle Menu</span>
+
+                <div class="relative h-4 w-5">
+                    <span
+                        class="absolute left-0 top-0 h-0.5 w-5 bg-white rounded-full transition-all duration-300 origin-center"
+                        :class="open ? 'top-1/2 -translate-y-1/2 rotate-45' : ''">
+                    </span>
+
+                    <span
+                        class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-5 bg-white rounded-full transition-all duration-300"
+                        :class="open ? 'opacity-0' : ''">
+                    </span>
+
+                    <span
+                        class="absolute left-0 bottom-0 h-0.5 w-5 bg-white rounded-full transition-all duration-300 origin-center"
+                        :class="open ? 'bottom-1/2 translate-y-1/2 -rotate-45' : ''">
+                    </span>
+                </div>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <!-- Mobile Dropdown -->
+        <div
+            x-show="open"
+            x-cloak
+            @click.outside="open = false"
+            x-transition:enter="transition ease-out duration-250"
+            x-transition:enter-start="opacity-0 -translate-y-3 scale-95"
+            x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+            x-transition:leave-end="opacity-0 -translate-y-3 scale-95"
+            class="absolute left-4 right-4 top-full mt-3 z-[99999] lg:hidden">
+
+            <div
+                class="overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-r from-blue-900/50 via-cyan-950/50 to-emerald-400/5 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.6)]">
+
+                <div class="space-y-1 p-3">
+
+                    <a href="#features" @click="open = false"
+                        class="block rounded-xl px-4 py-3 hover:bg-white/5">
+                        {{ __('welcome.nav.features') }}
+                    </a>
+
+                    <a href="#platform" @click="open = false"
+                        class="block rounded-xl px-4 py-3 hover:bg-white/5">
+                        {{ __('welcome.nav.platform') }}
+                    </a>
+
+                    <a href="#security" @click="open = false"
+                        class="block rounded-xl px-4 py-3 hover:bg-white/5">
+                        {{ __('welcome.nav.security') }}
+                    </a>
+
+                    <div class="my-3 h-px bg-white/10"></div>
+
+                    <div class="flex rounded-xl border border-white/10 bg-white/5 p-1">
+
+                        @foreach(['en'=>'EN','ar'=>'AR'] as $locale => $label)
+                            <a
+                                href="{{ route('lang.switch',$locale) }}"
+                                class="flex-1 rounded-lg px-3 py-2 text-center
+                                {{ app()->getLocale()===$locale
+                                    ? 'bg-white text-zinc-900'
+                                    : 'text-zinc-400 hover:bg-white/10 hover:text-white'
+                                }}">
+                                {{ $label }}
+                            </a>
+                        @endforeach
+
+                    </div>
+
+                    <a
+                        href="/school_admin"
+                        class="mt-3 block rounded-xl bg-cyan-700 px-5 py-3 text-center font-medium hover:bg-cyan-500">
+                        {{ __('welcome.nav.dashboard') }}
+                    </a>
+
+                </div>
             </div>
         </div>
     </nav>
@@ -297,7 +409,7 @@
     </div>
 </section>
 
-<section class="dashboard-section py-32 relative overflow-hidden">
+<section id="platform" class="dashboard-section py-32 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <div class="dashboard-section-content text-center max-w-3xl mx-auto mb-16">
             <p class="text-indigo-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.dashboard_section.eyebrow') }}</p>
@@ -451,7 +563,7 @@
     </div>
 </section>
 
-<section class="trust-section py-32">
+<section id="security" class="trust-section py-32">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <p class="text-indigo-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.trust_section.eyebrow') }}</p>
