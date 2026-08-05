@@ -372,7 +372,7 @@
     <div class="max-w-7xl mx-auto px-6">
         <!-- Heading -->
         <div class="max-w-3xl mb-16">
-            <p class="text-indigo-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.features_section.eyebrow') }}</p>
+            <p class="text-sky-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.features_section.eyebrow') }}</p>
             <h2 class="mt-4 text-4xl md:text-6xl font-bold">
                 {{ __('welcome.features_section.heading_white') }}
                 <span class="text-zinc-500">{{ __('welcome.features_section.heading_muted') }}</span>
@@ -382,26 +382,26 @@
 
         <!-- Cards -->
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-indigo-500/50 transition">
-                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-500/20 mb-6"><i data-lucide="users" class="text-indigo-400"></i></div>
+            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
+                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-sky-500/20 mb-6"><i data-lucide="users" class="text-sky-400"></i></div>
                 <h3 class="text-xl font-semibold">{{ __('welcome.features_section.cards.student_management.title') }}</h3>
                 <p class="mt-4 text-zinc-400 leading-relaxed">{{ __('welcome.features_section.cards.student_management.description') }}</p>
             </div>
 
-            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-indigo-500/50 transition">
-                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-500/20 mb-6"><i data-lucide="clipboard-check" class="text-indigo-400"></i></div>
+            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
+                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-sky-500/20 mb-6"><i data-lucide="clipboard-check" class="text-sky-400"></i></div>
                 <h3 class="text-xl font-semibold">{{ __('welcome.features_section.cards.smart_attendance.title') }}</h3>
                 <p class="mt-4 text-zinc-400 leading-relaxed">{{ __('welcome.features_section.cards.smart_attendance.description') }}</p>
             </div>
 
-            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-indigo-500/50 transition">
-                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-500/20 mb-6"><i data-lucide="calendar-days" class="text-indigo-400"></i></div>
+            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
+                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-sky-500/20 mb-6"><i data-lucide="calendar-days" class="text-sky-400"></i></div>
                 <h3 class="text-xl font-semibold">{{ __('welcome.features_section.cards.scheduling.title') }}</h3>
                 <p class="mt-4 text-zinc-400 leading-relaxed">{{ __('welcome.features_section.cards.scheduling.description') }}</p>
             </div>
 
-            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 hover:border-indigo-500/50 transition">
-                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-indigo-500/20 mb-6"><i data-lucide="bar-chart-3" class="text-indigo-400"></i></div>
+            <div class="module-card group rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
+                <div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-sky-500/20 mb-6"><i data-lucide="bar-chart-3" class="text-sky-400"></i></div>
                 <h3 class="text-xl font-semibold">{{ __('welcome.features_section.cards.reports_analytics.title') }}</h3>
                 <p class="mt-4 text-zinc-400 leading-relaxed">{{ __('welcome.features_section.cards.reports_analytics.description') }}</p>
             </div>
@@ -412,7 +412,7 @@
 <section id="platform" class="dashboard-section py-32 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <div class="dashboard-section-content text-center max-w-3xl mx-auto mb-16">
-            <p class="text-indigo-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.dashboard_section.eyebrow') }}</p>
+            <p class="text-sky-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.dashboard_section.eyebrow') }}</p>
             <h2 class="mt-4 text-4xl md:text-6xl font-bold">{{ __('welcome.dashboard_section.heading') }}</h2>
             <p class="mt-6 text-zinc-400 text-lg">{{ __('welcome.dashboard_section.description') }}</p>
         </div>
@@ -468,11 +468,11 @@
                         <div class="rounded-2xl bg-white/5 p-6">
                             <h3 class="font-semibold mb-6">{{ __('welcome.dashboard_section.chart_title') }}</h3>
                             <div class="flex items-end gap-3 h-40">
-                                <div class="w-full bg-indigo-500/40 rounded-t-lg h-[60%]"></div>
-                                <div class="w-full bg-indigo-500/40 rounded-t-lg h-[80%]"></div>
-                                <div class="w-full bg-indigo-500/40 rounded-t-lg h-[45%]"></div>
-                                <div class="w-full bg-indigo-500/40 rounded-t-lg h-[90%]"></div>
-                                <div class="w-full bg-indigo-500/40 rounded-t-lg h-[70%]"></div>
+                                <div class="w-full bg-sky-500/40 rounded-t-lg h-[60%]"></div>
+                                <div class="w-full bg-sky-500/40 rounded-t-lg h-[80%]"></div>
+                                <div class="w-full bg-sky-500/40 rounded-t-lg h-[45%]"></div>
+                                <div class="w-full bg-sky-500/40 rounded-t-lg h-[90%]"></div>
+                                <div class="w-full bg-sky-500/40 rounded-t-lg h-[70%]"></div>
                             </div>
                         </div>
 
@@ -497,7 +497,7 @@
     <div class="max-w-7xl mx-auto px-6">
         <!-- Heading -->
         <div class="max-w-3xl mb-20">
-            <p class="text-indigo-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.roadmap_section.eyebrow') }}</p>
+            <p class="text-sky-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.roadmap_section.eyebrow') }}</p>
             <h2 class="mt-4 text-4xl md:text-6xl font-bold">
                 {{ __('welcome.roadmap_section.heading_line1') }}
                 <br>
@@ -514,7 +514,7 @@
             <div class="space-y-10">
                 <!-- Gradebook -->
                 <div class="roadmap-item relative md:flex gap-10">
-                    <div class="hidden md:flex w-10 h-10 rounded-full bg-purple-600 items-center justify-center z-10">
+                    <div class="hidden md:flex w-10 h-10 rounded-full bg-sky-600 items-center justify-center z-10">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notebook-pen-icon lucide-notebook-pen"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>
                     </div>
                     <div class="flex-1 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
@@ -530,7 +530,7 @@
 
                 <!-- Communication -->
                 <div class="roadmap-item relative md:flex gap-10">
-                    <div class="hidden md:flex w-10 h-10 rounded-full bg-orange-500 items-center justify-center z-10">
+                    <div class="hidden md:flex w-10 h-10 rounded-full bg-sky-600 items-center justify-center z-10">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
                     </div>
                     <div class="flex-1 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
@@ -546,7 +546,7 @@
 
                 <!-- Exams -->
                 <div class="roadmap-item relative md:flex gap-10">
-                    <div class="hidden md:flex w-10 h-10 rounded-full bg-pink-600 items-center justify-center z-10">
+                    <div class="hidden md:flex w-10 h-10 rounded-full bg-sky-600 items-center justify-center z-10">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor-icon lucide-monitor"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>                    </div>
                     <div class="flex-1 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
                         <h3 class="text-2xl font-bold">{{ __('welcome.roadmap_section.exams.title') }}</h3>
@@ -566,7 +566,7 @@
 <section id="security" class="trust-section py-32">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <p class="text-indigo-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.trust_section.eyebrow') }}</p>
+            <p class="text-sky-400 uppercase tracking-widest text-sm font-semibold">{{ __('welcome.trust_section.eyebrow') }}</p>
             <h2 class="mt-4 text-4xl md:text-6xl font-bold">{{ __('welcome.trust_section.heading') }}</h2>
             <p class="mt-6 text-zinc-400 text-lg">{{ __('welcome.trust_section.description') }}</p>
         </div>
@@ -574,32 +574,32 @@
         <!-- Cards -->
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div class="flex-1 trust-card rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
-                <div class="mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(67.3% 0.182 276.935)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                <div class="mb-6 bg-sky-500/20 w-14 h-14 flex items-center justify-center rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(71.5% 0.143 215.221)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check-icon lucide-shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
                 </div>
                 <h3 class="text-xl font-bold">{{ __('welcome.trust_section.cards.secure.title') }}</h3>
                 <p class="mt-4 text-zinc-400">{{ __('welcome.trust_section.cards.secure.description') }}</p>
             </div>
 
             <div class="flex-1 trust-card rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
-                <div class="mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(67.3% 0.182 276.935)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap-icon lucide-zap"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg>
+                <div class="mb-6 bg-sky-500/20 w-14 h-14 flex items-center justify-center rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(71.5% 0.143 215.221)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap-icon lucide-zap"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></svg>
                 </div>
                 <h3 class="text-xl font-bold">{{ __('welcome.trust_section.cards.fast.title') }}</h3>
                 <p class="mt-4 text-zinc-400">{{ __('welcome.trust_section.cards.fast.description') }}</p>
             </div>
 
             <div class="flex-1 trust-card rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
-                <div class="mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(67.3% 0.182 276.935)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column-icon lucide-chart-column"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                <div class="mb-6 bg-sky-500/20 w-14 h-14 flex items-center justify-center rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(71.5% 0.143 215.221)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column-icon lucide-chart-column"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
                 </div>
                 <h3 class="text-xl font-bold">{{ __('welcome.trust_section.cards.data_driven.title') }}</h3>
                 <p class="mt-4 text-zinc-400">{{ __('welcome.trust_section.cards.data_driven.description') }}</p>
             </div>
 
             <div class="trust-card rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
-                <div class="mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(67.3% 0.182 276.935)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket-icon lucide-rocket"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
+                <div class="mb-6 bg-sky-500/20 w-14 h-14 flex items-center justify-center rounded-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(71.5% 0.143 215.221)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rocket-icon lucide-rocket"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
                 </div>
                 <h3 class="text-xl font-bold">{{ __('welcome.trust_section.cards.scalable.title') }}</h3>
                 <p class="mt-4 text-zinc-400">{{ __('welcome.trust_section.cards.scalable.description') }}</p>
@@ -610,14 +610,14 @@
 
 <section class="cta-section py-32 relative overflow-hidden">
     <!-- Background glow -->
-    <div class="absolute inset-0 -z-10 h-full w-full bg-black [background:radial-gradient(125%_125%_at_50%_10%,#09090b_40%,#63e_100%)]"></div>
+    <div class="absolute inset-0 -z-10 h-full w-full bg-black [background:radial-gradient(125%_125%_at_50%_10%,#09090b_40%,#33CCEE_100%)]"></div>
 
     <div class="cta-content relative max-w-5xl mx-auto px-6 text-center">
         <h2 class="text-5xl md:text-7xl font-bold leading-tight">{{ __('welcome.cta_section.heading') }}</h2>
         <p class="mt-8 max-w-2xl mx-auto text-lg text-zinc-400">{{ __('welcome.cta_section.description') }}</p>
 
         <div class="mt-10 flex justify-center gap-5 flex-wrap">
-            <a href="/school_admin" class="px-8 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 transition font-semibold shadow-lg shadow-indigo-600/30">{{ __('welcome.cta_section.open_dashboard') }}</a>
+            <a href="/school_admin" class="px-8 py-4 rounded-2xl bg-cyan-600 hover:bg-cyan-500 transition font-semibold shadow-lg shadow-sky-400/30">{{ __('welcome.cta_section.open_dashboard') }}</a>
             <a href="#features" class="px-8 py-4 rounded-2xl border border-white/10 hover:bg-white/5 transition">{{ __('welcome.cta_section.explore_platform') }}</a>
         </div>
     </div>
@@ -625,7 +625,7 @@
 
 </body>
 
-<footer class="border-t border-indigo-300/70 py-10">
+<footer class="border-t border-cyan-300/70 py-10">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6 text-zinc-400">
         <div>
             <h3 class="text-white font-bold text-xl">{{ __('welcome.footer.brand') }}</h3>

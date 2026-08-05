@@ -10,7 +10,9 @@ class CurriculumDownloadController extends Controller
     public function download($month)
     {
         $curriculums = CurriculumTable::where('month', $month)
-            ->with('user')
+            ->with([
+                'user',
+            ])
             ->get();
 
         if ($curriculums->isEmpty()) {

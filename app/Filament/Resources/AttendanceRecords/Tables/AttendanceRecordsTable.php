@@ -38,6 +38,10 @@ class AttendanceRecordsTable
 
                 TextColumn::make('group.name')
                     ->label(__('attendance.group'))
+                    ->formatStateUsing(function ($state, $record) {
+                        $group = Group::find($record->group_id);
+                        return $group ? __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})" : '-';
+                    })
                     ->sortable(),
 
                 BadgeColumn::make('status')
@@ -64,13 +68,17 @@ class AttendanceRecordsTable
                     ->label(__('attendance.group'))
                     ->relationship('group', 'name')
                     ->options(function () {
-                        $user = Auth::user();
-                        if ($user->isHeadmaster()) {
-                            return Group::where('is_active', true)->pluck('name', 'id');
-                        }
-                        return $user->groups()
-                                    ->where('groups.is_active', true)
-                                    ->pluck('groups.name', 'groups.id');
+                         $user = Auth::user();
+
+                        $groups = $user->isHeadmaster()
+                            ? Group::where('is_active', true)->get()
+                            : $user->groups()
+                                ->where('groups.is_active', true)
+                                ->get();
+
+                        return $groups->mapWithKeys(fn ($group) => [
+                            $group->id => __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})" 
+                        ]);
                     }),
 
                 SelectFilter::make('status')
@@ -107,7 +115,6 @@ class AttendanceRecordsTable
                 Action::make('download_ticket')
                     ->label(__('attendance.actions.download_ticket'))
                     ->icon('heroicon-o-printer')
-                    ->visible(fn ($record) => in_array($record->status, ['absent', 'exit_before_time']))
                     ->action(function ($record) {
 
                         // Render Blade view to HTML
@@ -137,6 +144,7 @@ class AttendanceRecordsTable
                             'orientation' => 'P',
                             'autoScriptToLang' => true,
                             'autoLangToFont' => true,
+                            'tempDir' => storage_path('app/mpdf-tmp')
                         ]);
                         
                         // Critical: Set shrink to fit

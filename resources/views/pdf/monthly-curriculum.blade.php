@@ -2,28 +2,24 @@
 use App\Models\Group;
 use App\Models\Subject;
 use App\Models\SchoolSettings;
-use Illuminate\Support\Facades\Auth;
 
-// Sort by oldest first
-$curriculums = \App\Models\CurriculumTable::where('user_id', Auth::id())
-    ->orderBy('created_at', 'asc')
-    ->get();
+$isRtl = app()->getLocale() === 'ar';
+$dir = $isRtl ? 'rtl' : 'ltr';
 
 // Helper: get subject name by id or code
 $subjectMap = Subject::pluck('name', 'id')
     ->merge(Subject::pluck('name', 'code'))
     ->toArray();
 
-// Helper closure for resolving subject name
 $resolveSubject = function ($subject) use ($subjectMap) {
     $key = $subject['name'] ?? null;
     return $subjectMap[$key] ?? $key ?? '-';
 };
 
-// Detect user and related school
 $user = auth()->user();
+
 $school = $user?->schoolSettings
-    ?? SchoolSettings::first(); // fallback to first if teacher has none
+    ?? SchoolSettings::first();
 
 $schoolName = $school->school_name ?? env('APP_NAME', __('pdf.monthly_curriculum.unspecified_school'));
 $province   = $school->province ?? env('SCHOOL_PROVINCE', __('pdf.monthly_curriculum.default_province'));
@@ -31,7 +27,7 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', __('pdf.monthly_curric
 @endphp
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ $dir }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,14 +37,21 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', __('pdf.monthly_curric
            GLOBAL STYLE
         ============== */
         body {
-            font-family: 'Amiri', 'Cairo', sans-serif;
-            direction: rtl;
+            font-family: "DejaVu Sans", sans-serif;
             background: #fff;
             color: #000;
             margin: 0;
             padding: 20px;
             font-size: 15px;
             line-height: 1.7;
+        }
+
+        html[dir="rtl"] body {
+            direction: rtl;
+        }
+
+        html[dir="ltr"] body {
+            direction: ltr;
         }
 
         .header {
@@ -116,9 +119,16 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', __('pdf.monthly_curric
         }
 
         .subject-cell {
-            text-align: right;
             padding: 0.6rem;
             font-size: 0.95rem;
+        }
+
+        body[dir="rtl"] .subject-cell {
+            text-align: right;
+        }
+
+        body[dir="ltr"] .subject-cell {
+            text-align: left;
         }
 
         .topic-line {
@@ -205,7 +215,7 @@ $district   = $school->district ?? env('SCHOOL_DISTRICT', __('pdf.monthly_curric
                     ->select('name','code')
                     ->first();
 
-                $groupName = $group ? "{$group->name} - {$group->code}" : $record->grade_level;
+                $groupName = $group ? __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})" : $record->grade_level;
 
                 // Reverse day order if needed
                 $allDays = collect($record->subjects ?? [])

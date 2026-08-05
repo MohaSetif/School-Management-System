@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\StudyRecords\Schemas;
 
+use App\Models\Group;
+use App\Models\Subject;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
@@ -29,7 +31,7 @@ class StudyRecordForm
                 Select::make('grade_level')
                     ->label(__('studyrecord.fields.grade_level'))
                     ->options(function () {
-                        if (Auth::user()->isTeacher() || Auth::user()->isHeadmaster()) {
+                        if (Auth::user()->isTeacher()) {
                             return Auth::user()->groups
                                 ->pluck('name', 'code')
                                 ->unique()
@@ -37,8 +39,16 @@ class StudyRecordForm
                                 ->map(fn ($name, $code) => "{$name} - {$code}")
                                 ->toArray();
                         }
-                        return [];
+
+                        return Group::query()
+                            ->orderBy('name')
+                            ->get()
+                            ->mapWithKeys(fn ($group) => [
+                                $group->code => __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})"
+                            ])
+                            ->toArray();
                     })
+                    ->disabled(fn () => Auth::user()->isHeadmaster())
                     ->required(),
                 TextInput::make('activity')
                     ->label(__('studyrecord.fields.activity'))
@@ -53,14 +63,16 @@ class StudyRecordForm
                             return Auth::user()
                                 ->subjects()
                                 ->pluck('subjects.name', 'subjects.id')
-                                ->unique()
-                                ->sort()
                                 ->toArray();
                         }
 
-                        return [];
+                        return Subject::query()
+                            ->orderBy('name')
+                            ->pluck('name', 'id')
+                            ->toArray();
                     })
                     ->searchable()
+                    ->disabled(fn () => Auth::user()->isHeadmaster())
                     ->required(),
                 Textarea::make('goal')
                     ->label(__('studyrecord.fields.goal'))

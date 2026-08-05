@@ -1,5 +1,10 @@
+@php
+    $isRtl = app()->getLocale() === 'ar';
+    $dir = $isRtl ? 'rtl' : 'ltr';
+@endphp
+
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="{{ app()->getLocale() }}" dir="{{ $dir }}">
 <head>
     <meta charset="utf-8" />
     <title>{{ __('pdf.entry_ticket.title') }}</title>
@@ -15,7 +20,14 @@
             color: #111827;
             font-size: 12px;
             line-height: 1.4;
+        }
+
+        html[dir="rtl"] body {
             direction: rtl;
+        }
+
+        html[dir="ltr"] body {
+            direction: ltr;
         }
 
         .ticket {
@@ -192,7 +204,17 @@
 
         <div class="row">
             <div class="label">{{ __('pdf.entry_ticket.class_group') }}</div>
-            <div class="value">{{ optional($record->group)->name ?? '—' }}</div>
+            <div class="value">
+                @php
+                    $group = $record->group;
+
+                    $groupName = $group
+                        ? __('students.' . $group->name) . ' (' . __('students.fields.group') . " {$group->code})"
+                        : '—';
+                @endphp
+
+                {{ $groupName }}
+            </div>
         </div>
 
         <div class="row">
